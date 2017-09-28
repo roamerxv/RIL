@@ -1,0 +1,21 @@
+.dataTable_div {
+    /*font-size: 0.2em;*/
+    width: 100%;
+}
+
+#businesslog_table {
+    /*font-size: 1em;*/
+}
+
+#businesslog_table tbody tr td.success_type {
+    color: green;
+}
+
+#businesslog_table tbody tr td.fail_type {
+    color: red;
+    /*font-size: 1.0em;*/
+}
+
+div.toolbar {
+    float: right;
+}

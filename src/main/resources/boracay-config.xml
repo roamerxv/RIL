@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Boracay - Web 项目实用组件框架
+  ~
+  ~ @author 徐泽宇 roamerxv@gmail.com
+  ~ @version 1.0.0
+  ~ Copyright (c) 2017. 徐泽宇
+  ~
+  -->
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+          http://www.springframework.org/schema/aop
+          http://www.springframework.org/schema/aop/spring-aop-4.3.xsd"
+       >
+
+
+    <!-- 配置徐泽宇的 boracay 框架要到的 aop begin-->
+    <!-- ①配置业务方法日志记录的功能 begin-->
+    <bean id="businessLogAspect" class="pers.roamer.boracay.aspect.businesslogger.BusinessLogAspect"></bean>
+    <aop:config>
+        <aop:pointcut
+                id="logControllerPointcut"
+                expression="execution(* com.alcor.ril.controller..*.*(..)) &amp;&amp; !execution(* com.alcor.ril.controller.UserController.logout(..))"/>
+        <aop:pointcut
+                id="beforeLogControllerPointcut"
+                expression="execution(* com.alcor.ril.controller.UserController.logout(..))"/>
+        <aop:aspect ref="businessLogAspect">
+            <aop:around method="logAroundAction" pointcut-ref="logControllerPointcut"/>
+            <aop:before method="logBeforeAction" pointcut-ref="beforeLogControllerPointcut"/>
+        </aop:aspect>
+    </aop:config>
+    <!-- ①配置业务方法日志记录的功能  end -->
+
+    <!-- ②配置controller 方法中抛出的错误进行 json封装，并且和 config.xml 中进行对应！ begin-->
+    <bean id="catchControllerExceptionAspect"
+          class="pers.roamer.boracay.aspect.catchcontroller.CatchControllerExceptionAspect"></bean>
+    <aop:config>
+        <aop:pointcut
+                id="catchControllerExceptionPointcut"
+                expression="execution(* pers.roamer.boracay.controller..*.*(..)) || execution(* com.alcor.ril.controller..*.*(..))"/>
+        <aop:aspect ref="catchControllerExceptionAspect">
+            <aop:after-throwing throwing="ex" method="writeToHttpResponse"
+                                pointcut-ref="catchControllerExceptionPointcut"/>
+        </aop:aspect>
+    </aop:config>
+    <!-- ②配置controller 方法中抛出的错误进行 json封装，并且和 config.xml 中进行对应！ end-->
+
+    <!-- ③配置项目访问白名单功能 begin-->
+    <!--<bean id="whiteListCheckAspect"-->
+    <!--class="pers.roamer.boracay.aspect.whitelist.WhiteListCheckAspect"></bean>-->
+    <!--<aop:config>-->
+    <!--<aop:pointcut-->
+    <!--id="whiteListCheckPointcut"-->
+    <!--expression="execution(* com.ninelephas.raccoon.controller..*.*(..))"/>-->
+    <!--<aop:aspect ref="whiteListCheckAspect">-->
+    <!--<aop:before method="whiteListCheck"-->
+    <!--pointcut-ref="whiteListCheckPointcut"/>-->
+    <!--</aop:aspect>-->
+    <!--</aop:config>-->
+    <!-- ③配置项目访问白名单功能 end-->
+
+
+    <!-- ④配置项目中需要进行短信验证码验证的功能 begin-->
+    <!--<bean id="smsValidateCodeAspect"-->
+          <!--class="pers.roamer.boracay.aspect.sms.SMSValidateCodeAspect"></bean>-->
+    <!--<aop:config>-->
+        <!--<aop:pointcut-->
+                <!--id="smsValidateCodePointcut"-->
+                <!--expression="execution(* pers.roamer.boracay.websample.controller..*.*(..))"/>-->
+        <!--<aop:aspect ref="smsValidateCodeAspect">-->
+            <!--<aop:before method="smsValidateCodeCheck"-->
+                        <!--pointcut-ref="smsValidateCodePointcut"/>-->
+        <!--</aop:aspect>-->
+    <!--</aop:config>-->
+    <!-- ④配置项目中需要进行短信验证码验证的功能 end-->
+
+    <!-- ⑤配置项目中需要进行session check，确定是否登录的功能 begin-->
+    <bean id="sessionCheckKeywordAspect"
+          class="pers.roamer.boracay.aspect.httprequest.SessionCheckKeywordAspect"></bean>
+    <aop:config>
+        <aop:pointcut
+                id="sessionKeywordCheckPointcut"
+                expression="execution(* com.alcor.ril.controller..*.*(..))"/>
+        <aop:aspect ref="sessionCheckKeywordAspect">
+            <aop:before method="sessionKeywordCheck"
+                        pointcut-ref="sessionKeywordCheckPointcut"/>
+        </aop:aspect>
+    </aop:config>
+    <!-- ⑤配置项目中需要进行session check，确定是否登录的功能  end-->
+
+
+    <!-- 不使用aop 方式，使用工具类的方式。以便更灵活的调用-->
+    <!-- ⑥配置项目中需要启动自动保存上传文件的功能 -->
+    <!--<bean id="uploadFileAutoSaveAspect"-->
+    <!--class="pers.roamer.boracay.aspect.fileupload.FileAutoSaveAspect"></bean>-->
+    <!--<aop:config>-->
+    <!--<aop:pointcut-->
+    <!--id="autoSavePointcut"-->
+    <!--expression="execution(* pers.roamer.boracay.websample.controller..*.*(..))"/>-->
+    <!--<aop:aspect ref="uploadFileAutoSaveAspect">-->
+    <!--<aop:around method="saveFileAction"-->
+    <!--pointcut-ref="smsValidateCodePointcut"/>-->
+    <!--</aop:aspect>-->
+    <!--</aop:config>-->
+    <!-- ⑥配置项目中需要启动自动保存上传文件的功能 end -->
+
+    <!-- 配置徐泽宇的 boracay 框架要到的 aop end-->
+
+</beans>

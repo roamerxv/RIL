@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Boracay - Web 项目实用组件框架
+  ~
+  ~ @author 徐泽宇 roamerxv@gmail.com
+  ~ @version 1.0.0
+  ~ Copyright (c) 2017. 徐泽宇
+  ~
+  -->
+
+<Config>
+    <!--应用系统部分 -->
+    <System>
+        <!-- 用于 boracay 组件必须使用到的配置 begin-->
+        <AppName>Researching Information Library</AppName>
+        <!--写入到数据表中的 created_by 和 update_by  系统用户-->
+        <SystemAdminName>
+            systemadmin
+        </SystemAdminName>
+        <!--访问白名单-->
+        <!--# 系统能访问的IP白名单。只有在这个白名单里面的IP才能访问-->
+        <!--#内网地址都纳入-->
+        <!--#A类10.0.0.0&#45;&#45;10.255.255.255-->
+        <!--#B类172.16.0.0&#45;&#45;172.31.255.255-->
+        <!--#C类192.168.0.0&#45;&#45;192.168.255.255-->
+        <Whitelist>
+            127.0.0.1,192.168.0-255.0-255,172.16-31.0-255.0-255,10.0-255.0-255.0-255
+        </Whitelist>
+        <!---->
+        <!-- 设置是否要做业务活动日志记录 -->
+        <RecordBusinessLog>true</RecordBusinessLog>
+        <!---->
+        <!-- 设置判断 session 中被用于保存用户信息的关键词 -->
+        <SessionUserKeyword>
+            user_mobile
+        </SessionUserKeyword>
+
+        <!-- 用于 boracay 组件必须使用到的配置 end -->
+
+        <!-- 设置上传文件的路径 -->
+        <UploadFile>
+            <saveFilePath>
+                /Users/roamer/Desktop/upload
+            </saveFilePath>
+        </UploadFile>
+        <!-- -->
+
+        <!--短信接口-->
+        <Sms>
+            <Url>http://222.73.117.158/msg/HttpBatchSendSM</Url>
+            <Username>xxxx</Username>
+            <Password>xxxx</Password>
+            <BusinessMethod>
+                <Regist>
+                    <!--注册验证码有效时长-->
+                    <Duration>1800000</Duration>
+                    <!--注册验证码长度-->
+                    <Length>6</Length>
+                    <Text>尊敬的用户，您注册的手机验证码为：${code}，请填入以完成注册。该验证码有效时间为${duration}分钟，限本次使用。</Text>
+                </Regist>
+                <ForgetPassword>
+                    <!--忘记密码验证码有效时长-->
+                    <Duration>1800000</Duration>
+                    <!--忘记密码验证码长度-->
+                    <Length>6</Length>
+                    <Text>尊敬的用户，您正在使用忘记密码功能，您的手机验证码为：${code}，该验证码有效时间为${duration}分钟，限本次使用。</Text>
+                </ForgetPassword>
+                <ModifyPhoneNumber>
+                    <!--修改手机号码验证码有效时长-->
+                    <Duration>1800000</Duration>
+                    <!--修改手机号码验证码长度-->
+                    <Length>6</Length>
+                    <Text>尊敬的用户，您正在使用修改手机号码功能，您的手机验证码为：${code}，该验证码有效时间为${duration}分钟，限本次使用。</Text>
+                </ModifyPhoneNumber>
+                <ModifyPassword>
+                    <!--修改密码验证码有效时长-->
+                    <Duration>1800000</Duration>
+                    <!--修改密码验证码长度-->
+                    <Length>6</Length>
+                    <Text>尊敬的用户，您正在使用重置密码功能，您的手机验证码为：${code}，该验证码有效时间为${duration}分钟，限本次使用。</Text>
+                </ModifyPassword>
+            </BusinessMethod>
+        </Sms>
+    </System>
+    <!---->
+
+
+    <!--定义错误信息-->
+    <exception>
+        <test>
+            <exception>
+                测试用的错误！由Controller 层抛出。| user_name , user_passwd
+            </exception>
+        </test>
+        <system>
+            <need_login>
+                必须登录系统
+            </need_login>
+        </system>
+        <!--短信验证部分-->
+        <sms>
+            <validate>
+                <mobile>
+                    <not_set>
+                        验证的手机号没有设置！
+                    </not_set>
+                </mobile>
+                <vcode>
+                    <opid_size_no_match>
+                        需要短信验证的方法和传入的验证码数目不一致！| code
+                    </opid_size_no_match>
+                    <not_set>
+                        短信验证码没有设置!| code
+                    </not_set>
+                    <invalid>
+                        该用户没有发送过短信 ！| code
+                        <ReboundOldMobile>
+                            需要解绑手机的验证码没有发送过!
+                        </ReboundOldMobile>
+                        <ReboundNewMobile>
+                            需要绑定的手机的验证码没有发送过!
+                        </ReboundNewMobile>
+                    </invalid>
+                    <expired>
+                        验证码过期！| code
+                        <ReboundOldMobile>
+                            需要解绑手机的验证码已经过期!
+                        </ReboundOldMobile>
+                        <ReboundNewMobile>
+                            需要绑定的手机的验证码已经过期!
+                        </ReboundNewMobile>
+                    </expired>
+                    <not_match>
+                        验证码不匹配！| code
+                        <ReboundOldMobile>
+                            需要解绑手机的验证码不匹配!
+                        </ReboundOldMobile>
+                        <ReboundNewMobile>
+                            需要绑定的手机的验证码不匹配!
+                        </ReboundNewMobile>
+                    </not_match>
+                    <invalid_method>
+                        无效的业务请求| code
+                    </invalid_method>
+                </vcode>
+            </validate>
+        </sms>
+        <!---->
+        <system_log>
+            <datetime_condition>
+                <begin_datetime>
+                    <invalidate_format>
+                        起始时间是无效的
+                    </invalidate_format>
+                </begin_datetime>
+                <end_datetime>
+                    <invalidate_format>
+                        结束时间是无效的
+                    </invalidate_format>
+                </end_datetime>
+            </datetime_condition>
+        </system_log>
+    </exception>
+    <!--测试部分-->
+    <Test>
+        <Item>
+            阿萨德飞洒地方111阿斯蒂芬1111
+        </Item>
+    </Test>
+</Config>

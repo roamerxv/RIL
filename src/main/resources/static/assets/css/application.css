@@ -1,0 +1,7 @@
+/* latin-ext */
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Raleway'), local('Raleway-Regular'), url(./lib/fonts/Raleway.woff2) format('woff2');
+}

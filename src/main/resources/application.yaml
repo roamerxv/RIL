@@ -1,0 +1,38 @@
+spring:
+    jpa:
+        database: MYSQL
+        hibernate:
+            ddl-auto: update
+        naming:
+            physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL5Dialect
+    http:
+        multipart:
+            maxFileSize: -1
+            maxRequestSize: -1
+
+    datasource:
+        url: jdbc:mysql://120.76.101.180:3306/ril?useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: ril
+        password: rilril
+        driver-class-name: com.mysql.jdbc.Driver
+
+    thymeleaf:
+        cache:  false
+        mode: HTML
+
+    devtools:
+        restart:
+            exclude: static/**,public/**
+
+server:
+    contextPath: /
+
+hibernate:
+    show_sql: true
+
+context:
+    listener:
+        classes: pers.roamer.boracay.application.StartedListener
