@@ -1,6 +1,7 @@
 var businesslog_table;
 
 $().ready(function () {
+
     if ($('#begin_time') == undefined || $('#begin_time') == undefined) {
         Logger.error("没有定义开始时间和结束时间的 UI 组件");
     } else {
