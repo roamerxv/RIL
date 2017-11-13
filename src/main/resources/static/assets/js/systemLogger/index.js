@@ -43,7 +43,7 @@ $().ready(function () {
             dataSrc: 'logs'
         },
         "language": {
-            "url": contextPath + "/assets/js/lib//DataTables-1.10.15/chinese.lang.json"
+            "url": contextPath + "/assets/js/lib//DataTables-1.10.16/chinese.lang.json"
         },
         "columns": [{
             "data": "createdAt" // 发生时间
