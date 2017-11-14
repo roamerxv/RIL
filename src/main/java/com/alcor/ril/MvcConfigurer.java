@@ -3,6 +3,7 @@ package com.alcor.ril;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import pers.roamer.boracay.aspect.httprequest.SessionCheckKeyword;
 
 /**
  * @author roamer - 徐泽宇
@@ -24,9 +25,10 @@ public class MvcConfigurer extends WebMvcConfigurerAdapter {
      * @param registry
      */
     @Override
+    @SessionCheckKeyword()
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/system_log/show").setViewName("systemLogs/systemLoggerIndex");
-        registry.addViewController("/").setViewName("/index");
+        registry.addViewController("/system_logs_index").setViewName("/systemLogs/systemLoggerIndex");
+        registry.addViewController("/test/ajax_500").setViewName("/test/ajax_500");
         super.addViewControllers(registry);
     }
 }

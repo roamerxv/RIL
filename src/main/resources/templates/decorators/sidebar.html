@@ -9,7 +9,26 @@
             data-menu-dropdown="true" data-menu-scrollable="true" data-menu-dropdown-timeout="500"
     >
         <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
-            <li class="m-menu__item  m-menu__item--active" aria-haspopup="true">
+            <li class="m-menu__item " aria-haspopup="true" name="menu_system_dashboard">
+                <a th:href="@{/}" class="m-menu__link ">
+                    <i class="m-menu__link-icon flaticon-line-graph"></i>
+                    <span class="m-menu__link-title">
+                        <span class="m-menu__link-wrap">
+                            <span class="m-menu__link-text">
+                                Dashboard
+                            </span>
+                        </span>
+                    </span>
+                </a>
+            </li>
+            <li class="m-menu__item" aria-haspopup="true" name="menu_system_configer">
+                <a href="/system_config" class="m-menu__link ">
+                    <span class="m-menu__item-here"></span>
+                    <i class="m-menu__link-icon flaticon-list-3"></i>
+                    <span class="m-menu__link-text">参数设置</span>
+                </a>
+            </li>
+            <li class="m-menu__item" aria-haspopup="true" name="menu_system_log">
                 <a th:href="@{/system_logs_index}" class="m-menu__link ">
                     <span class="m-menu__item-here"></span>
                     <i class="m-menu__link-icon flaticon-line-graph"></i>
@@ -59,11 +78,11 @@
                             </a>
                         </li>
                         <li class="m-menu__item " aria-haspopup="true" data-redirect="true">
-                            <a href="builder.html" class="m-menu__link ">
+                            <a th:href="@{/test/ajax_500}" class="m-menu__link ">
                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                     <span></span>
                                 </i>
-                                <span class="m-menu__link-text">Fixed Footer</span>
+                                <span class="m-menu__link-text"> 通过 ajax 捕获500错误</span>
                             </a>
                         </li>
                     </ul>

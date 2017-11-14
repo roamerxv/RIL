@@ -22,6 +22,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'war'
 
 /* 这里定义一个检查 dependency 版本的插件 begin*/
 apply plugin: 'com.github.ben-manes.versions'
@@ -32,7 +33,7 @@ apply plugin: 'org.flywaydb.flyway'
 // end
 
 group = 'com.alcor'
-version = '0.0.1'
+version = '1.0.0'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -75,13 +76,16 @@ ext {
 	lombokVersion = "1.16.18"
 }
 
+war {
+	archiveName 'ril.war'
+}
 
 
 dependencies {
 
 	compile(
 		// 徐泽宇的web 实用框架
-		"pers.roamer:boracay:2.1.0",
+		"pers.roamer:boracay:2.1.1",
 
 		//  使用alibaba 的druid
 		"com.alibaba:druid:$druidVersion",
@@ -97,6 +101,8 @@ dependencies {
 		"org.apache.logging.log4j:log4j-api:$log4jVersion",
 		"org.apache.logging.log4j:log4j-core:$log4jVersion",
 		//  ------------------------------
+
+		"joda-time:joda-time:2.3",
 	)
 
 	compile('org.springframework.boot:spring-boot-starter-aop')

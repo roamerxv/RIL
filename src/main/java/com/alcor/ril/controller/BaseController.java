@@ -13,7 +13,9 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import pers.roamer.boracay.configer.ConfigHelper;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -23,13 +25,17 @@ import javax.servlet.http.HttpSession;
  * @create 2017-06-2017/6/2  下午4:24
  */
 @Log4j2
-@Controller("pers.roamer.boracay.websample.controller.BaseController")
+@Controller("com.alcor.ril.controller.BaseController")
 public class BaseController {
+
+    @Autowired
+    ServletContext servletContext;
+
     @Autowired
     protected HttpSession httpSession;
 
     public String getUserID() throws ControllerException {
-        String user_id = (String) httpSession.getAttribute("user_id");
+        String user_id = (String) httpSession.getAttribute(ConfigHelper.getConfig().getString("System.SessionUserKeyword"));
         log.debug("当前 session 中的user_id 是 {}", user_id);
         if (StringUtils.isEmpty(user_id)) {
             throw new ControllerException("exception.system.need_login");

@@ -20,21 +20,42 @@ var SnippetLogin = function () {
         })
     }, l = function () {
         $("#m_login_signin_submit").click(function (e) {
+
+            var send_data = {};
+            send_data.name = $("#Username").val();
+            send_data.passwd = $("#Password").val();
+
             e.preventDefault();
             var a = $(this), t = $(this).closest("form");
+
             t.validate({
                 rules: {
-                    email: {required: !0, email: !0},
+                    email: {required: !0},
                     password: {required: !0}
                 }
-            }), t.valid() && (a.addClass("m-loader m-loader--right m-loader--light").attr("disabled", !0), t.ajaxSubmit({
-                url: "",
-                success: function (e, r, n, l) {
-                    setTimeout(function () {
-                        a.removeClass("m-loader m-loader--right m-loader--light").attr("disabled", !1), i(t, "danger", "Incorrect username or password. Please try again.")
-                    }, 2e3)
-                }
-            }))
+            }), t.valid() && (a.addClass("m-loader m-loader--right m-loader--light").attr("disabled", !0), t.submit(
+                $.ajax({
+                    type: 'post',
+                    data: JSON.stringify(send_data),
+                    url: contextPath + 'signIn.json',
+                    async: true,//默认为true
+                    contentType: "application/json",
+                    dataType: 'json',//默认为预期服务器返回的数据类型
+                    beforeSend: function (data) {
+                        cleanAllExceptionTip();
+                    },
+                    success: function (e, r, n, l) {
+                        window.location = contextPath ;
+                    },
+                    error: function ( jqXHR, textStatus, errorThrown) {
+                        Logger.debug(jqXHR);
+                        setTimeout(function () {
+                            a.removeClass("m-loader m-loader--right m-loader--light").attr("disabled", !1), i(t, "danger", "错误的用户名或密码！请重试")
+                        }, 1e3)
+                        //showExceptionTip(data);
+                    }
+                })
+            ))
         })
     }, s = function () {
         $("#m_login_signup_submit").click(function (a) {
@@ -49,13 +70,13 @@ var SnippetLogin = function () {
                     agree: {required: !0}
                 }
             }), n.valid() && (r.addClass("m-loader m-loader--right m-loader--light").attr("disabled", !0), n.ajaxSubmit({
-                url: "",
+                url: contextPath + "",
                 success: function (a, l, s, o) {
                     setTimeout(function () {
                         r.removeClass("m-loader m-loader--right m-loader--light").attr("disabled", !1), n.clearForm(), n.validate().resetForm(), t();
                         var a = e.find(".m-login__signin form");
                         a.clearForm(), a.validate().resetForm(), i(a, "success", "Thank you. To complete your registration please check your email.")
-                    }, 2e3)
+                    }, 1e3)
                 }
             }))
         })

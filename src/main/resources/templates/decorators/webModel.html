@@ -46,7 +46,7 @@
 <!-- begin:: Page -->
 <div class="m-grid m-grid--hor m-grid--root m-page">
     <!-- BEGIN: Header -->
-    <div class="" th:replace="decorators/top-menu :: top-menu"></div>
+    <div class="" th:replace="~{decorators/top-menu :: top-menu}"></div>
     <!-- END: Header -->
     <!-- begin::Body -->
     <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
@@ -56,7 +56,7 @@
         </button>
         <div id="m_aside_left" class="m-grid__item    m-aside-left  m-aside-left--skin-dark ">
             <!-- BEGIN: Aside Menu 侧边栏-->
-            <div  th:replace="decorators/sidebar :: sidebar"></div>
+            <div  th:replace="~{decorators/sidebar :: sidebar}"></div>
             <!-- END: Aside Menu -->
         </div>
         <!-- END: Left Aside -->
@@ -74,14 +74,14 @@
             <!-- END: Subheader -->
             <div class="m-content">
                 <!--Begin::Main Portlet-->
-                <div class="content_container" th:include="this :: content" th:remove="tag"></div>
+                <div class="content_container" th:include="~{this :: content}"></div>
                 <!--End::Main Portlet-->
             </div>
         </div>
     </div>
     <!-- end:: Body -->
     <!-- begin::Footer -->
-    <div class="" th:replace="decorators/footer :: footer"></div>
+    <div class="" th:replace="~{decorators/footer :: footer}"></div>
     <!-- end::Footer -->
 </div>
 <!-- end:: Page -->
