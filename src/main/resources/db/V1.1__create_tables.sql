@@ -93,3 +93,18 @@ CREATE TABLE `user` (
 SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT INTO `user` VALUES ('admin', '1');
+
+# 事件表
+CREATE TABLE `event` (
+  `id`    VARCHAR(36)  NOT NULL,
+  `name`  VARCHAR(256) NOT NULL,
+  `start` DATETIME(0)  NOT NULL
+  COMMENT '开始时间',
+  `end`   DATETIME(0)  NOT NULL
+  COMMENT '结束时间',
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  CHARACTER SET = utf8
+  COLLATE = utf8_bin
+  COMMENT = '事件信息表';
