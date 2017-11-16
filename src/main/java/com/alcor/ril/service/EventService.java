@@ -29,7 +29,8 @@ public class EventService {
 
     /**
      * 列出所有需要在 start 和 end 时间段内显示的事件
-     * 不管日期条件，返回所有记录。是否显示在日历里面。交给 fullcalendar 进行处理
+     * 可以不管日期条件，返回所有记录。是否显示在日历里面。交给 fullcalendar 进行处理
+     *
      * @param start
      * @param end
      *
@@ -41,8 +42,9 @@ public class EventService {
     public List<EventEntity> findAlInDays(Date start, Date end) throws ServiceException {
         List<EventEntity> eventEntityList;
         try {
-            eventEntityList = iEventRepository.findAll();
+            eventEntityList = iEventRepository.findAlInDays(start, end);
         } catch (Exception e) {
+            log.trace(e);
             throw new ServiceException(e.getMessage());
         }
         return eventEntityList;

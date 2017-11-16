@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{decorators/webModel}">
+<!-- begin::Body -->
+<div class="m-content" th:fragment="content">
+    <div class="row">
+        <div class="col-xl-3 col-lg-4">
+            <div class="m-portlet m-portlet--full-height  ">
+                <div class="m-portlet__body">
+                    <div class="m-card-profile">
+                        <div class="m-card-profile__title m--hide">
+                            Your Profile
+                        </div>
+                        <div class="m-card-profile__pic">
+                            <div class="m-card-profile__pic-wrapper">
+                                <img src="../assets/app/media/img/users/user4.jpg" alt=""/>
+                            </div>
+                        </div>
+                        <div class="m-card-profile__details">
+                                <span class="m-card-profile__name" th:text="${UserEntity.fullName}"/>
+                            <a href="" class="m-card-profile__email m-link" th:text="${UserEntity.email}">
+                            </a>
+                        </div>
+                    </div>
+                    <ul class="m-nav m-nav--hover-bg m-portlet-fit--sides">
+                        <li class="m-nav__separator m-nav__separator--fit"></li>
+                        <li class="m-nav__section m--hide">
+                            <span class="m-nav__section-text">
+                                Section
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-9 col-lg-8">
+            <div class="m-portlet m-portlet--full-height m-portlet--tabs  ">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-tools">
+                        <ul class="nav nav-tabs m-tabs m-tabs-line   m-tabs-line--left m-tabs-line--primary"
+                            role="tablist">
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link active" data-toggle="tab"
+                                   href="#m_user_profile_tab_1" role="tab">
+                                    <i class="flaticon-share m--hide"></i>
+                                    个人信息
+                                </a>
+                            </li>
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link" data-toggle="tab"
+                                   href="#m_user_profile_tab_2" role="tab">
+                                    头像
+                                </a>
+                            </li>
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link" data-toggle="tab"
+                                   href="#m_user_profile_tab_3" role="tab">
+                                    密码
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="m_user_profile_tab_1">
+                        <form class="m-form m-form--fit m-form--label-align-right">
+                            <div class="m-portlet__body">
+                                <div class="form-group m-form__group row">
+                                    <div class="col-10 ml-auto">
+                                        <h3 class="m-form__section">
+                                            1. 个人信息
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="name" class="col-2 col-form-label">
+                                        名字
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" type="text" id="name" th:value="${UserEntity.fullName}">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="occupation" class="col-2 col-form-label">
+                                        职务
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" id="occupation"  type="text" th:value="${UserEntity.occupation}">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="company" class="col-2 col-form-label">
+                                        公司
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" type="text" id="company"
+                                               th:value="${UserEntity.company}">
+                                        <span class="m-form__help">
+                                            输入公司名字
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="phone" class="col-2 col-form-label">
+                                        联系电话
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" type="text" id="phone" th:value="${UserEntity.phone}">
+                                    </div>
+                                </div>
+                                <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
+                                <div class="form-group m-form__group row">
+                                    <div class="col-10 ml-auto">
+                                        <h3 class="m-form__section">
+                                            2. 地址
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="address" class="col-2 col-form-label">
+                                        地址
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" type="text" id="address" th:value="${UserEntity.address}">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="city" class="col-2 col-form-label">
+                                        城市
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" type="text" id="city" th:value="${UserEntity.city}">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="state" class="col-2 col-form-label">
+                                        区县
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" type="text" id="state" th:value="${UserEntity.state}">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="postcode" class="col-2 col-form-label">
+                                        邮政编码
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" type="text" id="postcode" th:value="${UserEntity.postcode}">
+                                    </div>
+                                </div>
+                                <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
+                                <div class="form-group m-form__group row">
+                                    <div class="col-10 ml-auto">
+                                        <h3 class="m-form__section">
+                                            3. 社交账号
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="linkedin" class="col-2 col-form-label">
+                                        Linkedin
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" type="text" id="linkedin" th:value="${UserEntity.linkedin}">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="facebook" class="col-2 col-form-label">
+                                        Facebook
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" type="text" id="facebook" th:value="${UserEntity.facebook}">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="twitter" class="col-2 col-form-label">
+                                        Twitter
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" type="text" id="twitter" th:value="${UserEntity.twitter}">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="instagram" class="col-2 col-form-label">
+                                        Instagram
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" type="text" id="instagram" th:value="${UserEntity.instagram}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__foot m-portlet__foot--fit">
+                                <div class="m-form__actions">
+                                    <div class="row">
+                                        <div class="col-2"></div>
+                                        <div class="col-7">
+                                            <button type="reset"
+                                                    class="btn btn-accent m-btn m-btn--air m-btn--custom">
+                                                保存更新
+                                            </button>
+                                            &nbsp;&nbsp;
+                                            <button type="reset"
+                                                    class="btn btn-secondary m-btn m-btn--air m-btn--custom">
+                                                放弃
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="m_user_profile_tab_2">
+                        阿斯蒂芬萨芬撒地方头像处理
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

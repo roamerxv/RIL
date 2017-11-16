@@ -32,7 +32,7 @@
         <!---->
         <!-- 设置判断 session 中被用于保存用户信息的关键词 -->
         <SessionUserKeyword>
-            user_mobile
+            user_name
         </SessionUserKeyword>
 
         <!-- 用于 boracay 组件必须使用到的配置 end -->

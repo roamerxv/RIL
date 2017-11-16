@@ -8,9 +8,9 @@ $().ready(function () {
             center: 'title',
             right: 'month,agendaWeek,agendaDay,listWeek'
         },
-        selectable: true, //Allows a user to highlight multiple days or timeslots by clicking and dragging.
+        selectable: false, //Allows a user to highlight multiple days or timeslots by clicking and dragging.
         selectHelper: false, //Whether to draw a "placeholder" event while the user is dragging.
-        editable: true,  // 不能拖拉
+        editable: false,  // 不能拖拉
         eventLimit: true, // allow "more" link when too many events
         events: {
             url: contextPath + "fullcalendar/events",

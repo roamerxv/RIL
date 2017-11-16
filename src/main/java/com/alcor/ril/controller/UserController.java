@@ -27,7 +27,8 @@ import java.util.Enumeration;
  */
 @Log4j2
 @Controller("com.alcor.ril.controller.UserController")
-public class UserController extends  BaseController{
+@SessionCheckKeyword
+public class UserController extends BaseController {
 
     @Autowired
     UserService userService;
@@ -36,6 +37,11 @@ public class UserController extends  BaseController{
     SystemConfigureService systemConfigureService;
 
 
+    /**
+     * 访问 首页的 跳转功能
+     *
+     * @return
+     */
     @RequestMapping("/")
     @SessionCheckKeyword(checkIt = false)
     public ModelAndView index() {
@@ -52,6 +58,22 @@ public class UserController extends  BaseController{
 
         return modelAndView;
     }
+
+    /**
+     * 跳转到显示用户 profile 的界面
+     * @return
+     * @throws ControllerException
+     */
+    @RequestMapping("/user/profile")
+    public ModelAndView profile() throws ControllerException {
+        ModelAndView modelAndView;
+        UserEntity userEntity = userService.findByID(super.getUserID());
+        log.debug(userEntity.toString());
+        modelAndView = new ModelAndView("/user/profile");
+        modelAndView.addObject("UserEntity",userEntity);
+        return modelAndView;
+    }
+
 
     /**
      * 登出功能
@@ -83,7 +105,7 @@ public class UserController extends  BaseController{
         try {
             if (userService.login(userEntity)) {
                 httpSession.setAttribute(ConfigHelper.getConfig().getString("System.SessionUserKeyword"), userEntity.getName());
-                String systemBanner = systemConfigureService.findByName("banner_message").getValue() ;
+                String systemBanner = systemConfigureService.findByName("banner_message").getValue();
                 httpSession.setAttribute("SystemBanner", systemBanner);
             }
         } catch (ServiceException e) {
