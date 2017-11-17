@@ -115,4 +115,17 @@ public class UserController extends BaseController {
         log.debug("用户登录成功");
         return HttpResponseHelper.successInfoInbox("成功登录");
     }
+
+    @BusinessMethod(value = "更新用户资料")
+    @PostMapping("/user/{id}")
+    @SessionCheckKeyword
+    @ResponseBody
+    public String updateUser(@RequestBody UserEntity userEntity) throws ControllerException{
+        log.debug("用户资料更新");
+        UserEntity userInDb = userService.findByID(userEntity.getName());
+        userEntity.setPasswd(userInDb.getPasswd());
+        userService.update(userEntity);
+        log.debug("用户资料更新完成");
+        return HttpResponseHelper.successInfoInbox("成功登录");
+    }
 }

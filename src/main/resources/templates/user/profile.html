@@ -4,6 +4,10 @@
       layout:decorate="~{decorators/webModel}">
 <!-- begin::Body -->
 <div class="m-content" th:fragment="content">
+
+    <link th:href="@{/assets/css/lib/bootstrap-file-input-4.4.6/fileinput.css}" media="all"  rel="stylesheet" type="text/css"/>
+    <link th:href="@{/assets/js/lib/bootstrap-file-input-4.4.6/themes/explorer/theme.css}" media="all" rel="stylesheet" type="text/css"/>
+
     <div class="row">
         <div class="col-xl-3 col-lg-4">
             <div class="m-portlet m-portlet--full-height  ">
@@ -49,7 +53,7 @@
                             </li>
                             <li class="nav-item m-tabs__item">
                                 <a class="nav-link m-tabs__link" data-toggle="tab"
-                                   href="#m_user_profile_tab_2" role="tab">
+                                   href="#avatar_tab" role="tab">
                                     头像
                                 </a>
                             </li>
@@ -64,7 +68,8 @@
                 </div>
                 <div class="tab-content">
                     <div class="tab-pane active" id="m_user_profile_tab_1">
-                        <form class="m-form m-form--fit m-form--label-align-right">
+                        <form class="m-form m-form--fit m-form--label-align-right" id="profile_form" target="nm_iframe" onsubmit="fun_submit()">
+                            <input type="hidden" data-name="name" th:value="${UserEntity.name}">
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group row">
                                     <div class="col-10 ml-auto">
@@ -74,11 +79,11 @@
                                     </div>
                                 </div>
                                 <div class="form-group m-form__group row">
-                                    <label for="name" class="col-2 col-form-label">
+                                    <label for="fullName" class="col-2 col-form-label">
                                         名字
                                     </label>
                                     <div class="col-7">
-                                        <input class="form-control m-input" type="text" id="name" th:value="${UserEntity.fullName}">
+                                        <input class="form-control m-input" type="text" id="fullName"  data-name="fullName"  th:value="${UserEntity.fullName}">
                                     </div>
                                 </div>
                                 <div class="form-group m-form__group row">
@@ -86,7 +91,15 @@
                                         职务
                                     </label>
                                     <div class="col-7">
-                                        <input class="form-control m-input" id="occupation"  type="text" th:value="${UserEntity.occupation}">
+                                        <input class="form-control m-input" id="occupation"  type="text" data-name="occupation" th:value="${UserEntity.occupation}">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label for="email" class="col-2 col-form-label">
+                                        email
+                                    </label>
+                                    <div class="col-7">
+                                        <input class="form-control m-input" id="email"  type="text"  data-name="email" th:value="${UserEntity.email}">
                                     </div>
                                 </div>
                                 <div class="form-group m-form__group row">
@@ -94,7 +107,7 @@
                                         公司
                                     </label>
                                     <div class="col-7">
-                                        <input class="form-control m-input" type="text" id="company"
+                                        <input class="form-control m-input" type="text" id="company" data-name="company"
                                                th:value="${UserEntity.company}">
                                         <span class="m-form__help">
                                             输入公司名字
@@ -106,116 +119,126 @@
                                         联系电话
                                     </label>
                                     <div class="col-7">
-                                        <input class="form-control m-input" type="text" id="phone" th:value="${UserEntity.phone}">
+                                        <input class="form-control m-input" type="text" id="phone"  data-name="phone" th:value="${UserEntity.phone}">
                                     </div>
                                 </div>
-                                <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
-                                <div class="form-group m-form__group row">
-                                    <div class="col-10 ml-auto">
-                                        <h3 class="m-form__section">
-                                            2. 地址
-                                        </h3>
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="address" class="col-2 col-form-label">
-                                        地址
-                                    </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" id="address" th:value="${UserEntity.address}">
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="city" class="col-2 col-form-label">
-                                        城市
-                                    </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" id="city" th:value="${UserEntity.city}">
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="state" class="col-2 col-form-label">
-                                        区县
-                                    </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" id="state" th:value="${UserEntity.state}">
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="postcode" class="col-2 col-form-label">
-                                        邮政编码
-                                    </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" id="postcode" th:value="${UserEntity.postcode}">
-                                    </div>
-                                </div>
-                                <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
-                                <div class="form-group m-form__group row">
-                                    <div class="col-10 ml-auto">
-                                        <h3 class="m-form__section">
-                                            3. 社交账号
-                                        </h3>
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="linkedin" class="col-2 col-form-label">
-                                        Linkedin
-                                    </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" id="linkedin" th:value="${UserEntity.linkedin}">
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="facebook" class="col-2 col-form-label">
-                                        Facebook
-                                    </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" id="facebook" th:value="${UserEntity.facebook}">
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="twitter" class="col-2 col-form-label">
-                                        Twitter
-                                    </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" id="twitter" th:value="${UserEntity.twitter}">
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="instagram" class="col-2 col-form-label">
-                                        Instagram
-                                    </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" id="instagram" th:value="${UserEntity.instagram}">
-                                    </div>
-                                </div>
+                                <!--<div class="m-form__seperator m-form__seperator&#45;&#45;dashed m-form__seperator&#45;&#45;space-2x"></div>-->
+                                <!--<div class="form-group m-form__group row">-->
+                                    <!--<div class="col-10 ml-auto">-->
+                                        <!--<h3 class="m-form__section">-->
+                                            <!--2. 地址-->
+                                        <!--</h3>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group m-form__group row">-->
+                                    <!--<label for="address" class="col-2 col-form-label">-->
+                                        <!--地址-->
+                                    <!--</label>-->
+                                    <!--<div class="col-7">-->
+                                        <!--<input class="form-control m-input" type="text" id="address" data-name="address" th:value="${UserEntity.address}">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group m-form__group row">-->
+                                    <!--<label for="city" class="col-2 col-form-label">-->
+                                        <!--城市-->
+                                    <!--</label>-->
+                                    <!--<div class="col-7">-->
+                                        <!--<input class="form-control m-input" type="text" id="city" data-name="city" th:value="${UserEntity.city}">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group m-form__group row">-->
+                                    <!--<label for="state" class="col-2 col-form-label">-->
+                                        <!--区县-->
+                                    <!--</label>-->
+                                    <!--<div class="col-7">-->
+                                        <!--<input class="form-control m-input" type="text" id="state" data-name="state"   th:value="${UserEntity.state}">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group m-form__group row">-->
+                                    <!--<label for="postcode" class="col-2 col-form-label">-->
+                                        <!--邮政编码-->
+                                    <!--</label>-->
+                                    <!--<div class="col-7">-->
+                                        <!--<input class="form-control m-input" type="text" id="postcode" data-name="postcode"  th:value="${UserEntity.postcode}">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="m-form__seperator m-form__seperator&#45;&#45;dashed m-form__seperator&#45;&#45;space-2x"></div>-->
+                                <!--<div class="form-group m-form__group row">-->
+                                    <!--<div class="col-10 ml-auto">-->
+                                        <!--<h3 class="m-form__section">-->
+                                            <!--3. 社交账号-->
+                                        <!--</h3>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group m-form__group row">-->
+                                    <!--<label for="linkedin" class="col-2 col-form-label">-->
+                                        <!--Linkedin-->
+                                    <!--</label>-->
+                                    <!--<div class="col-7">-->
+                                        <!--<input class="form-control m-input" type="text" id="linkedin" th:value="${UserEntity.linkedin}">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group m-form__group row">-->
+                                    <!--<label for="facebook" class="col-2 col-form-label">-->
+                                        <!--Facebook-->
+                                    <!--</label>-->
+                                    <!--<div class="col-7">-->
+                                        <!--<input class="form-control m-input" type="text" id="facebook" th:value="${UserEntity.facebook}">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group m-form__group row">-->
+                                    <!--<label for="twitter" class="col-2 col-form-label">-->
+                                        <!--Twitter-->
+                                    <!--</label>-->
+                                    <!--<div class="col-7">-->
+                                        <!--<input class="form-control m-input" type="text" id="twitter" th:value="${UserEntity.twitter}">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group m-form__group row">-->
+                                    <!--<label for="instagram" class="col-2 col-form-label">-->
+                                        <!--Instagram-->
+                                    <!--</label>-->
+                                    <!--<div class="col-7">-->
+                                        <!--<input class="form-control m-input" type="text" id="instagram" th:value="${UserEntity.instagram}">-->
+                                    <!--</div>-->
+                                <!--</div>-->
                             </div>
                             <div class="m-portlet__foot m-portlet__foot--fit">
                                 <div class="m-form__actions">
                                     <div class="row">
                                         <div class="col-2"></div>
                                         <div class="col-7">
-                                            <button type="reset"
+                                            <button type="submit"
                                                     class="btn btn-accent m-btn m-btn--air m-btn--custom">
                                                 保存更新
                                             </button>
-                                            &nbsp;&nbsp;
-                                            <button type="reset"
-                                                    class="btn btn-secondary m-btn m-btn--air m-btn--custom">
-                                                放弃
-                                            </button>
+                                            <!--&nbsp;&nbsp;-->
+                                            <!--<button type="reset"-->
+                                                    <!--class="btn btn-secondary m-btn m-btn&#45;&#45;air m-btn&#45;&#45;custom">-->
+                                                <!--放弃-->
+                                            <!--</button>-->
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </form>
+                        <iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>
                     </div>
-                    <div class="tab-pane" id="m_user_profile_tab_2">
-                        阿斯蒂芬萨芬撒地方头像处理
+                    <div class="tab-pane" id="avatar_tab">
+                        <div class="m-portlet__body">
+                            <input type="file" id="avatar">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script th:src="@{/assets/js/lib/bootstrap-file-input-4.4.6/fileinput.js}"/>
+    <script th:src="@{/assets/js/lib/bootstrap-file-input-4.4.6/locales/zh.js}"/>
+    <script th:src="@{/assets/js/lib/bootstrap-file-input-4.4.6/themes/explorer/theme.js}" type="text/javascript"></script>
+
+    <script th:src="@{/assets/js/user/profile.js}"></script>
+
 </div>
 </html>

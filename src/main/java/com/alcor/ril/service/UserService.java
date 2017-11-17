@@ -54,4 +54,8 @@ public class UserService {
         iUserRepository.save(userEntity);
         return true;
     }
+
+    public void update(UserEntity userEntity)throws ServiceException{
+        iUserRepository.save(userEntity);
+    }
 }
