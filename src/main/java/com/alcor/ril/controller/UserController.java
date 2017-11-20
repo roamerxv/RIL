@@ -4,6 +4,7 @@ import com.alcor.ril.entity.UserEntity;
 import com.alcor.ril.service.SystemConfigureService;
 import com.alcor.ril.service.UserService;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -176,14 +177,18 @@ public class UserController extends BaseController {
         String userID = super.getUserID();
         UserEntity userEntity = userService.findByID(userID);
         String avatarId = userEntity.getAvatar();
+        log.debug("头像的ID 是{}", avatarId);
         String saveFilePath = ConfigHelper.getConfig().getString("System.UploadFile.saveFilePath") + File.separator + avatarId;
         File[] listFiles = new File(saveFilePath).listFiles();
         log.debug(listFiles.length);
         try {
             File avatarFile = null;
-            if (listFiles.length <= 0) {
-                log.debug("头像文件不存在，使用缺省的头像文件");
-                avatarFile =  new ClassPathResource("/static/assets/img/logo/logo.png").getFile();
+            if (StringUtils.isEmpty(avatarId)) {
+                log.debug("头像没有设置，使用缺省的头像文件");
+                avatarFile = new ClassPathResource("/static/assets/img/logo/logo.png").getFile();
+            } else if (listFiles.length <= 0) {
+                log.debug("头像文件不存，使用缺省的头像文件");
+                avatarFile = new ClassPathResource("/static/assets/img/logo/logo.png").getFile();
             } else {
                 avatarFile = listFiles[0];
             }

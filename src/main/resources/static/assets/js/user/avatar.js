@@ -15,7 +15,9 @@ var fileinput_options =
 
 $().ready(function () {
     // 使用 bootstrap file input 组件
-    $("input[name='avatar']").fileinput(fileinput_options).on('fileuploaded', function (event, data, previewId, index) {
+    $("input[name='avatar']").fileinput(fileinput_options).on('fileselect', function(event, numFiles, label) {
+        $(this).fileinput('upload');
+    }).on('fileuploaded', function (event, data, previewId, index) {
         //$("img[name='avatar']").attr("src", contextPath + "avatar");
         var avatarImgs = $("img[name='avatar']");
         for (var i = 0; i <= avatarImgs.length; i++) {
