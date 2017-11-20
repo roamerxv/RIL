@@ -2,20 +2,24 @@
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 
 <div th:fragment="avatar">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/assets/css/lib/bootstrap-file-input-4.4.6/fileinput.css}" media="all"  rel="stylesheet" type="text/css"/>
+    <link th:href="@{/assets/js/lib/bootstrap-file-input-4.4.6/themes/explorer/theme.css}" media="all" rel="stylesheet" type="text/css"/>
+
+
     <form enctype="multipart/form-data">
         <input type="file" name="avatar" accept="image/*">
     </form>
 
     <script th:src="@{/assets/js/lib/bootstrap-file-input-4.4.6/plugins/canvas-to-blob.js}" type="text/javascript"></script>
-    <script th:src="@{/assets/js/lib/bootstrap-file-input-4.4.6/fileinput.js}"/>
-    <script th:src="@{/assets/js/lib/bootstrap-file-input-4.4.6/locales/zh.js}"/>
+    <script th:src="@{/assets/js/lib/bootstrap-file-input-4.4.6/fileinput.js}" type="text/javascript"></script>
+    <script th:src="@{/assets/js/lib/bootstrap-file-input-4.4.6/locales/zh.js}" type="text/javascript"></script>
 
-    <script th:src="@{/assets/js/lib/bootstrap-file-input-4.4.6/explorer-fa/theme.js}"
-            type="text/javascript"></script>
-    <script th:src="@{/assets/js/lib/bootstrap-file-input-4.4.6/themes/fa/theme.js}"
-            type="text/javascript"></script>
+    <script th:src="@{/assets/js/lib/bootstrap-file-input-4.4.6/themes/explorer-fa/theme.js}" type="text/javascript"></script>
+    <script th:src="@{/assets/js/lib/bootstrap-file-input-4.4.6/themes/fa/theme.js}" type="text/javascript"></script>
 
-    <script th:src="@{/assets/js/user/avatar.js}" ></script>
+    <script th:src="@{/assets/js/user/avatar.js}"></script>
 
 </div>
 </html>
