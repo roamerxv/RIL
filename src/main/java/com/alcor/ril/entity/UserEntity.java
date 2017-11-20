@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 /**
  * @author roamer - 徐泽宇
- * @create 2017-11-2017/11/16  下午6:46
+ * @create 2017-11-2017/11/20  下午12:49
  */
 @Entity
 @Table(name = "user", schema = "ril", catalog = "")
@@ -23,6 +23,7 @@ public class UserEntity {
     private String twitter;
     private String instagram;
     private String email;
+    private String avatar;
     private String passwd;
 
     @Id
@@ -166,7 +167,17 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "passwd", nullable = false, length = 36)
+    @Column(name = "avatar", nullable = true, length = 128)
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    @Basic
+    @Column(name = "passwd", nullable = true, length = 36)
     public String getPasswd() {
         return passwd;
     }
@@ -196,6 +207,7 @@ public class UserEntity {
         if (twitter != null ? !twitter.equals(that.twitter) : that.twitter != null) return false;
         if (instagram != null ? !instagram.equals(that.instagram) : that.instagram != null) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
+        if (avatar != null ? !avatar.equals(that.avatar) : that.avatar != null) return false;
         if (passwd != null ? !passwd.equals(that.passwd) : that.passwd != null) return false;
 
         return true;
@@ -217,6 +229,7 @@ public class UserEntity {
         result = 31 * result + (twitter != null ? twitter.hashCode() : 0);
         result = 31 * result + (instagram != null ? instagram.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
         result = 31 * result + (passwd != null ? passwd.hashCode() : 0);
         return result;
     }

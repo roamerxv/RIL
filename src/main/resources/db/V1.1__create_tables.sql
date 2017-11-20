@@ -117,11 +117,14 @@ CREATE TABLE `user` (
   `instagram`  VARCHAR(128)
                COLLATE utf8_bin
   COMMENT 'Instagram',
-  `email`       VARCHAR(36)
-                COLLATE utf8_bin
+  `email`      VARCHAR(36)
+               COLLATE utf8_bin
   COMMENT 'mail地址',
+  `avatar`     VARCHAR(128)
+               COLLATE utf8_bin
+  COMMENT '头像文件 ID',
   `passwd`     VARCHAR(36)
-               COLLATE utf8_bin NOT NULL
+               COLLATE utf8_bin
   COMMENT '密码',
   PRIMARY KEY (`name`)
 )
@@ -131,7 +134,8 @@ CREATE TABLE `user` (
 
 SET FOREIGN_KEY_CHECKS = 1;
 
-INSERT INTO `user` VALUES ('admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL ,'1');
+INSERT INTO `user`
+VALUES ('admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1');
 COMMIT;
 
 # 事件表

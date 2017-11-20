@@ -44,7 +44,7 @@ logging:
     level:
         org:
             hibernate:
-                type: trace # trace 显示 sql 的参数值
+                type: info # trace 显示 sql 的参数值
         pers:
             roamer:
-                boracay: debug
+                boracay: info

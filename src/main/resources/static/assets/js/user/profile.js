@@ -1,12 +1,5 @@
 $().ready(function () {
-    // 使用 bootstrap file input 组件
-    $("#avatar").fileinput({
-        theme: 'fa',
-        language: 'zh',
-        // showUpload: false,
-        // previewFileType: 'any',
-        // allowedFileExtensions: ['jpg', 'png']
-    });
+
 });
 
 
