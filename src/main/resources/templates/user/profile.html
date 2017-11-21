@@ -56,7 +56,7 @@
                             </li>
                             <li class="nav-item m-tabs__item">
                                 <a class="nav-link m-tabs__link" data-toggle="tab"
-                                   href="#m_user_profile_tab_3" role="tab">
+                                   href="#modify_password_tab" role="tab">
                                     密码
                                 </a>
                             </li>
@@ -224,6 +224,12 @@
                     <div class="tab-pane" id="avatar_tab">
                         <div class="m-portlet__body">
                             <div  th:replace="~{user/_avatar :: avatar}"></div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="modify_password_tab">
+                        <div class="m-portlet__body">
+                            <div  th:replace="~{user/_modify_password :: modify_password}"></div>
                         </div>
                     </div>
                 </div>

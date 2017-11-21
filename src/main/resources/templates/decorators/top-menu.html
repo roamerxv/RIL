@@ -83,14 +83,17 @@
                                              th:style="'background:url('+@{/assets/img/misc/user_profile_bg.jpg}+'); background-size: cover;background-color: #716aca;'">
                                             <div class="m-card-user m-card-user--skin-dark">
                                                 <div class="m-card-user__pic">
-                                                    <img th:src="@{/avatar}" class="m--img-rounded m--marginless" name="avatar"
+                                                    <img th:src="@{/avatar}" class="m--img-rounded m--marginless"
+                                                         name="avatar"
                                                          alt=""/>
                                                 </div>
                                                 <div class="m-card-user__details">
-                                                                <span class="m-card-user__name m--font-weight-500" th:text="${session.UserEntity.name}">
+                                                                <span class="m-card-user__name m--font-weight-500"
+                                                                      th:text="${session.UserEntity.name}">
 
                                                                 </span>
-                                                    <a href="#" class="m-card-user__email m--font-weight-300 m-link" th:text="${session.UserEntity.email}">
+                                                    <a href="#" class="m-card-user__email m--font-weight-300 m-link"
+                                                       th:text="${session.UserEntity.email}">
                                                     </a>
                                                 </div>
                                             </div>
@@ -107,45 +110,12 @@
                                                         <a th:href="@{/user/profile}" class="m-nav__link">
                                                             <i class="m-nav__link-icon flaticon-profile-1"></i>
                                                             <span class="m-nav__link-title">
-                                                                            <span class="m-nav__link-wrap">
-                                                                                <span class="m-nav__link-text">
-                                                                                    我的档案
-                                                                                </span>
-                                                                            </span>
-                                                                        </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a href="header/profile.html" class="m-nav__link">
-                                                            <i class="m-nav__link-icon flaticon-share"></i>
-                                                            <span class="m-nav__link-text">
-                                                                            Activity
-                                                                        </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a href="header/profile.html" class="m-nav__link">
-                                                            <i class="m-nav__link-icon flaticon-chat-1"></i>
-                                                            <span class="m-nav__link-text">
-                                                                            Messages
-                                                                        </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__separator m-nav__separator--fit"></li>
-                                                    <li class="m-nav__item">
-                                                        <a href="header/profile.html" class="m-nav__link">
-                                                            <i class="m-nav__link-icon flaticon-info"></i>
-                                                            <span class="m-nav__link-text">
-                                                                            FAQ
-                                                                        </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
-                                                        <a href="header/profile.html" class="m-nav__link">
-                                                            <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                            <span class="m-nav__link-text">
-                                                                            Support
-                                                                        </span>
+                                                                <span class="m-nav__link-wrap">
+                                                                    <span class="m-nav__link-text">
+                                                                        我的档案
+                                                                    </span>
+                                                                </span>
+                                                            </span>
                                                         </a>
                                                     </li>
                                                     <li class="m-nav__separator m-nav__separator--fit"></li>

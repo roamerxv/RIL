@@ -4,7 +4,6 @@ import com.alcor.ril.entity.UserEntity;
 import com.alcor.ril.repository.IUserRepository;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
-import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -45,10 +44,13 @@ public class UserService {
         }
     }
 
-    public boolean modifyPassword(String userName ,String newPassword) throws ServiceException{
+    public boolean modifyPassword(String userName ,String oldPassword ,String newPassword) throws ServiceException{
         UserEntity userEntity = iUserRepository.findOne(userName);
         if (userEntity == null) {
             throw new ServiceException("exception.user.login.user_not_exit");
+        }
+        if (!userEntity.getPasswd().equals(oldPassword)){
+            throw new ServiceException("exception.user.login.password_not_match");
         }
         userEntity.setPasswd(newPassword);
         iUserRepository.save(userEntity);

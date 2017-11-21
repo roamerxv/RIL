@@ -1,11 +1,11 @@
 package com.alcor.ril.controller;
 
 import com.alcor.ril.entity.UserEntity;
+import com.alcor.ril.service.ServiceException;
 import com.alcor.ril.service.SystemConfigureService;
 import com.alcor.ril.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
@@ -138,9 +138,14 @@ public class UserController extends BaseController {
         UserEntity userInDb = userService.findByID(userEntity.getName());
         userEntity.setPasswd(userInDb.getPasswd());
         userEntity.setAvatar(userInDb.getAvatar());
-        userService.update(userEntity);
-        log.debug("用户资料更新完成");
-        return HttpResponseHelper.successInfoInbox("成功登录");
+        try {
+            userService.update(userEntity);
+            log.debug("用户资料更新完成");
+            return HttpResponseHelper.successInfoInbox("成功登录");
+        }catch (ServiceException e){
+            throw new ControllerException(e.getMessage());
+        }
+
     }
 
     @BusinessMethod(value = "更新用户头像")
@@ -160,7 +165,7 @@ public class UserController extends BaseController {
             userService.update(userEntity);
             log.debug("头像更新完成！");
             return HttpResponseHelper.successInfoInbox("成功更新");
-        } catch (IOException | NoSuchAlgorithmException e) {
+        } catch (IOException | NoSuchAlgorithmException | ServiceException e) {
             e.printStackTrace();
             throw new ControllerException(e.getMessage());
         }
@@ -204,6 +209,18 @@ public class UserController extends BaseController {
             stream.close();
         } catch (IOException e) {
             e.printStackTrace();
+            throw new ControllerException(e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/user/modify_password")
+    @ResponseBody
+    public String modifyPassword(@RequestParam("oldPassword") String oldPassword,@RequestParam("newPassword") String newPassword) throws ControllerException{
+        log.debug("密码修改，老密码：{},新密码{}",oldPassword,newPassword);
+        try{
+            userService.modifyPassword(super.getUserID(),oldPassword,newPassword);
+            return HttpResponseHelper.successInfoInbox("密码修改成功");
+        }catch (ServiceException e){
             throw new ControllerException(e.getMessage());
         }
     }

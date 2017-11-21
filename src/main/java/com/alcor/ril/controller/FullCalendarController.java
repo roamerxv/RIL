@@ -2,6 +2,7 @@ package com.alcor.ril.controller;
 
 import com.alcor.ril.entity.EventEntity;
 import com.alcor.ril.service.EventService;
+import com.alcor.ril.service.ServiceException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
@@ -75,7 +76,7 @@ public class FullCalendarController extends BaseController {
             m_rtn = JsonUtilsHelper.objectToJsonString(fullCalendarEventList);
             log.debug("返回的fullCalendar 的 events 数据是:{}", m_rtn);
             return m_rtn;
-        } catch (JsonProcessingException | ParseException e) {
+        } catch (JsonProcessingException | ParseException | ServiceException e) {
             e.printStackTrace();
             throw new ControllerException(e.getMessage());
         }

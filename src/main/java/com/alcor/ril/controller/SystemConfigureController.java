@@ -1,10 +1,10 @@
 package com.alcor.ril.controller;
 
 import com.alcor.ril.entity.SystemConfigureEntity;
+import com.alcor.ril.service.ServiceException;
 import com.alcor.ril.service.SystemConfigureService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.log4j.Log4j2;
-import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;

@@ -4,7 +4,6 @@ import com.alcor.ril.entity.EventEntity;
 import com.alcor.ril.repository.IEventRepository;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
-import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
