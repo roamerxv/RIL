@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import pers.roamer.boracay.BoracayException;
 import pers.roamer.boracay.aspect.businesslogger.BusinessMethod;
 import pers.roamer.boracay.aspect.httprequest.SessionCheckKeyword;
 import pers.roamer.boracay.configer.ConfigHelper;
@@ -53,7 +54,6 @@ public class UserController extends BaseController {
      * @return
      */
     @RequestMapping("/")
-    @SessionCheckKeyword(checkIt = false)
     public ModelAndView index() {
         ModelAndView modelAndView;
         try {
@@ -165,7 +165,7 @@ public class UserController extends BaseController {
             userService.update(userEntity);
             log.debug("头像更新完成！");
             return HttpResponseHelper.successInfoInbox("成功更新");
-        } catch (IOException | NoSuchAlgorithmException | ServiceException e) {
+        } catch (IOException | NoSuchAlgorithmException  | BoracayException e) {
             e.printStackTrace();
             throw new ControllerException(e.getMessage());
         }

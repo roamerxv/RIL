@@ -6,7 +6,7 @@ spring:
             physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         properties:  ## spring boot 中所有的原来配置在 hibernate.cfg.xml 中的内容都配置在 spring.jpa.properties.hibernate 下
             hibernate:
-                show_sql: true
+                show_sql: false
                 dialect: org.hibernate.dialect.MySQL5Dialect
                 ddl-auto: update
                 format_sql: false #显示格式化后的 sql 语句
@@ -39,12 +39,8 @@ context:
         classes: pers.roamer.boracay.application.StartedListener
 
 logging:
-    config:
-        classpath: log4j2-dev.xml
+    config: classpath:log4j2-dev.yaml
     level:
         org:
             hibernate:
                 type: info # trace 显示 sql 的参数值
-        pers:
-            roamer:
-                boracay: info

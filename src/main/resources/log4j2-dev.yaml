@@ -1,0 +1,33 @@
+Configutation:
+    name: Default
+    Properties:
+        Property:
+        -   name: project_name
+            value: "RIL"
+        -   name: log_path
+            value: /logs/${project_name}
+        -   name: log_pattern
+            value: '%d{yyyy-MM-dd HH:mm:ss} %-5level %class %line 行 %method - %msg%xEx%n'
+    Appenders:
+        Console:
+            name: Console_Appender
+            target: SYSTEM_OUT
+            PatternLayout:
+                pattern: ${log_pattern}
+    Loggers:
+        Root:
+            level: info
+            appender-ref:
+                ref: Console_Appender
+                level: info
+        Logger:
+        -   name: com.alcor.ril
+            level: debug
+            AppenderRef:
+            -   ref: Console_Appender
+                level: debug
+        -   name: pers.roamer
+            level: info
+            AppenderRef:
+            -   ref: Console_Appender
+                level: info
