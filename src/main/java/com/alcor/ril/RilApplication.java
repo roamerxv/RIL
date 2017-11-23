@@ -8,6 +8,7 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 /** @SpringBootApplication   same as @Configuration @EnableAutoConfiguration @ComponentScan
  */
@@ -17,7 +18,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EntityScan({"pers.roamer.boracay.entity","com.alcor.ril.entity"})
 //@EnableAsync()
 @EnableScheduling
-
+@EnableRedisHttpSession
 @Log4j2
 public class RilApplication  extends SpringBootServletInitializer {
 

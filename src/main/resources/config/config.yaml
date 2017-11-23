@@ -1,0 +1,23 @@
+ System:
+      AppName: "Researching Information Library"
+      SystemAdminName: "systemadmin"
+      Whitelist: "127.0.0.1,192.168.0-255.0-255,172.16-31.0-255.0-255,10.0-255.0-255.0-255"
+      RecordBusinessLog: true
+      SessionUserKeyword: "user_name"
+      UploadFile:
+            saveFilePath: "/Users/roamer/Desktop/upload"
+ exception:
+    test:
+        exception: "测试用的错误！由Controller 层抛出。| user_name , user_passwd"
+    system:
+        need_login: "必须登录系统"
+    user:
+        login:
+            user_not_exit:  "用户不存在！"
+            password_not_match: "输入的旧密码不匹配！"
+    system_log:
+        datetime_condition:
+            begin_datetime:
+                invalidate_format: "起始时间是无效的"
+            end_datetime:
+                invalidate_format: "结束时间是无效的"

@@ -4,8 +4,8 @@ import com.alcor.ril.entity.UserEntity;
 import com.alcor.ril.service.ServiceException;
 import com.alcor.ril.service.SystemConfigureService;
 import com.alcor.ril.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
@@ -17,6 +17,7 @@ import pers.roamer.boracay.aspect.businesslogger.BusinessMethod;
 import pers.roamer.boracay.aspect.httprequest.SessionCheckKeyword;
 import pers.roamer.boracay.configer.ConfigHelper;
 import pers.roamer.boracay.helper.HttpResponseHelper;
+import pers.roamer.boracay.helper.JsonUtilsHelper;
 import pers.roamer.boracay.util.web.FileUploadResult;
 import pers.roamer.boracay.util.web.UploadFileUtil;
 
@@ -100,10 +101,14 @@ public class UserController extends BaseController {
     public ModelAndView adminLogout() throws ControllerException {
         log.debug("开始登出");
         Enumeration<String> eume = httpSession.getAttributeNames();
-        while (eume.hasMoreElements()) {
-            String name = eume.nextElement();
-            httpSession.removeAttribute(name);
-        }
+//        while (eume.hasMoreElements()) {
+//            String name = eume.nextElement();
+//            log.debug("开始从 session 中移除 {}", name);
+//
+//            httpSession.removeAttribute(name);
+//        }
+        httpSession.removeAttribute("SystemBanner");
+        httpSession.removeAttribute("UserEntity");
         log.debug("登出完成");
         return new ModelAndView("/user/login");
     }
@@ -119,7 +124,7 @@ public class UserController extends BaseController {
                 httpSession.setAttribute(ConfigHelper.getConfig().getString("System.SessionUserKeyword"), userEntity.getName());
                 String systemBanner = systemConfigureService.findByName("banner_message").getValue();
                 httpSession.setAttribute("SystemBanner", systemBanner);
-                httpSession.setAttribute("UserEntity", userService.findByID(userEntity.getName()));
+//                httpSession.setAttribute("UserEntity", userService.findByID(userEntity.getName()));
             }
         } catch (ServiceException e) {
             log.error(e.getMessage());
@@ -129,9 +134,35 @@ public class UserController extends BaseController {
         return HttpResponseHelper.successInfoInbox("成功登录");
     }
 
+    /**
+     * 获取当前登录用户的信息
+     * @return
+     * @throws ControllerException
+     */
+    @ResponseBody
+    @GetMapping("/user")
+    public String getUserInfo() throws ControllerException {
+        String m_rtn = "";
+        try {
+            m_rtn = JsonUtilsHelper.objectToJsonString(userService.findByID(super.getUserID()));
+            return m_rtn;
+        } catch (JsonProcessingException e) {
+            log.error(e.getMessage());
+            throw new ControllerException(e.getMessage());
+        }
+    }
+
+    /**
+     * 更新用户信息
+     *
+     * @param userEntity
+     *
+     * @return
+     *
+     * @throws ControllerException
+     */
     @BusinessMethod(value = "更新用户资料")
     @PostMapping("/user/{id}")
-    @SessionCheckKeyword
     @ResponseBody
     public String updateUser(@RequestBody UserEntity userEntity) throws ControllerException {
         log.debug("用户资料更新");
@@ -142,10 +173,9 @@ public class UserController extends BaseController {
             userService.update(userEntity);
             log.debug("用户资料更新完成");
             return HttpResponseHelper.successInfoInbox("成功登录");
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             throw new ControllerException(e.getMessage());
         }
-
     }
 
     @BusinessMethod(value = "更新用户头像")
@@ -165,7 +195,7 @@ public class UserController extends BaseController {
             userService.update(userEntity);
             log.debug("头像更新完成！");
             return HttpResponseHelper.successInfoInbox("成功更新");
-        } catch (IOException | NoSuchAlgorithmException  | BoracayException e) {
+        } catch (IOException | NoSuchAlgorithmException | BoracayException e) {
             e.printStackTrace();
             throw new ControllerException(e.getMessage());
         }
@@ -185,16 +215,16 @@ public class UserController extends BaseController {
         log.debug("头像的ID 是{}", avatarId);
         String saveFilePath = ConfigHelper.getConfig().getString("System.UploadFile.saveFilePath") + File.separator + avatarId;
         File[] listFiles = new File(saveFilePath).listFiles();
-        log.debug(listFiles.length);
         try {
             File avatarFile = null;
-            if (StringUtils.isEmpty(avatarId)) {
+            if (listFiles == null) {
                 log.debug("头像没有设置，使用缺省的头像文件");
                 avatarFile = new ClassPathResource("/static/assets/img/logo/logo.png").getFile();
             } else if (listFiles.length <= 0) {
                 log.debug("头像文件不存，使用缺省的头像文件");
                 avatarFile = new ClassPathResource("/static/assets/img/logo/logo.png").getFile();
             } else {
+                log.debug("在 id 的目录下发现多个文件，取第一个文件");
                 avatarFile = listFiles[0];
             }
             log.debug(avatarFile);
@@ -215,12 +245,12 @@ public class UserController extends BaseController {
 
     @RequestMapping(value = "/user/modify_password")
     @ResponseBody
-    public String modifyPassword(@RequestParam("oldPassword") String oldPassword,@RequestParam("newPassword") String newPassword) throws ControllerException{
-        log.debug("密码修改，老密码：{},新密码{}",oldPassword,newPassword);
-        try{
-            userService.modifyPassword(super.getUserID(),oldPassword,newPassword);
+    public String modifyPassword(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword) throws ControllerException {
+        log.debug("密码修改，老密码：{},新密码{}", oldPassword, newPassword);
+        try {
+            userService.modifyPassword(super.getUserID(), oldPassword, newPassword);
             return HttpResponseHelper.successInfoInbox("密码修改成功");
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             throw new ControllerException(e.getMessage());
         }
     }

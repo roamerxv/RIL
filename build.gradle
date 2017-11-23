@@ -40,8 +40,8 @@ targetCompatibility = 1.8
 
 repositories {
     jcenter()
-    mavenLocal()
     mavenCentral()
+    mavenLocal()
 }
 
 // gradle flyway 查看子命令
@@ -61,10 +61,9 @@ flyway {
 
 ext {
     springVersion = "4.3.11.RELEASE"
-    springJpaVersion = "1.11.7.RELEASE"
+    springJpaVersion = "2.0.1.RELEASE"
     aspectjVersion = "1.8.10"
     jacksonVersion = "2.9.1"
-    springDataRedisVersion = "1.8.3.RELEASE"
     fastJsonVersion = "1.2.38"
     apacheOroVersion = "2.0.8"
     javaxServletAPIVersion = "4.0.0"
@@ -91,6 +90,8 @@ dependencies {
     compile(
         // 徐泽宇的web 实用框架
         "pers.roamer:boracay:2.1.2",
+        //  ------------------------------
+
 
         //  使用alibaba 的druid
         "com.alibaba:druid:$druidVersion",
@@ -110,7 +111,6 @@ dependencies {
         "joda-time:joda-time:2.9.9",
         //  ------------------------------
 
-
     )
 
     compile('org.springframework.boot:spring-boot-starter-aop')
@@ -118,6 +118,11 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-log4j2')
 
+    // 使用 spring session + redis 共享 session
+    compile('org.springframework.session:spring-session')
+	compile('org.springframework.boot:spring-boot-starter-data-redis')
+    // ---------------------------------------
+    
 
     // compile("org.springframework.boot:spring-boot-starter-thymeleaf") //这个是使用 thymeleaf 2 版本。替换成 3
     compile("org.thymeleaf:thymeleaf:3.0.9.RELEASE")

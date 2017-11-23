@@ -88,12 +88,9 @@
                                                          alt=""/>
                                                 </div>
                                                 <div class="m-card-user__details">
-                                                                <span class="m-card-user__name m--font-weight-500"
-                                                                      th:text="${session.UserEntity.name}">
-
-                                                                </span>
-                                                    <a href="#" class="m-card-user__email m--font-weight-300 m-link"
-                                                       th:text="${session.UserEntity.email}">
+                                                    <span class="m-card-user__name m--font-weight-500" id="top_menu_user_fullname">
+                                                    </span>
+                                                    <a href="#" class="m-card-user__email m--font-weight-300 m-link" id="top_menu_user_name">
                                                     </a>
                                                 </div>
                                             </div>
@@ -138,6 +135,8 @@
             </div>
         </div>
     </div>
+
+    <script th:src="@{/assets/js/decorators/top-menu.js}" type="text/javascript"></script>
 </header>
 
 

@@ -26,8 +26,3 @@ Configutation:
             AppenderRef:
             -   ref: Console_Appender
                 level: debug
-        -   name: pers.roamer
-            level: info
-            AppenderRef:
-            -   ref: Console_Appender
-                level: info
