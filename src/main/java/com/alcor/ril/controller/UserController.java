@@ -80,7 +80,6 @@ public class UserController extends BaseController {
     public ModelAndView profile() throws ControllerException {
         ModelAndView modelAndView;
         UserEntity userEntity = userService.findByName(super.getUserID());
-        log.debug(userEntity.toString());
         modelAndView = new ModelAndView("/user/profile");
         modelAndView.addObject("UserEntity", userEntity);
         return modelAndView;
@@ -229,10 +228,10 @@ public class UserController extends BaseController {
                     return avatarUrl;
                 } else {
                     File file = listFiles[0];
-                    log.debug("开始显示用户头像，头像路径是:{}", file.getPath());
+                    //log.debug("开始显示用户头像，头像路径是:{}", file.getPath());
                     avatarUrl = new StringBuilder(AVATAR_FILE_FOLDER_PATH).append(File.separator).append(userAvatarID).append(File.separator).append(file.getName()).toString();
                     avatarUrl = avatarUrl.replace("/static/", "");
-                    log.debug("头像 url 调用路径是：{}", avatarUrl);
+                    //log.debug("头像 url 调用路径是：{}", avatarUrl);
                     return avatarUrl;
                 }
             }

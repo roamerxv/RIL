@@ -6,9 +6,6 @@ import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,16 +16,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Log4j2
 @Data
 @Service("com.alcor.ril.service.UserService")
-@CacheConfig(cacheNames = "UserEntity")
+// 在 repository 中使用 cache
+//@CacheConfig(cacheNames = "UserEntity")
 public class UserService {
     @Qualifier("com.alcor.ril.repository.IUserRepository")
     @Autowired
     IUserRepository iUserRepository;
 
-
-    @Cacheable(key = "#name")
+    // 在 repository 中使用 cache
+    //    @Cacheable(key = "#a0")
     public UserEntity findByName(String name) {
-        log.debug("cache 没有命中，进行数据库查询！");
         return iUserRepository.findOne(name);
     }
 
@@ -59,7 +56,8 @@ public class UserService {
         return true;
     }
 
-    @CachePut(key = "#userEntity.name")
+    // 在 repository 中使用 cache
+    //    @CachePut(key = "#a0.name")
     public UserEntity update(UserEntity userEntity) throws ServiceException {
         return iUserRepository.save(userEntity);
     }

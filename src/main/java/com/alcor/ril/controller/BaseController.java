@@ -36,7 +36,6 @@ public class BaseController {
 
     public String getUserID() throws ControllerException {
         String user_id = (String) httpSession.getAttribute(ConfigHelper.getConfig().getString("System.SessionUserKeyword"));
-        log.debug("当前 session 中的user_id 是 {}", user_id);
         if (StringUtils.isEmpty(user_id)) {
             throw new ControllerException("exception.system.need_login");
         }
