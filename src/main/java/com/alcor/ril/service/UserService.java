@@ -6,10 +6,11 @@ import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * @author roamer - 徐泽宇
@@ -18,21 +19,20 @@ import java.util.List;
 @Log4j2
 @Data
 @Service("com.alcor.ril.service.UserService")
+@CacheConfig(cacheNames = "UserEntity")
 public class UserService {
     @Qualifier("com.alcor.ril.repository.IUserRepository")
     @Autowired
     IUserRepository iUserRepository;
 
-    public List<UserEntity> findAll() {
-        return iUserRepository.findAll();
+
+    @Cacheable(key = "#name")
+    public UserEntity findByName(String name) {
+        log.debug("cache 没有命中，进行数据库查询！");
+        return iUserRepository.findOne(name);
     }
 
-//    @Cacheable(value = "user", key = "#user.name")
-    public UserEntity findByID(String id) {
-        return iUserRepository.findOne(id);
-    }
 
-//    @CachePut(value = "user", key = "#user.name")
     @Transactional(readOnly = true)
     public boolean login(UserEntity userEntity) throws ServiceException {
         UserEntity userEntityInDB = iUserRepository.findOne(userEntity.getName());
@@ -46,12 +46,12 @@ public class UserService {
         }
     }
 
-    public boolean modifyPassword(String userName ,String oldPassword ,String newPassword) throws ServiceException{
+    public boolean modifyPassword(String userName, String oldPassword, String newPassword) throws ServiceException {
         UserEntity userEntity = iUserRepository.findOne(userName);
         if (userEntity == null) {
             throw new ServiceException("exception.user.login.user_not_exit");
         }
-        if (!userEntity.getPasswd().equals(oldPassword)){
+        if (!userEntity.getPasswd().equals(oldPassword)) {
             throw new ServiceException("exception.user.login.password_not_match");
         }
         userEntity.setPasswd(newPassword);
@@ -59,7 +59,8 @@ public class UserService {
         return true;
     }
 
-    public void update(UserEntity userEntity)throws ServiceException{
-        iUserRepository.save(userEntity);
+    @CachePut(key = "#userEntity.name")
+    public UserEntity update(UserEntity userEntity) throws ServiceException {
+        return iUserRepository.save(userEntity);
     }
 }

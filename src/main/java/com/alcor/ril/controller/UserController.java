@@ -80,7 +80,7 @@ public class UserController extends BaseController {
     @RequestMapping("/user/profile")
     public ModelAndView profile() throws ControllerException {
         ModelAndView modelAndView;
-        UserEntity userEntity = userService.findByID(super.getUserID());
+        UserEntity userEntity = userService.findByName(super.getUserID());
         log.debug(userEntity.toString());
         modelAndView = new ModelAndView("/user/profile");
         modelAndView.addObject("UserEntity", userEntity);
@@ -147,7 +147,7 @@ public class UserController extends BaseController {
     public String getUserInfo() throws ControllerException {
         String m_rtn = "";
         try {
-            m_rtn = JsonUtilsHelper.objectToJsonString(userService.findByID(super.getUserID()));
+            m_rtn = JsonUtilsHelper.objectToJsonString(userService.findByName(super.getUserID()));
             return m_rtn;
         } catch (JsonProcessingException e) {
             log.error(e.getMessage());
@@ -169,7 +169,7 @@ public class UserController extends BaseController {
     @ResponseBody
     public String updateUser(@RequestBody UserEntity userEntity) throws ControllerException {
         log.debug("用户资料更新");
-        UserEntity userInDb = userService.findByID(userEntity.getName());
+        UserEntity userInDb = userService.findByName(userEntity.getName());
         userEntity.setPasswd(userInDb.getPasswd());
         userEntity.setAvatar(userInDb.getAvatar());
         try {
@@ -193,7 +193,7 @@ public class UserController extends BaseController {
             ArrayList<FileUploadResult> avatarFileList = new UploadFileUtil().saveFile(avatar, true);
             FileUploadResult avatarFile = avatarFileList.get(0);
             log.debug("保存的文件信息是：{}", avatarFile.toString());
-            UserEntity userEntity = userService.findByID(super.getUserID());
+            UserEntity userEntity = userService.findByName(super.getUserID());
             userEntity.setAvatar(avatarFile.getId());
             userService.update(userEntity);
             log.debug("头像更新完成！");
@@ -213,7 +213,7 @@ public class UserController extends BaseController {
     public void showAvatar(HttpServletRequest request, HttpServletResponse response) throws ControllerException {
         log.debug("开始显示用户头像");
         String userID = super.getUserID();
-        UserEntity userEntity = userService.findByID(userID);
+        UserEntity userEntity = userService.findByName(userID);
         String avatarId = userEntity.getAvatar();
         log.debug("头像的ID 是{}", avatarId);
         String saveFilePath = ConfigHelper.getConfig().getString("System.UploadFile.saveFilePath") + File.separator + avatarId;
