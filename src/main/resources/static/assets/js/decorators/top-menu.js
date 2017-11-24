@@ -14,7 +14,23 @@ $().ready(function(){
 
         },
         complete: function () {
-
+        }
+    });
+    //刷新头像的图片
+    $.ajax({
+        type: 'get',
+        url: contextPath + 'avatar.json',
+        async: true,//默认为true
+        contentType: "application/text",
+        dataType: 'text',//默认为预期服务器返回的数据类型
+        success: function ( data,  textStatus, jqXHR ) {
+            Logger.debug(jqXHR);
+            $("img[name='avatar']").attr("src", contextPath+jqXHR.responseText);
+        },
+        error: function ( jqXHR, textStatus, errorThrown ){
+            Logger.debug(jqXHR);
+        },
+        complete: function () {
         }
     });
 })

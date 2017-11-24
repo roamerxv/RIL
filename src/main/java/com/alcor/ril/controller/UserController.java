@@ -6,8 +6,10 @@ import com.alcor.ril.service.SystemConfigureService;
 import com.alcor.ril.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,12 +23,8 @@ import pers.roamer.boracay.helper.JsonUtilsHelper;
 import pers.roamer.boracay.util.web.FileUploadResult;
 import pers.roamer.boracay.util.web.UploadFileUtil;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -48,6 +46,7 @@ public class UserController extends BaseController {
     @Autowired
     SystemConfigureService systemConfigureService;
 
+    static private String AVATAR_FILE_FOLDER_PATH = "/static/assets/img/avatar";
 
     /**
      * 访问 首页的 跳转功能
@@ -120,7 +119,7 @@ public class UserController extends BaseController {
     @SessionCheckKeyword(checkIt = false)
     @ResponseBody
     public String login(@RequestBody UserEntity userEntity) throws ControllerException {
-        log.debug("用户登录!{}",userEntity.toString());
+        log.debug("用户登录!{}", userEntity.toString());
         try {
             if (userService.login(userEntity)) {
                 httpSession.setAttribute(ConfigHelper.getConfig().getString("System.SessionUserKeyword"), userEntity.getName());
@@ -190,7 +189,8 @@ public class UserController extends BaseController {
             throw new ControllerException("没有传入有效的头像文件！");
         }
         try {
-            ArrayList<FileUploadResult> avatarFileList = new UploadFileUtil().saveFile(avatar, true);
+            Resource resource = new ClassPathResource(AVATAR_FILE_FOLDER_PATH);
+            ArrayList<FileUploadResult> avatarFileList = new UploadFileUtil().saveFile(avatar, true, resource.getFile().getPath());
             FileUploadResult avatarFile = avatarFileList.get(0);
             log.debug("保存的文件信息是：{}", avatarFile.toString());
             UserEntity userEntity = userService.findByName(super.getUserID());
@@ -209,41 +209,71 @@ public class UserController extends BaseController {
      *
      * @throws ControllerException
      */
-    @RequestMapping(value = "/avatar")
-    public void showAvatar(HttpServletRequest request, HttpServletResponse response) throws ControllerException {
-        log.debug("开始显示用户头像");
-        String userID = super.getUserID();
-        UserEntity userEntity = userService.findByName(userID);
-        String avatarId = userEntity.getAvatar();
-        log.debug("头像的ID 是{}", avatarId);
-        String saveFilePath = ConfigHelper.getConfig().getString("System.UploadFile.saveFilePath") + File.separator + avatarId;
-        File[] listFiles = new File(saveFilePath).listFiles();
+    @GetMapping(value = "/avatar")
+    @ResponseBody
+    public String showAvatar() throws ControllerException {
+        // 从性能角度考虑，不再使用文件下载的方式显示用户头像
+        Resource resource = new ClassPathResource(AVATAR_FILE_FOLDER_PATH);
+        String userAvatarID = userService.findByName(super.getUserID()).getAvatar();
+        StringBuilder avatarPath = null;
         try {
-            File avatarFile = null;
-            if (listFiles == null) {
+            String avatarUrl = ConfigHelper.getConfig().getString("System.user.avatar.defaultFile");
+            if (StringUtils.isEmpty(userAvatarID)) {
                 log.debug("头像没有设置，使用缺省的头像文件");
-                avatarFile = new ClassPathResource("/static/assets/img/logo/logo.png").getFile();
-            } else if (listFiles.length <= 0) {
-                log.debug("头像文件不存，使用缺省的头像文件");
-                avatarFile = new ClassPathResource("/static/assets/img/logo/logo.png").getFile();
+                return avatarUrl;
             } else {
-                log.debug("在 id 的目录下发现多个文件，取第一个文件");
-                avatarFile = listFiles[0];
+                avatarPath = new StringBuilder(resource.getFile().getPath()).append(File.separator).append(userAvatarID);
+                File[] listFiles = new File(avatarPath.toString()).listFiles();
+                if (listFiles == null || listFiles.length <= 0) {
+                    log.error("目录{}下没有头像文件！使用缺省的头像:{}", avatarPath, avatarUrl);
+                    return avatarUrl;
+                } else {
+                    File file = listFiles[0];
+                    log.debug("开始显示用户头像，头像路径是:{}", file.getPath());
+                    avatarUrl = new StringBuilder(AVATAR_FILE_FOLDER_PATH).append(File.separator).append(userAvatarID).append(File.separator).append(file.getName()).toString();
+                    avatarUrl = avatarUrl.replace("/static/", "");
+                    log.debug("头像 url 调用路径是：{}", avatarUrl);
+                    return avatarUrl;
+                }
             }
-            log.debug(avatarFile);
-            FileInputStream inputStream = new FileInputStream(avatarFile);
-            byte[] data = new byte[(int) avatarFile.length()];
-            inputStream.read(data);
-            inputStream.close();
-            response.setContentType("image/png");
-            OutputStream stream = response.getOutputStream();
-            stream.write(data);
-            stream.flush();
-            stream.close();
         } catch (IOException e) {
             e.printStackTrace();
             throw new ControllerException(e.getMessage());
         }
+
+
+//        String userID = super.getUserID();
+//        UserEntity userEntity = userService.findByName(userID);
+//        String avatarId = userEntity.getAvatar();
+//        log.debug("头像的ID 是{}", avatarId);
+//        String saveFilePath = ConfigHelper.getConfig().getString("System.UploadFile.saveFilePath") + File.separator + avatarId;
+//        File[] listFiles = new File(saveFilePath).listFiles();
+//        try {
+//            File avatarFile = null;
+//            if (listFiles == null) {
+//                log.debug("头像没有设置，使用缺省的头像文件");
+//                avatarFile = new ClassPathResource("/static/assets/img/logo/logo.png").getFile();
+//            } else if (listFiles.length <= 0) {
+//                log.debug("头像文件不存，使用缺省的头像文件");
+//                avatarFile = new ClassPathResource("/static/assets/img/logo/logo.png").getFile();
+//            } else {
+//                log.debug("在 id 的目录下发现多个文件，取第一个文件");
+//                avatarFile = listFiles[0];
+//            }
+//            log.debug(avatarFile);
+//            FileInputStream inputStream = new FileInputStream(avatarFile);
+//            byte[] data = new byte[(int) avatarFile.length()];
+//            inputStream.read(data);
+//            inputStream.close();
+//            response.setContentType("image/png");
+//            OutputStream stream = response.getOutputStream();
+//            stream.write(data);
+//            stream.flush();
+//            stream.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            throw new ControllerException(e.getMessage());
+//        }
     }
 
     @RequestMapping(value = "/user/modify_password")

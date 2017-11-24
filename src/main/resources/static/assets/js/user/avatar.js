@@ -17,19 +17,30 @@ $().ready(function () {
     // 使用 bootstrap file input 组件
     $("input[name='avatar']").fileinput(fileinput_options).on('fileuploaded', function (event, data, previewId, index) {
         //$("img[name='avatar']").attr("src", contextPath + "avatar");
-        var avatarImgs = $("img[name='avatar']");
-        for (var i = 0; i <= avatarImgs.length; i++) {
-            //$(avatarImgs[i]).attr("src", contextPath + "avatar");
-            Logger.debug($(avatarImgs[i]));
-            $(avatarImgs[i]).attr("src", contextPath + "avatar" + '?' + new Date().getTime());
-        }
-        showMessage("success", "头像更新", data.jqXHR.responseJSON.data.localMessage);
+        //刷新头像的图片
+        $.ajax({
+            type: 'get',
+            url: contextPath + 'avatar.json',
+            async: true,//默认为true
+            contentType: "application/text",
+            dataType: 'text',//默认为预期服务器返回的数据类型
+            success: function ( data,  textStatus, jqXHR ) {
+                Logger.debug(jqXHR);
+                $("img[name='avatar']").attr("src", contextPath+jqXHR.responseText);
+            },
+            error: function ( jqXHR, textStatus, errorThrown ){
+                Logger.debug(jqXHR);
+            },
+            complete: function () {
+            }
+        });
+        showMessage("success", "头像更新成功", data.jqXHR.responseJSON.data.localMessage);
         // 重置 fileinput
         $(this).fileinput('destroy');
         $(this).fileinput(fileinput_options).fileinput('enable');
     }).on('fileuploaderror', function (event, data, previewId, index) {
         Logger.debug(data);
-        showMessage("danger", "头像更新", data.jqXHR.responseJSON.data[0].errorMessage);
+        showMessage("danger", "头像更新失败", data.jqXHR.responseJSON.data[0].errorMessage);
     })//.on('fileselect', function(event, numFiles, label) {
     // $(this).fileinput('upload');
     // });
