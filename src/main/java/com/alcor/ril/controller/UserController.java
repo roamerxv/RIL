@@ -107,8 +107,10 @@ public class UserController extends BaseController {
 //
 //            httpSession.removeAttribute(name);
 //        }
+
         httpSession.removeAttribute("SystemBanner");
-        httpSession.removeAttribute("UserEntity");
+        httpSession.removeAttribute(ConfigHelper.getConfig().getString("System.SessionUserKeyword"));
+
         log.debug("登出完成");
         return new ModelAndView("/user/login");
     }
@@ -118,13 +120,12 @@ public class UserController extends BaseController {
     @SessionCheckKeyword(checkIt = false)
     @ResponseBody
     public String login(@RequestBody UserEntity userEntity) throws ControllerException {
-        log.debug("用户登录!");
+        log.debug("用户登录!{}",userEntity.toString());
         try {
             if (userService.login(userEntity)) {
                 httpSession.setAttribute(ConfigHelper.getConfig().getString("System.SessionUserKeyword"), userEntity.getName());
                 String systemBanner = systemConfigureService.findByName("banner_message").getValue();
                 httpSession.setAttribute("SystemBanner", systemBanner);
-//                httpSession.setAttribute("UserEntity", userService.findByID(userEntity.getName()));
             }
         } catch (ServiceException e) {
             log.error(e.getMessage());
@@ -136,7 +137,9 @@ public class UserController extends BaseController {
 
     /**
      * 获取当前登录用户的信息
+     *
      * @return
+     *
      * @throws ControllerException
      */
     @ResponseBody

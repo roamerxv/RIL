@@ -1,50 +1,55 @@
 spring:
     jpa:
-        show-sql: true  #显示 sql 语句
+        show-sql: true
         database: MYSQL
         naming:
             physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-        properties:  ## spring boot 中所有的原来配置在 hibernate.cfg.xml 中的内容都配置在 spring.jpa.properties.hibernate 下
+        properties:
             hibernate:
                 show_sql: false
                 dialect: org.hibernate.dialect.MySQL5Dialect
                 ddl-auto: update
-                format_sql: false #显示格式化后的 sql 语句
-                use_sql_comments: true #显示注解
+                format_sql: false
+                use_sql_comments: true
     redis:
         host: 120.76.101.180
         password: 1qaz369*
-        port:   16379
-        database:   2
+        port: 16379
+        database: 2
+        ## 连接超时时间（毫秒）
+        timeout: 0
+        pool:
+            ## 连接池最大连接数（使用负值表示没有限制）
+            max-active: 8
+            ## 连接池最大阻塞等待时间（使用负值表示没有限制）
+            max-wait: -1
+            ## 连接池中的最大空闲连接
+            max-idle: 8
+            ## 连接池中的最小空闲连接
+            min-idle: 0
     http:
         multipart:
             maxFileSize: -1
             maxRequestSize: -1
-
     datasource:
         url: jdbc:mysql://120.76.101.180:3306/ril?useUnicode=true&characterEncoding=utf-8&useSSL=false
         username: ril
         password: rilril
         driver-class-name: com.mysql.jdbc.Driver
-
     thymeleaf:
-        cache:  false
+        cache: true
         mode: HTML
-
     devtools:
         restart:
             exclude: static/**,public/**
-
 server:
     contextPath: /
-
 context:
     listener:
         classes: pers.roamer.boracay.application.StartedListener
-
 logging:
     config: classpath:log4j2-prod.yaml
     level:
         org:
             hibernate:
-                type: info # trace 显示 sql 的参数值
+                type: info

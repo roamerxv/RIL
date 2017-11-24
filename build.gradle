@@ -4,8 +4,8 @@ buildscript {
     }
     repositories {
         jcenter()
-        mavenLocal()
         mavenCentral()
+        mavenLocal()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -120,7 +120,11 @@ dependencies {
 
     // 使用 spring session + redis 共享 session
     compile('org.springframework.session:spring-session')
-	compile('org.springframework.boot:spring-boot-starter-data-redis')
+    compile('org.springframework.boot:spring-boot-starter-data-redis')
+    // ---------------------------------------
+
+    // 使用 spring cache
+    compile("org.springframework.boot:spring-boot-starter-cache")
     // ---------------------------------------
     
 

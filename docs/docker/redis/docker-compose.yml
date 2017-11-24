@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+    redis-master:
+        build: ./redis/master
+        image: redis/master
+        container_name: "redis-master"
+        volumes:
+                - "$PWD/redis/master/data:/data"
+        ports:
+                - "16379:6379"
+
+    redis-slave:
+        build: ./redis/slave
+        image: redis/slave
+        container_name: "redis-slave-01"
+        volumes:
+                - "$PWD/redis/slave/data:/data"
+        ports:
+                - "26379:6379"

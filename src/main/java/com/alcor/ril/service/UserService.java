@@ -27,10 +27,12 @@ public class UserService {
         return iUserRepository.findAll();
     }
 
+//    @Cacheable(value = "user", key = "#user.name")
     public UserEntity findByID(String id) {
         return iUserRepository.findOne(id);
     }
 
+//    @CachePut(value = "user", key = "#user.name")
     @Transactional(readOnly = true)
     public boolean login(UserEntity userEntity) throws ServiceException {
         UserEntity userEntityInDB = iUserRepository.findOne(userEntity.getName());

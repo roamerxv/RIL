@@ -1,7 +1,6 @@
 package com.alcor.ril.entity;
 
 import javax.persistence.*;
-import java.io.*;
 
 /**
  * @author roamer - 徐泽宇
@@ -9,7 +8,7 @@ import java.io.*;
  */
 @Entity
 @Table(name = "user", schema = "ril", catalog = "")
-public class UserEntity implements Serializable {
+public class UserEntity {
     private String name;
     private String fullName;
     private String occupation;
