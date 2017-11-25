@@ -1,0 +1,64 @@
+spring:
+    jpa:
+        show-sql: true
+        database: MYSQL
+        naming:
+            physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        properties:
+            hibernate:
+                show_sql: true
+                dialect: org.hibernate.dialect.MySQL5Dialect
+                ddl-auto: update
+                format_sql: false
+                use_sql_comments: true
+    session:    #优先使用这个做  session time out
+        timeout: 30
+    redis:
+        #host: 120.76.101.180
+#        host: 127.0.0.1
+        host: redis-master
+        password: 1qaz369*
+        port: 6379
+        database: 2
+        ## 连接超时时间（毫秒）
+        timeout: 0
+        pool:
+            ## 连接池最大连接数（使用负值表示没有限制）
+            max-active: 8
+            ## 连接池最大阻塞等待时间（使用负值表示没有限制）
+            max-wait: -1
+            ## 连接池中的最大空闲连接
+            max-idle: 8
+            ## 连接池中的最小空闲连接
+            min-idle: 0
+
+    http:
+        multipart:
+            maxFileSize: -1
+            maxRequestSize: -1
+    datasource:
+        url: jdbc:mysql://120.76.101.180:3306/ril?useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: ril
+        password: rilril
+        driver-class-name: com.mysql.jdbc.Driver
+    thymeleaf:
+        cache: false
+        mode: HTML
+    devtools:
+        restart:
+            exclude: static/**,public/**
+server:
+    contextPath: /
+    session:
+        cookie:
+            max-age: 30
+        timeout: 30
+context:
+    listener:
+        classes: pers.roamer.boracay.application.StartedListener
+logging:
+    config: classpath:log4j2-dev.yaml
+    level:
+        org:
+            hibernate:
+                type: info

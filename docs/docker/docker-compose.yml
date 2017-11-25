@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+    redis-master:
+        build: ./redis/master
+        image: redis/master
+        container_name: "redis-master"
+        volumes:
+                - "$PWD/redis/master/data:/data"
+        ports:
+                - "16379:6379"
+
+    redis-slave-01:
+        build: ./redis/slave
+        image: redis/slave
+        container_name: "redis-slave-01"
+        volumes:
+                - "$PWD/redis/slave/data:/data"
+        ports:
+                - "26379:6379"
+
+    tomcat-001:
+        build: ./tomcat/
+        container_name: "tomcat-001"
+        ports:
+            - "8080:8080"
+            - "18443:18443"
+        volumes:
+            - "./webapps:/usr/local/tomcat/webapps"
+            - "./logs/tomcat:/usr/local/tomcat/logs"
+            - "./logs:/logs"
+        depends_on:
+            - "redis-master"
+
+    # nginx-001:
+    #     build: ./nginx/
+    #     container_name: "nginx-001"
+    #     ports:
+    #         - "80:80"
+    #         - "443:443"
+    #     volumes: 
+    #         - "./tomcat/webapps:/opt/t3/webapps"
+    #     depends_on:
+    #         - "t3-tomcat"

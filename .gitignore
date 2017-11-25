@@ -25,3 +25,10 @@ nbdist/
 .nb-gradle/
 gradle
 out
+docs/docker/logs
+docs/docker/redis/master/data/appendonly.aof
+docs/docker/redis/master/data/dump.rdb
+dump.rdb
+docs/docker/webapps/ril
+docs/docker/webapps/ROOT
+ril.war
