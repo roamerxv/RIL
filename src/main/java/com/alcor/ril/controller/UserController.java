@@ -27,7 +27,6 @@ import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 
 /**
  * 用户操作的 Controller
@@ -56,6 +55,7 @@ public class UserController extends BaseController {
     @RequestMapping("/")
     public ModelAndView index() {
         ModelAndView modelAndView;
+        log.debug("开始跳转到主页！");
         try {
             if (super.getUserID() != null) {
                 modelAndView = new ModelAndView("/dashboard/index");
@@ -98,7 +98,7 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/user/logout")
     public ModelAndView adminLogout() throws ControllerException {
         log.debug("开始登出");
-        Enumeration<String> eume = httpSession.getAttributeNames();
+//        Enumeration<String> eume = httpSession.getAttributeNames();
 //        while (eume.hasMoreElements()) {
 //            String name = eume.nextElement();
 //            log.debug("开始从 session 中移除 {}", name);
@@ -118,10 +118,11 @@ public class UserController extends BaseController {
     @SessionCheckKeyword(checkIt = false)
     @ResponseBody
     public String login(@RequestBody UserEntity userEntity) throws ControllerException {
-        log.debug("用户登录!{}", userEntity.toString());
+        log.debug("用户[{}]登录", userEntity.getName());
         try {
             if (userService.login(userEntity)) {
                 httpSession.setAttribute(ConfigHelper.getConfig().getString("System.SessionUserKeyword"), userEntity.getName());
+                log.debug("放入 session 中的值是:{}",httpSession.getAttribute(ConfigHelper.getConfig().getString("System.SessionUserKeyword")).toString());
                 String systemBanner = systemConfigureService.findByName("banner_message").getValue();
                 httpSession.setAttribute("SystemBanner", systemBanner);
             }

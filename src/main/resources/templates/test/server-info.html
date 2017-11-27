@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{decorators/webModel}">
+<body>
+
+<div class="content_container" th:fragment="content">
+    <!--服务器信息-->
+    <!--<div id="" th:text="${serverInfo.serverIP}"></div>-->
+    <table class="table table-striped table-bordered hover dataTable">
+        <thead>
+        <tr>
+            <td>参数名称</td>
+            <td width="50%">参数值</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="banner_message_tr">
+            <td>
+                <label>服务器 IP</label>
+            </td>
+            <td>
+                <label class="form-control m-input" th:text="${serverInfo.serverIP}"></label>
+            </td>
+        </tr>
+        <tr class="banner_message_tr">
+            <td>
+                <label>Session ID</label>
+            </td>
+            <td>
+                <label class="form-control m-input" th:text="${serverInfo.sessionID}"></label>
+            </td>
+        </tr>
+        <tr class="banner_message_tr">
+            <td>
+                <label> 端口号</label>
+            </td>
+            <td>
+                <label class="form-control m-input" th:text="${serverInfo.localPort}"></label>
+            </td>
+        </tr>
+        <tr class="banner_message_tr">
+            <td>
+                <label>contextpath</label>
+            </td>
+            <td>
+                <label class="form-control m-input" th:text="${serverInfo.contextPath}"></label>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

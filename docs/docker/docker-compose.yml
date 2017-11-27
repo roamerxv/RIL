@@ -16,18 +16,42 @@ services:
         - $PWD/redis/slave/data:/data
         ports:
         - 26379:6379
+
+
     tomcat-001:
         build: ./tomcat/
         container_name: tomcat-001
-        ports:
-        - 18080:8080
-        - 18443:18443
+#        ports:
+#        - 18080:8080
+#        - 18443:18443
         volumes:
         - ./webapps:/usr/local/tomcat/webapps
-        - ./logs/tomcat:/usr/local/tomcat/logs
-        - ./logs:/logs
+        - ./logs/tomcat-001:/usr/local/tomcat/logs
+        - ./logs/tomcat-001:/logs
         depends_on:
         - redis-master
+    tomcat-002:
+        build: ./tomcat/
+        container_name: tomcat-002
+        volumes:
+        - ./webapps:/usr/local/tomcat/webapps
+        - ./logs/tomcat-002:/usr/local/tomcat/logs
+        - ./logs/tomcat-002:/logs
+        depends_on:
+        - redis-master
+
+    tomcat-003:
+        build: ./tomcat/
+        container_name: tomcat-003
+        volumes:
+        - ./webapps:/usr/local/tomcat/webapps
+        - ./logs/tomcat-003:/usr/local/tomcat/logs
+        - ./logs/tomcat-003:/logs
+        depends_on:
+        - redis-master
+
+
+
     nginx:
         build: ./nginx/
         container_name: "nginx"

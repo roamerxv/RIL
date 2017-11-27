@@ -28,7 +28,7 @@ public class MvcConfigurer extends WebMvcConfigurerAdapter {
     @SessionCheckKeyword()
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/system_logs_index").setViewName("/systemLogs/systemLoggerIndex");
-        registry.addViewController("/test/ajax_500").setViewName("/test/ajax_500");
+        registry.addViewController("/test/ajax_500").setViewName("/test/ajax-500");
         super.addViewControllers(registry);
     }
 }

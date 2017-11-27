@@ -22,7 +22,7 @@
                 </a>
             </li>
             <li class="m-menu__item" aria-haspopup="true" name="menu_system_configer">
-                <a href="/system_config" class="m-menu__link ">
+                <a th:href="@{/system_config}" class="m-menu__link ">
                     <span class="m-menu__item-here"></span>
                     <i class="m-menu__link-icon flaticon-list-3"></i>
                     <span class="m-menu__link-text">参数设置</span>
@@ -62,11 +62,19 @@
                             </a>
                         </li>
                         <li class="m-menu__item " aria-haspopup="true" data-redirect="true">
-                            <a th:href="@{builder.html}" class="m-menu__link ">
+                            <a th:href="@{/builder.html}" class="m-menu__link ">
                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                     <span></span>
                                 </i>
                                 <span class="m-menu__link-text">调用一个静态页面</span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true" data-redirect="true">
+                            <a th:href="@{/serverInfo}" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                    <span></span>
+                                </i>
+                                <span class="m-menu__link-text">查看服务器信息</span>
                             </a>
                         </li>
                         <li class="m-menu__item " aria-haspopup="true" data-redirect="true">
