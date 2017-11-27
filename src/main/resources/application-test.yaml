@@ -40,7 +40,7 @@ spring:
         password: rilril
         driver-class-name: com.mysql.jdbc.Driver
     thymeleaf:
-        cache: false
+        cache: true
         mode: HTML
     devtools:
         restart:
