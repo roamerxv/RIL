@@ -2,20 +2,18 @@ version: '3'
 services:
     redis-master:
         build: ./redis/master
-        image: redis/master
         container_name: ril-redis-master
         volumes:
         - $PWD/redis/master/data:/data
-        #ports:
-        #- 16379:6379
+        ports:
+        - 16379:6379
     redis-slave-01:
         build: ./redis/slave
-        image: redis/slave
         container_name: ril-redis-slave-01
         volumes:
         - $PWD/redis/slave/data:/data
-        #ports:
-        #- 26379:6379
+        ports:
+        - 26379:6379
 
 
     tomcat-001:
@@ -55,7 +53,7 @@ services:
 
     nginx:
         build: ./nginx/
-        container_name: "nginx"
+        container_name: ril-nginx
         ports:
             - "80:80"
             - "443:443"
