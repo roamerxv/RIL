@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{decorators/webModel}">
+<body>
+
+<div class="content_container" th:fragment="content">
+    <button id="ajax_500" class="btn btn-success">通过 ajax 的方式调用后台产生的错误，并且在前台显示</button>
+
+    <script>
+        $().ready(function (){
+            $("#ajax_500").on("click",function () {
+                $.ajax({
+                    type: 'post',
+                    url: contextPath + "test/500Error.json",
+                    async: true,//默认为true
+                    contentType: "application/json",
+                    dataType: 'json',//默认为预期服务器返回的数据类型
+                    success: function (data, textStatus, jqXHR) {
+                        //window.location = contextPath + "customers/index";
+                    },
+                    error: function (jqXHR) {
+                        showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
+                    }
+                });
+            });
+        })
+    </script>
+</div>
+
+</body>
+</html>
