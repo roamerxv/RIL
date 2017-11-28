@@ -33,3 +33,4 @@ docs/docker/webapps/ril
 docs/docker/webapps/ROOT
 ril.war
 docs/docker/nginx/redis/master/data
+rebel.xml
