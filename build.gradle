@@ -78,12 +78,6 @@ war {
     archiveName 'ril.war'
 }
 
-// 为了使用 log4j2 ，需要在项目中排除所有的 logback 组件 begin
-//configurations.all {
-//    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
-//    exclude group: 'org.springframework.boot', module: 'logback-classic'
-//}
-// 为了使用 log4j2 ，需要在项目中排除所有的 logback 组件 end
 
 dependencies {
 

@@ -6,7 +6,7 @@ spring:
             physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         properties:
             hibernate:
-                show_sql: false
+                show_sql: true
                 dialect: org.hibernate.dialect.MySQL5Dialect
                 ddl-auto: update
                 format_sql: false
