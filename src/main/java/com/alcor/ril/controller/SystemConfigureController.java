@@ -4,7 +4,7 @@ import com.alcor.ril.entity.SystemConfigureEntity;
 import com.alcor.ril.service.ServiceException;
 import com.alcor.ril.service.SystemConfigureService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,7 +21,7 @@ import java.util.List;
  * @author roamer - 徐泽宇
  * @create 2017-10-2017/10/16  上午10:56
  */
-@Log4j2
+@Slf4j
 @RestController("com.alcor.ril.controller.SystemConfigureController")
 @SessionCheckKeyword(checkIt = true)
 public class SystemConfigureController extends BaseController {

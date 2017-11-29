@@ -48,7 +48,7 @@ context:
     listener:
         classes: pers.roamer.boracay.application.StartedListener
 logging:
-    config: classpath:log4j2-prod.yaml
+    config: classpath:logback-${spring.profiles.active}.xml
     level:
         org:
             hibernate:

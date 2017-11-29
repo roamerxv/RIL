@@ -8,7 +8,7 @@
             saveFilePath: "/Users/roamer/Desktop/upload"
       user:
             avatar:
-                defaultFile: "assets/img/logo/logo.png"
+                defaultFile: "assets/img/avatar/default.png"
  exception:
     test:
         exception: "测试用的错误！由Controller 层抛出。| user_name , user_passwd"

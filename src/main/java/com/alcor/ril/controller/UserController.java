@@ -5,7 +5,7 @@ import com.alcor.ril.service.ServiceException;
 import com.alcor.ril.service.SystemConfigureService;
 import com.alcor.ril.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -34,7 +34,7 @@ import java.util.ArrayList;
  * @author roamer - 徐泽宇
  * @create 2017-09-2017/9/28  上午9:53
  */
-@Log4j2
+@Slf4j
 @Controller("com.alcor.ril.controller.UserController")
 @SessionCheckKeyword
 public class UserController extends BaseController {
@@ -122,7 +122,7 @@ public class UserController extends BaseController {
         try {
             if (userService.login(userEntity)) {
                 httpSession.setAttribute(ConfigHelper.getConfig().getString("System.SessionUserKeyword"), userEntity.getName());
-                log.debug("放入 session 中的值是:{}",httpSession.getAttribute(ConfigHelper.getConfig().getString("System.SessionUserKeyword")).toString());
+                log.debug("放入 session 中的值是:{}", httpSession.getAttribute(ConfigHelper.getConfig().getString("System.SessionUserKeyword")).toString());
                 String systemBanner = systemConfigureService.findByName("banner_message").getValue();
                 httpSession.setAttribute("SystemBanner", systemBanner);
             }
@@ -190,6 +190,7 @@ public class UserController extends BaseController {
         }
         try {
             Resource resource = new ClassPathResource(AVATAR_FILE_FOLDER_PATH);
+            //如果保存 avatar 的目录不存在，则建立
             ArrayList<FileUploadResult> avatarFileList = new UploadFileUtil().saveFile(avatar, true, resource.getFile().getPath());
             FileUploadResult avatarFile = avatarFileList.get(0);
             log.debug("保存的文件信息是：{}", avatarFile.toString());
@@ -225,7 +226,7 @@ public class UserController extends BaseController {
                 avatarPath = new StringBuilder(resource.getFile().getPath()).append(File.separator).append(userAvatarID);
                 File[] listFiles = new File(avatarPath.toString()).listFiles();
                 if (listFiles == null || listFiles.length <= 0) {
-                    log.error("目录{}下没有头像文件！使用缺省的头像:{}", avatarPath, avatarUrl);
+                    log.warn("目录{}下没有头像文件！使用缺省的头像:{}", avatarPath, avatarUrl);
                     return avatarUrl;
                 } else {
                     File file = listFiles[0];

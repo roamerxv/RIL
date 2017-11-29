@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration debug="true">
+    <contextName>RIL_logback</contextName>
+
+    <property name="app_name" value="RIL"/>
+    <property name="log.path" value="/logs/${app_name}/logback.log"/>
+
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}.%d{yyyy-MM-dd}.zip</fileNamePattern>
+        </rollingPolicy>
+
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %class %line 行 %method - %msg%xEx%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="file"/>
+    </root>
+
+</configuration>

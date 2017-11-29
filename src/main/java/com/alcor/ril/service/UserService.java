@@ -3,7 +3,7 @@ package com.alcor.ril.service;
 import com.alcor.ril.entity.UserEntity;
 import com.alcor.ril.repository.IUserRepository;
 import lombok.Data;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author roamer - 徐泽宇
  * @create 2017-08-2017/8/8  下午5:57
  */
-@Log4j2
+@Slf4j
 @Data
 @Service("com.alcor.ril.service.UserService")
 // 在 repository 中使用 cache

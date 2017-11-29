@@ -37,7 +37,6 @@ public interface IEventRepository extends JpaRepository<EventEntity, String>, Pa
      *       |------------||----------------|
      *
      **/
-    @Query("select u from EventEntity u WHERE u.id NOT IN ( SELECT O FROM EventEntity O WHERE O.start > ?2 OR  O.end < ?1)")
-
+    @Query(value = "select u from EventEntity u WHERE u.id NOT IN ( SELECT O FROM EventEntity O WHERE O.start > ?2 OR  O.end < ?1)" , nativeQuery = false)
     public List<EventEntity> findAlInDays(Date start, Date end);
 }

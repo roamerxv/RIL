@@ -1,7 +1,7 @@
 package com.alcor.ril.controller;
 
 import lombok.Data;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author roamer - 徐泽宇
  * @create 2017-10-2017/10/11  下午12:13
  */
-@Log4j2
+@Slf4j
 @RestController("com.alcor.cli.controller.TestController")
 
 public class TestController extends BaseController {

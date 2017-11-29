@@ -6,7 +6,7 @@ spring:
             physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         properties:
             hibernate:
-                show_sql: true
+                show_sql: false
                 dialect: org.hibernate.dialect.MySQL5Dialect
                 ddl-auto: update
                 format_sql: false
@@ -56,7 +56,7 @@ context:
     listener:
         classes: pers.roamer.boracay.application.StartedListener
 logging:
-    config: classpath:log4j2-dev.yaml
+    config: classpath:logback-${spring.profiles.active}.xml
     level:
         org:
             hibernate:
