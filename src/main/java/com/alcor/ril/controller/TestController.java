@@ -1,7 +1,10 @@
 package com.alcor.ril.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 提醒事件的 controller 类
@@ -20,10 +23,6 @@ public class TestController extends BaseController {
         throw new ControllerException("一个测试用的错误！");
     }
 
-    @GetMapping("/systemMenu")
-    @ResponseBody
-    public String showSystemMenu() throws  Exception{
-        return "asdf";
-    }
+
 }
 
