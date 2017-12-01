@@ -38,13 +38,12 @@ public class SystemMenuService {
         if (systemMenuEntityList == null){
             return null;
         }
-        log.debug("发现{}条，父id 是{}的菜单记录", systemMenuEntityList.size(),parentId);
+//        log.debug("发现{}条，父id 是{}的菜单记录", systemMenuEntityList.size(),parentId);
         List<SystemMenu> systemMenuList = new ArrayList<>(systemMenuEntityList.size());
         for (SystemMenuEntity item : systemMenuEntityList){
             SystemMenu systemMenu = new SystemMenu();
             systemMenu.setMenuItem(item);
             systemMenu.setChildrenMenu(this.getSystemMenusWithParent(item.getId()));
-
             systemMenuList.add(systemMenu);
         }
         return systemMenuList;
@@ -58,4 +57,5 @@ public class SystemMenuService {
     public SystemMenuEntity update(SystemMenuEntity systemMenuEntity) throws  ServiceException{
         return iSystemMenuRepository.save(systemMenuEntity);
     }
+    
 }

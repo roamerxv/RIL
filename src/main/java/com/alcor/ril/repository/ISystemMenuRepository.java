@@ -19,6 +19,7 @@ public interface ISystemMenuRepository extends JpaRepository<SystemMenuEntity, S
     @Cacheable(key = "'ListByParentId_'.concat(#a0)")
     public List<SystemMenuEntity> findAllByParentId(String parentId);
 
-    @CacheEvict(key = "'ListByParentId_'.concat(#a0.parentId)")
+
+    @CacheEvict(allEntries = true) //为了避免麻烦。把所有spring:cache:SystemMenuEntity开头的 cache 都清除
     public SystemMenuEntity save(SystemMenuEntity systemMenuEntity);
 }

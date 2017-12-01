@@ -17,6 +17,7 @@ import pers.roamer.boracay.aspect.httprequest.SessionCheckKeyword;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 系统级别的控制操作
@@ -114,12 +115,12 @@ public class SystemController extends BaseController {
     }
 
     /**
-     * 根据一个 systemMenuEntity ，保存到数据库
+     * 根据一个 systemMenuEntity ，保存更新到数据库
      * @return
      * @throws ControllerException
      */
-    @PostMapping("/systemMenu")
-    public SystemMenuEntity getSystemMenuItem(@RequestBody SystemMenuEntity systemMenuEntity) throws  ControllerException{
+    @PutMapping("/systemMenu")
+    public SystemMenuEntity updateSystemMenuItem(@RequestBody SystemMenuEntity systemMenuEntity) throws  ControllerException{
         log.debug("开始 更新 id 是：{}的菜单项信息",systemMenuEntity.getId());
         try {
             SystemMenuEntity systemMenuEntityInDB = systemMenuService.getMenuItemById(systemMenuEntity.getId());
@@ -130,6 +131,25 @@ public class SystemController extends BaseController {
             systemMenuEntityInDB.setName(systemMenuEntity.getName());
             systemMenuEntityInDB.setClazz(systemMenuEntity.getClazz());
             return  systemMenuService.update(systemMenuEntityInDB);
+        } catch (ServiceException e) {
+            log.error(e.getMessage(),e);
+            throw new ControllerException(e.getMessage());
+        }
+    }
+
+    /**
+     * 根据一个 systemMenuEntity ，新增到数据库
+     * @return
+     * @throws ControllerException
+     */
+    @PostMapping("/systemMenu")
+    public SystemMenuEntity getSystemMenuItem(@RequestBody SystemMenuEntity systemMenuEntity) throws  ControllerException{
+        log.debug("开始 增加一个菜单项信息");
+        try {
+            systemMenuEntity.setParentId(systemMenuEntity.getId());
+            systemMenuEntity.setId(UUID.randomUUID().toString());
+            systemMenuEntity.setLabelClazz("");
+            return systemMenuService.update(systemMenuEntity);
         } catch (ServiceException e) {
             log.error(e.getMessage(),e);
             throw new ControllerException(e.getMessage());

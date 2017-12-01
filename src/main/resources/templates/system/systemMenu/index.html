@@ -25,9 +25,7 @@
                 <form class="m-form">
                     <div class="m-portlet__body">
                         <div class="m-form__section m-form__section--first">
-                            <div id="jstree_system_menus_div" class="tree-demo jstree jstree-5 jstree-default" role="tree"
-                                 aria-multiselectable="true" tabindex="0" aria-activedescendant="j5_4"
-                                 aria-busy="false">
+                            <div id="jstree_system_menus_div">
 
                             </div>
                         </div>
@@ -53,7 +51,7 @@
                     </div>
                 </div>
                 <!--begin::Form-->
-                <form class="m-form m-form--fit" target="nm_iframe" onsubmit="fun_submit()">
+                <form class="m-form m-form--fit" id="submit_form">
                     <div class="m-portlet__body">
                         <div class="m-form__section m-form__section--first">
                             <input type="hidden" id="menu_id"/>
@@ -84,13 +82,15 @@
                     </div>
                     <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                         <div class="m-form__actions m-form__actions--solid">
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" class="btn btn-success" name="btn_update">
                                 更新
+                            </button>
+                            <button type="submit" class="btn btn-info btn-sm" name="btn_create">
+                                增加为下级
                             </button>
                         </div>
                     </div>
                 </form>
-                <iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>
                 <!--end::Form-->
             </div>
             <!--end::Portlet-->
