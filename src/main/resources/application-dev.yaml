@@ -60,4 +60,4 @@ logging:
     level:
         org:
             hibernate:
-                type: info
+                type: trace

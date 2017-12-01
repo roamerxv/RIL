@@ -11,12 +11,12 @@ import java.util.List;
  * @create 2017-11-2017/11/30  下午12:11
  */
 @Data
-public class TreeViewItem {
+public class Item {
     String text;
     String id;
     String icon;
     String parent;
     String url;
-    List<TreeViewItem> children;
+    List<Item> children;
     ItemState state ;
 }

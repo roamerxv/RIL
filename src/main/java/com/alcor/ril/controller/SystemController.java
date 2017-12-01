@@ -2,8 +2,8 @@ package com.alcor.ril.controller;
 
 import com.alcor.ril.controller.bean.ServerInfo;
 import com.alcor.ril.controller.bean.SystemMenu;
+import com.alcor.ril.controller.bean.treeview.Item;
 import com.alcor.ril.controller.bean.treeview.ItemState;
-import com.alcor.ril.controller.bean.treeview.TreeViewItem;
 import com.alcor.ril.entity.SystemMenuEntity;
 import com.alcor.ril.service.ServiceException;
 import com.alcor.ril.service.SystemMenuService;
@@ -74,7 +74,7 @@ public class SystemController extends BaseController {
      */
     @GetMapping("/systemMenus4Treeviewer")
     @ResponseBody
-    public List<TreeViewItem> getystemMenu4Treeviewer() throws ControllerException {
+    public List<Item> getystemMenu4Treeviewer() throws ControllerException {
         log.debug("开始获取系统菜单,用于显示在 TreeViewer");
         try {
             return this.parseSystemMenu(systemMenuService.getSystemMenusWithRoot());
@@ -89,13 +89,13 @@ public class SystemController extends BaseController {
      * @return
      * @throws ControllerException
      */
-    private List<TreeViewItem> parseSystemMenu(List<SystemMenu> systemMenuList) throws ControllerException {
+    private List<Item> parseSystemMenu(List<SystemMenu> systemMenuList) throws ControllerException {
         if (systemMenuList == null) {
             return null;
         }
-        List<TreeViewItem> treeViewItemList = new ArrayList<>(systemMenuList.size());
+        List<Item> treeViewItemList = new ArrayList<>(systemMenuList.size());
         for (SystemMenu item : systemMenuList) {
-            TreeViewItem treeViewItem = new TreeViewItem();
+            Item treeViewItem = new Item();
             treeViewItem.setId(item.getMenuItem().getId());
             treeViewItem.setParent(item.getMenuItem().getParentId());
             treeViewItem.setText(item.getMenuItem().getName());

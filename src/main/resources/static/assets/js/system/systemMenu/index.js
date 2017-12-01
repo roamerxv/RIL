@@ -1,9 +1,44 @@
-$().ready(function () {
+var system_menu_tree  = $('#jstree_system_menus_div').jstree({
+    "check_callback": true,
+    "core": {
+        "themes": {
+            "responsive": false
+        },
+        // so that create works
+        "check_callback": true,
+        "strings": {
+            'Loading ...' : '正在加载...'
+        }
+    },
+    "types": {
+        "default": {
+            "icon": "fa fa-folder m--font-success"
+        },
+        "file": {
+            "icon": "fa fa-file  m--font-success"
+        }
+    },
+    "state": {"key": "demo2"},
+    "plugins": ["dnd", "state", "types"],
+}).on('changed.jstree', function (e, data) {
+    if (typeof(data.node) == "undefined") {
+        return false;
+    } else {
+        var selected_node = data.node;
+        var menu_id = selected_node.id;
+        //根据 id 获取 菜单项的具体内容
+        fun_get_menu_item_info(selected_node.original);
+    }
+});
 
-    fun_render_jsTree();
+var jsTree_data  ;
+
+$().ready(function () {
+    fun_render_jstree();
 })
 
-function fun_render_jsTree() {
+
+function fun_render_jstree() {
 
     $.ajax({
         type: 'get',
@@ -23,38 +58,8 @@ function fun_render_jsTree() {
                 }
             };
             new_data.children = data;
-            jsTree_type = $('#jstree_system_menus_div').jstree({
-                "check_callback": true,
-                "core": {
-                    "themes": {
-                        "responsive": false
-                    },
-                    // so that create works
-                    "check_callback": true,
-                    'data': new_data
-                },
-                "types": {
-                    "default": {
-                        "icon": "fa fa-folder m--font-success"
-                    },
-                    "file": {
-                        "icon": "fa fa-file  m--font-success"
-                    }
-                },
-                "state": {"key": "demo2"},
-                "plugins": ["dnd", "state", "types"]
-            }).on('changed.jstree', function (e, data) {
-                Logger.debug(data);
-                if (typeof(data.node) == "undefined") {
-                    Logger.debug("undefined");
-                    return false;
-                } else {
-                    var selected_node = data.node;
-                    var menu_id = selected_node.id;
-                    //根据 id 获取 菜单项的具体内容
-                    fun_get_menu_item_info(selected_node.original);
-                }
-            });
+            system_menu_tree.jstree(true).settings.core.data = new_data;
+            system_menu_tree.jstree("refresh");
         },
         error: function (jqXHR, textStatus, errorThrown) {
             showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
@@ -89,7 +94,7 @@ function fun_submit() {
         dataType: 'json',//默认为预期服务器返回的数据类型
         data: JSON.stringify(systemMenu),
         success: function (data, textStatus, jqXHR) {
-            window.location =  contextPath + "systemMenuMaintain";
+            fun_render_jstree();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
