@@ -4,14 +4,13 @@ import com.alcor.ril.controller.bean.ServerInfo;
 import com.alcor.ril.controller.bean.SystemMenu;
 import com.alcor.ril.controller.bean.treeview.ItemState;
 import com.alcor.ril.controller.bean.treeview.TreeViewItem;
+import com.alcor.ril.entity.SystemMenuEntity;
 import com.alcor.ril.service.ServiceException;
 import com.alcor.ril.service.SystemMenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pers.roamer.boracay.aspect.httprequest.SessionCheckKeyword;
 
@@ -53,7 +52,7 @@ public class SystemController extends BaseController {
     }
 
     @GetMapping("/cleanCache")
-    @CacheEvict(cacheNames = {"spring:cache:UserEntity", "spring:cache:SystemMenus"}, allEntries = true)
+    @CacheEvict(cacheNames = {"spring:cache:UserEntity", "spring:cache:SystemMenuEntity" }, allEntries = true)
     public ModelAndView cleanCache() {
         log.debug("清除spring cache 中的缓存！");
         ModelAndView modelAndView = new ModelAndView("/index");
@@ -73,7 +72,7 @@ public class SystemController extends BaseController {
      *
      * @throws ControllerException
      */
-    @GetMapping("/systemMenu4Treeviewer")
+    @GetMapping("/systemMenus4Treeviewer")
     @ResponseBody
     public List<TreeViewItem> getystemMenu4Treeviewer() throws ControllerException {
         log.debug("开始获取系统菜单,用于显示在 TreeViewer");
@@ -101,6 +100,7 @@ public class SystemController extends BaseController {
             treeViewItem.setParent(item.getMenuItem().getParentId());
             treeViewItem.setText(item.getMenuItem().getName());
             treeViewItem.setIcon(item.getMenuItem().getClazz());
+            treeViewItem.setUrl(item.getMenuItem().getUrl());
             ItemState itemState = new ItemState();
             itemState.setOpened(true);
             treeViewItem.setState(itemState);
@@ -111,6 +111,29 @@ public class SystemController extends BaseController {
             }
         }
         return treeViewItemList;
+    }
+
+    /**
+     * 根据一个 systemMenuEntity ，保存到数据库
+     * @return
+     * @throws ControllerException
+     */
+    @PostMapping("/systemMenu")
+    public SystemMenuEntity getSystemMenuItem(@RequestBody SystemMenuEntity systemMenuEntity) throws  ControllerException{
+        log.debug("开始 更新 id 是：{}的菜单项信息",systemMenuEntity.getId());
+        try {
+            SystemMenuEntity systemMenuEntityInDB = systemMenuService.getMenuItemById(systemMenuEntity.getId());
+            if ( systemMenuEntityInDB == null){
+                throw new ControllerException("要更新的菜单项不存在!");
+            }
+            systemMenuEntityInDB.setUrl(systemMenuEntity.getUrl());
+            systemMenuEntityInDB.setName(systemMenuEntity.getName());
+            systemMenuEntityInDB.setClazz(systemMenuEntity.getClazz());
+            return  systemMenuService.update(systemMenuEntityInDB);
+        } catch (ServiceException e) {
+            log.error(e.getMessage(),e);
+            throw new ControllerException(e.getMessage());
+        }
     }
 }
 

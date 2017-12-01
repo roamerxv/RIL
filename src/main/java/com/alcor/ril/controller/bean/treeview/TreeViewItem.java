@@ -16,6 +16,7 @@ public class TreeViewItem {
     String id;
     String icon;
     String parent;
+    String url;
     List<TreeViewItem> children;
     ItemState state ;
 }

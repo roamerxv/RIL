@@ -24,11 +24,16 @@ public class SystemMenuService {
     @Autowired
     private ISystemMenuRepository iSystemMenuRepository;
 
+    /**
+     * 获取所有的 菜单项的链表结构
+     * @return
+     * @throws ServiceException
+     */
     public List<SystemMenu> getSystemMenusWithRoot() throws ServiceException{
         return getSystemMenusWithParent("0");
     }
 
-    private List<SystemMenu>  getSystemMenusWithParent (String parentId) throws  ServiceException{
+    public List<SystemMenu>  getSystemMenusWithParent (String parentId) throws  ServiceException{
         List<SystemMenuEntity> systemMenuEntityList  = iSystemMenuRepository.findAllByParentId(parentId);
         if (systemMenuEntityList == null){
             return null;
@@ -45,4 +50,12 @@ public class SystemMenuService {
         return systemMenuList;
     }
 
+
+    public SystemMenuEntity getMenuItemById(String id) throws ServiceException{
+        return iSystemMenuRepository.findOne(id);
+    }
+
+    public SystemMenuEntity update(SystemMenuEntity systemMenuEntity) throws  ServiceException{
+        return iSystemMenuRepository.save(systemMenuEntity);
+    }
 }
