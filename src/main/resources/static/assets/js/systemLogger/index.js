@@ -90,7 +90,7 @@ $().ready(function () {
                 $('td', row).eq(9).addClass('fail_type');
             }
         },
-        "dom": 'lf<"toolbar">itip', //在显示条数的部分后面插入一个 div . 查看文档 https://datatables.net/reference/option/dom
+        "dom": 'flpitrp', //定制表格各个部件的位置 . 查看文档 https://datatables.net/reference/option/dom
         "fnDrawCallback": function (oSettings) {
             $("div.toolbar").html('');
         }
