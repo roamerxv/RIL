@@ -5,5 +5,6 @@ CREATE TABLE `ril`.`system_menu`  (
   `clazz` varchar(256) NOT NULL COMMENT '菜单项的 class',
   `label_clazz` varchar(256) NOT NULL COMMENT '菜单项前面的图标的 class（用 class 来显示图片）',
   `url` varchar(256) NULL COMMENT '菜单项对应的 url',
+  `order_num` int  NOT NULL  DEFAULT  0 COMMENT '菜单项的排序序号',
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '系统菜单表';

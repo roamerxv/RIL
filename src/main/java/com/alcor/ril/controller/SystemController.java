@@ -2,6 +2,7 @@ package com.alcor.ril.controller;
 
 import com.alcor.ril.controller.bean.ServerInfo;
 import com.alcor.ril.controller.bean.SystemMenu;
+import com.alcor.ril.controller.bean.treeview.DragAndDropResult;
 import com.alcor.ril.controller.bean.treeview.Item;
 import com.alcor.ril.controller.bean.treeview.ItemState;
 import com.alcor.ril.entity.SystemMenuEntity;
@@ -12,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pers.roamer.boracay.aspect.businesslogger.BusinessMethod;
 import pers.roamer.boracay.aspect.httprequest.SessionCheckKeyword;
+import pers.roamer.boracay.helper.HttpResponseHelper;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -53,7 +56,7 @@ public class SystemController extends BaseController {
     }
 
     @GetMapping("/cleanCache")
-    @CacheEvict(cacheNames = {"spring:cache:UserEntity", "spring:cache:SystemMenuEntity" }, allEntries = true)
+    @CacheEvict(cacheNames = {"spring:cache:UserEntity", "spring:cache:SystemMenuEntity"}, allEntries = true)
     public ModelAndView cleanCache() {
         log.debug("清除spring cache 中的缓存！");
         ModelAndView modelAndView = new ModelAndView("/index");
@@ -86,8 +89,11 @@ public class SystemController extends BaseController {
 
     /**
      * 递归把系统菜单的对象链表结构转换成用于 treeviewer 显示的链表结构
+     *
      * @param systemMenuList
+     *
      * @return
+     *
      * @throws ControllerException
      */
     private List<Item> parseSystemMenu(List<SystemMenu> systemMenuList) throws ControllerException {
@@ -102,6 +108,7 @@ public class SystemController extends BaseController {
             treeViewItem.setText(item.getMenuItem().getName());
             treeViewItem.setIcon(item.getMenuItem().getClazz());
             treeViewItem.setUrl(item.getMenuItem().getUrl());
+            treeViewItem.setOrderNum(item.getMenuItem().getOrderNum());
             ItemState itemState = new ItemState();
             itemState.setOpened(true);
             treeViewItem.setState(itemState);
@@ -116,34 +123,64 @@ public class SystemController extends BaseController {
 
     /**
      * 根据一个 systemMenuEntity ，保存更新到数据库
+     *
      * @return
+     *
      * @throws ControllerException
      */
     @PutMapping("/systemMenu")
-    public SystemMenuEntity updateSystemMenuItem(@RequestBody SystemMenuEntity systemMenuEntity) throws  ControllerException{
-        log.debug("开始 更新 id 是：{}的菜单项信息",systemMenuEntity.getId());
+    public SystemMenuEntity updateSystemMenuItem(@RequestBody SystemMenuEntity systemMenuEntity) throws ControllerException {
+        log.debug("开始 更新 id 是：{}的菜单项信息", systemMenuEntity.getId());
         try {
             SystemMenuEntity systemMenuEntityInDB = systemMenuService.getMenuItemById(systemMenuEntity.getId());
-            if ( systemMenuEntityInDB == null){
+            if (systemMenuEntityInDB == null) {
                 throw new ControllerException("要更新的菜单项不存在!");
             }
             systemMenuEntityInDB.setUrl(systemMenuEntity.getUrl());
             systemMenuEntityInDB.setName(systemMenuEntity.getName());
             systemMenuEntityInDB.setClazz(systemMenuEntity.getClazz());
-            return  systemMenuService.update(systemMenuEntityInDB);
+            systemMenuEntityInDB.setOrderNum(systemMenuEntity.getOrderNum());
+            return systemMenuService.update(systemMenuEntityInDB);
         } catch (ServiceException e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             throw new ControllerException(e.getMessage());
         }
     }
 
+
     /**
-     * 根据一个 systemMenuEntity ，新增到数据库
+     * 拖拉后，把结果保存到数据库中
+     * 同时具备更新父节点和排序的功能
+     * @param result
      * @return
      * @throws ControllerException
      */
+    @BusinessMethod("调整菜单结构")
+    @PutMapping("/systemMenu/resort")
+    @ResponseBody
+    public String resortSystemMenu(@RequestBody DragAndDropResult result) throws ControllerException {
+        log.debug("把id是：{}的菜单 变成父菜单id 是{}", result.id, result.parentId);
+        try {
+            // 1.先把菜单项的父id 修改成新的 id
+            systemMenuService.updateParent(result.id, result.parentId);
+            // 2.然后对所有 id 的菜单项进行排序
+            systemMenuService.resort(result.getChildren());
+        } catch (ServiceException e) {
+            log.error(e.getMessage(), e);
+            throw new ControllerException(e.getMessage());
+        }
+        return HttpResponseHelper.successInfoInbox("更新成功");
+    }
+
+    /**
+     * 根据一个 systemMenuEntity ，新增到数据库
+     *
+     * @return
+     *
+     * @throws ControllerException
+     */
     @PostMapping("/systemMenu")
-    public SystemMenuEntity getSystemMenuItem(@RequestBody SystemMenuEntity systemMenuEntity) throws  ControllerException{
+    public SystemMenuEntity getSystemMenuItem(@RequestBody SystemMenuEntity systemMenuEntity) throws ControllerException {
         log.debug("开始 增加一个菜单项信息");
         try {
             systemMenuEntity.setParentId(systemMenuEntity.getId());
@@ -151,7 +188,7 @@ public class SystemController extends BaseController {
             systemMenuEntity.setLabelClazz("");
             return systemMenuService.update(systemMenuEntity);
         } catch (ServiceException e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             throw new ControllerException(e.getMessage());
         }
     }

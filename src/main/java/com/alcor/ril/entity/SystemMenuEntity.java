@@ -16,6 +16,7 @@ public class SystemMenuEntity implements Serializable {
     private String clazz;
     private String labelClazz;
     private String url;
+    private Integer orderNum;
 
     @Id
     @Column(name = "id", nullable = false, length = 36)
@@ -103,5 +104,15 @@ public class SystemMenuEntity implements Serializable {
         result = 31 * result + (labelClazz != null ? labelClazz.hashCode() : 0);
         result = 31 * result + (url != null ? url.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "order_num", nullable = false)
+    public Integer getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(Integer orderNum) {
+        this.orderNum = orderNum;
     }
 }

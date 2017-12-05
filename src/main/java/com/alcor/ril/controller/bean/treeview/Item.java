@@ -17,6 +17,7 @@ public class Item {
     String icon;
     String parent;
     String url;
+    int orderNum;
     List<Item> children;
-    ItemState state ;
+    ItemState state;
 }
