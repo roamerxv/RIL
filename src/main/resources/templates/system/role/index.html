@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{decorators/webModel}">
+<body>
+
+<div class="content_container" th:fragment="content">
+
+    <!--引入 jquery DataTables 需要的 js 和 css-->
+    <div  th:replace="~{compoments/_jquery_datatables_included :: content}"></div>
+    <!---->
+
+    <link th:href="@{/assets/css/system/role/index.css}" rel="stylesheet"/>
+
+    <div class="dataTable_div">
+        <table id="role_table" class="hover" style="width:100%">
+            <thead>
+            <tr>
+                <th>名称</th>
+                <th>描述</th>
+                <th width="40px">操作</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <th>名称</th>
+                <th>描述</th>
+                <th width="40px">操作</th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <script th:src="@{/assets/js/system/role/index.js}" type="text/javascript"></script>
+
+</div>
+</body>
+</html>
