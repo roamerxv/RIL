@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="role_edit_in_modal">
+    <!-- begin:: Model-->
+    <form id="role-form">
+        <div class="modal fade" id="m_modal_role_edit" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            编辑
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                        ×
+                    </span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!--begin：role 编辑界面-->
+                        <input type="hidden" id="role-id"/>
+                        <div class="form-group">
+                            <label for="role-name" class="form-control-label">
+                                名字:
+                            </label>
+                            <input type="text" class="form-control" id="role-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="role-description" class="form-control-label">
+                                描述:
+                            </label>
+                            <textarea class="form-control" id="role-description" required></textarea>
+                        </div>
+                        <!--end：role 编辑界面-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            关闭
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="btn-submit">
+                            保存
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- end::Model-->
+    <script th:src="@{/assets/js/system/role/edit.js}" type="text/javascript"></script>
+</div>
+</body>
+</html>

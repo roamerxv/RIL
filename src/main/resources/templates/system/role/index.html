@@ -7,11 +7,23 @@
 <div class="content_container" th:fragment="content">
 
     <!--引入 jquery DataTables 需要的 js 和 css-->
-    <div  th:replace="~{compoments/_jquery_datatables_included :: content}"></div>
+    <div th:replace="~{compoments/_jquery_datatables_included :: content}"></div>
     <!---->
 
     <link th:href="@{/assets/css/system/role/index.css}" rel="stylesheet"/>
 
+
+    <div class="col-xl-12 order-1 order-xl-2 m--align-right">
+        <a href="javascript:fun_create()" class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air">
+            <span>
+                <i class="la la-cart-plus"></i>
+                <span>
+                    增加一个角色
+                </span>
+            </span>
+        </a>
+        <div class="m-separator m-separator--dashed d-xl-none"></div>
+    </div>
     <div class="dataTable_div">
         <table id="role_table" class="hover" style="width:100%">
             <thead>
@@ -30,6 +42,10 @@
             </tfoot>
         </table>
     </div>
+
+    <!-- begin:: Model-->
+    <div th:replace="/system/role/_edit_in_modal :: role_edit_in_modal"></div>
+    <!-- end::Model-->
 
     <script th:src="@{/assets/js/system/role/index.js}" type="text/javascript"></script>
 
