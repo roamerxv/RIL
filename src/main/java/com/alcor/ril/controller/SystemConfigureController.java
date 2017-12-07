@@ -24,6 +24,7 @@ import java.util.List;
 @Slf4j
 @RestController("com.alcor.ril.controller.SystemConfigureController")
 @SessionCheckKeyword(checkIt = true)
+@RequestMapping("/admin")
 public class SystemConfigureController extends BaseController {
 
     @Autowired

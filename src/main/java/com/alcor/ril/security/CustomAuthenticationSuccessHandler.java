@@ -1,12 +1,12 @@
 package com.alcor.ril.security;
 
-import com.alcor.ril.persistence.entity.SysUser;
 import com.alcor.ril.service.ServiceException;
 import com.alcor.ril.service.SystemConfigureService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import pers.roamer.boracay.configer.ConfigHelper;
 import pers.roamer.boracay.helper.HttpResponseHelper;
@@ -39,7 +39,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         //the user successfully logs in.
 
         HttpSession session = httpServletRequest.getSession();
-        SysUser authUser = (SysUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         session.setAttribute(ConfigHelper.getConfig().getString("System.SessionUserKeyword"), authUser.getUsername());
         try {
             String systemBanner = systemConfigureService.findByName("banner_message").getValue();

@@ -112,7 +112,7 @@ public class UserController extends BaseController {
         log.debug("登出完成");
         return new ModelAndView("/user/login");
     }
-
+    /*
     @BusinessMethod(value = "用户登录")
     @PostMapping("/signIn")
     @SessionCheckKeyword(checkIt = false)
@@ -133,7 +133,7 @@ public class UserController extends BaseController {
         log.debug("用户登录成功");
         return HttpResponseHelper.successInfoInbox("成功登录");
     }
-
+    */
     /**
      * 获取当前登录用户的信息
      *
@@ -141,8 +141,8 @@ public class UserController extends BaseController {
      *
      * @throws ControllerException
      */
-    @ResponseBody
-    @GetMapping("/user")
+//    @ResponseBody
+//    @GetMapping("/user")
     public String getUserInfo() throws ControllerException {
         String m_rtn = "";
         try {
@@ -210,8 +210,8 @@ public class UserController extends BaseController {
      *
      * @throws ControllerException
      */
-    @GetMapping(value = "/avatar")
-    @ResponseBody
+//    @GetMapping(value = "/avatar")
+//    @ResponseBody
     public String showAvatar() throws ControllerException {
         // 从性能角度考虑，不再使用文件下载的方式显示用户头像
         Resource resource = new ClassPathResource(AVATAR_FILE_FOLDER_PATH);

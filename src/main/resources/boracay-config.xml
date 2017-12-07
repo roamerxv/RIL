@@ -79,6 +79,7 @@
     <!-- ④配置项目中需要进行短信验证码验证的功能 end-->
 
     <!-- ⑤配置项目中需要进行session check，确定是否登录的功能 begin-->
+    <!--
     <bean id="sessionCheckKeywordAspect"
           class="pers.roamer.boracay.aspect.httprequest.SessionCheckKeywordAspect"></bean>
     <aop:config>
@@ -90,6 +91,7 @@
                         pointcut-ref="sessionKeywordCheckPointcut"/>
         </aop:aspect>
     </aop:config>
+    -->
     <!-- ⑤配置项目中需要进行session check，确定是否登录的功能  end-->
 
 

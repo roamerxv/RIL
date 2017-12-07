@@ -56,8 +56,8 @@ context:
     listener:
         classes: pers.roamer.boracay.application.StartedListener
 logging:
-    config: classpath:logback-${spring.profiles.active}.xml
+#    config: classpath:logback-${spring.profiles.active}.xml
     level:
-        org:
-            hibernate:
-                type: info
+      com.alcor.ril: DEBUG
+      org.springframework.security: INFO
+      org.hibernate.type: info

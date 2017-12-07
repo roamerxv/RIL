@@ -159,7 +159,7 @@ function fun_render_jstree() {
 
     $.ajax({
         type: 'get',
-        url: contextPath + "systemMenus4Treeviewer",
+        url: contextPath + "admin/systemMenus4Treeviewer",
         async: true,//默认为true
         contentType: "application/json",
         dataType: 'json',//默认为预期服务器返回的数据类型

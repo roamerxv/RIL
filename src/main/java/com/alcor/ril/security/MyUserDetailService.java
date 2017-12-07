@@ -34,10 +34,10 @@ public class MyUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         Optional<SysUser> user = userRepository.findByUsername(s);
         if (!user.isPresent()) {
+            log.warn("User<{}> is not exists.", s);
             throw new UsernameNotFoundException("用户不存在");
         }
         user.ifPresent((u) -> log.debug("username:{}; password:{}", u.getUsername(), u.getPassword()));
-
 
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;

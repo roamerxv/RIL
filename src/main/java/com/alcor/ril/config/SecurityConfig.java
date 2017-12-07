@@ -1,9 +1,6 @@
 package com.alcor.ril.config;
 
-import com.alcor.ril.security.CustomAuthenticationSuccessHandler;
-import com.alcor.ril.security.CustomLogoutSuccessHandler;
-import com.alcor.ril.security.LoggingAccessDeniedHandler;
-import com.alcor.ril.security.MyUserDetailService;
+import com.alcor.ril.security.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -51,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                 .formLogin()
                     .loginPage("/login")
+                    .loginProcessingUrl("/signIn.json")
                     .usernameParameter("name")
                     .passwordParameter("passwd")
                     .defaultSuccessUrl("/index")
@@ -68,7 +67,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                     .and()
                 .exceptionHandling()
-                    .accessDeniedHandler(accessDeniedHandler());
+                    .accessDeniedHandler(accessDeniedHandler())
+                    .and()
+                .addFilterAt(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
@@ -91,6 +92,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder(){
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder;
+    }
+
+    @Bean
+    CustomAuthenticationFilter customAuthenticationFilter() throws Exception {
+        CustomAuthenticationFilter filter = new CustomAuthenticationFilter();
+        filter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
+//        filter.setAuthenticationFailureHandler(new FailureHandler());
+        filter.setFilterProcessesUrl("/signIn.json");
+
+        //这句很关键，重用WebSecurityConfigurerAdapter配置的AuthenticationManager，
+        // 不然要自己组装AuthenticationManager
+        filter.setAuthenticationManager(authenticationManagerBean());
+        return filter;
     }
 
     @Bean

@@ -16,7 +16,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @SpringBootApplication(scanBasePackages = {"pers.roamer.boracay","com.alcor.ril"})
 @ImportResource(locations = {"classpath:boracay-config.xml"})
 @EnableJpaRepositories({"pers.roamer.boracay","com.alcor.ril"})
-@EntityScan({"pers.roamer.boracay.entity","com.alcor.ril.entity"})
+@EntityScan({"pers.roamer.boracay.entity","com.alcor.ril.entity","com.alcor.ril.persistence.entity"})
 //@EnableAsync()
 @EnableScheduling
 @EnableRedisHttpSession
@@ -25,6 +25,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 public class RilApplication  extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
+        log.debug("Hello......");
         SpringApplication.run(RilApplication.class, args);
     }
 

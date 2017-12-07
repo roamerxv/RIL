@@ -31,6 +31,7 @@ import java.util.UUID;
 @Slf4j
 @RestController("com.alcor.cli.controller.SystemController")
 @SessionCheckKeyword
+@RequestMapping("/admin")
 public class SystemController extends BaseController {
 
     @Autowired

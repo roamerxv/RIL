@@ -25,6 +25,9 @@ public class SysUser extends BaseEntity {
     //重置密码Token
     @Getter @Setter private String resetToken;
 
+    //头像
+    @Getter @Setter private String avatar;
+
     //用户状态,0:创建未激活,1:正常状态,2：用户被锁定.
     @Column(nullable = false)
     @Getter @Setter private int status = 0;

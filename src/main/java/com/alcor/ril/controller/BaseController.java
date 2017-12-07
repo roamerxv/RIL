@@ -11,11 +11,13 @@ package com.alcor.ril.controller;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import pers.roamer.boracay.configer.ConfigHelper;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 
 /**
  * 基础控制类
@@ -33,10 +35,23 @@ public class BaseController {
     protected HttpSession httpSession;
 
     public String getUserID() throws ControllerException {
-        String user_id = (String) httpSession.getAttribute(ConfigHelper.getConfig().getString("System.SessionUserKeyword"));
+//        String user_id = (String) httpSession.getAttribute(ConfigHelper.getConfig().getString("System.SessionUserKeyword"));
+        String user_id = getCurrentUsername();
         if (StringUtils.isEmpty(user_id)) {
             throw new ControllerException("exception.system.need_login");
         }
         return user_id;
+    }
+
+    public String getCurrentUsername() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            return ((UserDetails) principal).getUsername();
+        }
+
+        if (principal instanceof Principal) {
+            return ((Principal) principal).getName();
+        }
+        return String.valueOf(principal);
     }
 }
