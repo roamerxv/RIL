@@ -74,6 +74,11 @@ ext {
     lombokVersion = "1.16.18"
 }
 
+// upgrade to thymeleaf version 3
+ext["thymeleaf.version"] = "3.0.9.RELEASE"
+ext["thymeleaf-layout-dialect.version"] = "2.2.2"
+ext["thymeleaf-extras-springsecurity4.version"] = "3.0.2.RELEASE"
+
 war {
     archiveName 'ril.war'
 }
@@ -107,6 +112,9 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-web')
 
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity4')
+
     // 使用 spring session + redis 共享 session
     compile('org.springframework.session:spring-session')
     compile('org.springframework.boot:spring-boot-starter-data-redis')
@@ -116,11 +124,11 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-cache")
     // ---------------------------------------
     
-
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     // compile("org.springframework.boot:spring-boot-starter-thymeleaf") //这个是使用 thymeleaf 2 版本。替换成 3
-    compile("org.thymeleaf:thymeleaf:3.0.9.RELEASE")
-    compile("org.thymeleaf:thymeleaf-spring4:3.0.9.RELEASE")
-    compile("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.2.2")
+//    compile("org.thymeleaf:thymeleaf:3.0.9.RELEASE")
+//    compile("org.thymeleaf:thymeleaf-spring4:3.0.9.RELEASE")
+//    compile("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.2.2")
     // end
 
     // 热部署插件
