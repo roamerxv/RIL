@@ -26,6 +26,7 @@ $().ready(function () {
         "processing": true,
         "serverSide": true,
         "stateSave": true,
+        "fixedHeader": true, //需要映入响应的 js 文件
         "ajax": {
             url: contextPath + "/system/businesslog/getDataWithPaged.json",
             type: 'post',
