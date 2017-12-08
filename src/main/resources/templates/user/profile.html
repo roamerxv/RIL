@@ -19,8 +19,8 @@
                             </div>
                         </div>
                         <div class="m-card-profile__details">
-                                <span class="m-card-profile__name" th:text="${UserEntity.name}"/>
-                            <a href="" class="m-card-profile__email m-link" th:text="${UserEntity.email}">
+                                <span class="m-card-profile__name" th:text="${SysUser.name}"/>
+                            <a href="" class="m-card-profile__email m-link" th:text="${SysUser.email}">
                             </a>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="m_user_profile_tab_1">
                         <form class="m-form m-form--fit m-form--label-align-right" id="profile_form" target="nm_iframe" onsubmit="fun_submit()">
-                            <input type="hidden" data-name="name" th:value="${UserEntity.name}">
+                            <input type="hidden" data-name="username" th:value="${SysUser.username}">
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group row">
                                     <div class="col-10 ml-auto">
@@ -76,49 +76,49 @@
                                     </div>
                                 </div>
                                 <div class="form-group m-form__group row">
-                                    <label for="fullName" class="col-2 col-form-label">
-                                        名字
+                                    <label for="name" class="col-2 col-form-label">
+                                        全名
                                     </label>
                                     <div class="col-7">
-                                        <input class="form-control m-input" type="text" id="fullName"  data-name="fullName"  th:value="${UserEntity.fullName}">
+                                        <input class="form-control m-input" type="text" id="name"  data-name="name"  th:value="${SysUser.name}">
                                     </div>
                                 </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="occupation" class="col-2 col-form-label">
-                                        职务
-                                    </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" id="occupation"  type="text" data-name="occupation" th:value="${UserEntity.occupation}">
-                                    </div>
-                                </div>
+                                <!--<div class="form-group m-form__group row">-->
+                                    <!--<label for="occupation" class="col-2 col-form-label">-->
+                                        <!--职务-->
+                                    <!--</label>-->
+                                    <!--<div class="col-7">-->
+                                        <!--<input class="form-control m-input" id="occupation"  type="text" data-name="occupation" th:value="${SysUser.occupation}">-->
+                                    <!--</div>-->
+                                <!--</div>-->
                                 <div class="form-group m-form__group row">
                                     <label for="email" class="col-2 col-form-label">
                                         email
                                     </label>
                                     <div class="col-7">
-                                        <input class="form-control m-input" id="email"  type="text"  data-name="email" th:value="${UserEntity.email}">
+                                        <input class="form-control m-input" id="email"  type="text"  data-name="email" th:value="${SysUser.email}">
                                     </div>
                                 </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="company" class="col-2 col-form-label">
-                                        公司
-                                    </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" id="company" data-name="company"
-                                               th:value="${UserEntity.company}">
-                                        <span class="m-form__help">
-                                            输入公司名字
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label for="phone" class="col-2 col-form-label">
-                                        联系电话
-                                    </label>
-                                    <div class="col-7">
-                                        <input class="form-control m-input" type="text" id="phone"  data-name="phone" th:value="${UserEntity.phone}">
-                                    </div>
-                                </div>
+                                <!--<div class="form-group m-form__group row">-->
+                                    <!--<label for="company" class="col-2 col-form-label">-->
+                                        <!--公司-->
+                                    <!--</label>-->
+                                    <!--<div class="col-7">-->
+                                        <!--<input class="form-control m-input" type="text" id="company" data-name="company"-->
+                                               <!--th:value="${SysUser.company}">-->
+                                        <!--<span class="m-form__help">-->
+                                            <!--输入公司名字-->
+                                        <!--</span>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group m-form__group row">-->
+                                    <!--<label for="phone" class="col-2 col-form-label">-->
+                                        <!--联系电话-->
+                                    <!--</label>-->
+                                    <!--<div class="col-7">-->
+                                        <!--<input class="form-control m-input" type="text" id="phone"  data-name="phone" th:value="${SysUser.phone}">-->
+                                    <!--</div>-->
+                                <!--</div>-->
                                 <!--<div class="m-form__seperator m-form__seperator&#45;&#45;dashed m-form__seperator&#45;&#45;space-2x"></div>-->
                                 <!--<div class="form-group m-form__group row">-->
                                     <!--<div class="col-10 ml-auto">-->
@@ -132,7 +132,7 @@
                                         <!--地址-->
                                     <!--</label>-->
                                     <!--<div class="col-7">-->
-                                        <!--<input class="form-control m-input" type="text" id="address" data-name="address" th:value="${UserEntity.address}">-->
+                                        <!--<input class="form-control m-input" type="text" id="address" data-name="address" th:value="${SysUser.address}">-->
                                     <!--</div>-->
                                 <!--</div>-->
                                 <!--<div class="form-group m-form__group row">-->
@@ -140,7 +140,7 @@
                                         <!--城市-->
                                     <!--</label>-->
                                     <!--<div class="col-7">-->
-                                        <!--<input class="form-control m-input" type="text" id="city" data-name="city" th:value="${UserEntity.city}">-->
+                                        <!--<input class="form-control m-input" type="text" id="city" data-name="city" th:value="${SysUser.city}">-->
                                     <!--</div>-->
                                 <!--</div>-->
                                 <!--<div class="form-group m-form__group row">-->
@@ -148,7 +148,7 @@
                                         <!--区县-->
                                     <!--</label>-->
                                     <!--<div class="col-7">-->
-                                        <!--<input class="form-control m-input" type="text" id="state" data-name="state"   th:value="${UserEntity.state}">-->
+                                        <!--<input class="form-control m-input" type="text" id="state" data-name="state"   th:value="${SysUser.state}">-->
                                     <!--</div>-->
                                 <!--</div>-->
                                 <!--<div class="form-group m-form__group row">-->
@@ -156,7 +156,7 @@
                                         <!--邮政编码-->
                                     <!--</label>-->
                                     <!--<div class="col-7">-->
-                                        <!--<input class="form-control m-input" type="text" id="postcode" data-name="postcode"  th:value="${UserEntity.postcode}">-->
+                                        <!--<input class="form-control m-input" type="text" id="postcode" data-name="postcode"  th:value="${SysUser.postcode}">-->
                                     <!--</div>-->
                                 <!--</div>-->
                                 <!--<div class="m-form__seperator m-form__seperator&#45;&#45;dashed m-form__seperator&#45;&#45;space-2x"></div>-->
@@ -172,7 +172,7 @@
                                         <!--Linkedin-->
                                     <!--</label>-->
                                     <!--<div class="col-7">-->
-                                        <!--<input class="form-control m-input" type="text" id="linkedin" th:value="${UserEntity.linkedin}">-->
+                                        <!--<input class="form-control m-input" type="text" id="linkedin" th:value="${SysUser.linkedin}">-->
                                     <!--</div>-->
                                 <!--</div>-->
                                 <!--<div class="form-group m-form__group row">-->
@@ -180,7 +180,7 @@
                                         <!--Facebook-->
                                     <!--</label>-->
                                     <!--<div class="col-7">-->
-                                        <!--<input class="form-control m-input" type="text" id="facebook" th:value="${UserEntity.facebook}">-->
+                                        <!--<input class="form-control m-input" type="text" id="facebook" th:value="${SysUser.facebook}">-->
                                     <!--</div>-->
                                 <!--</div>-->
                                 <!--<div class="form-group m-form__group row">-->
@@ -188,7 +188,7 @@
                                         <!--Twitter-->
                                     <!--</label>-->
                                     <!--<div class="col-7">-->
-                                        <!--<input class="form-control m-input" type="text" id="twitter" th:value="${UserEntity.twitter}">-->
+                                        <!--<input class="form-control m-input" type="text" id="twitter" th:value="${SysUser.twitter}">-->
                                     <!--</div>-->
                                 <!--</div>-->
                                 <!--<div class="form-group m-form__group row">-->
@@ -196,7 +196,7 @@
                                         <!--Instagram-->
                                     <!--</label>-->
                                     <!--<div class="col-7">-->
-                                        <!--<input class="form-control m-input" type="text" id="instagram" th:value="${UserEntity.instagram}">-->
+                                        <!--<input class="form-control m-input" type="text" id="instagram" th:value="${SysUser.instagram}">-->
                                     <!--</div>-->
                                 <!--</div>-->
                             </div>

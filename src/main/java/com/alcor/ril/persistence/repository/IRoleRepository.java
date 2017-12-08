@@ -1,4 +1,4 @@
-package com.alcor.ril.repository;
+package com.alcor.ril.persistence.repository;
 
 import com.alcor.ril.entity.RoleEntity;
 import org.springframework.cache.annotation.CacheConfig;

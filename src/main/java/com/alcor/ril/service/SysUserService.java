@@ -24,4 +24,36 @@ public class SysUserService implements ISysUserService {
     public Optional<SysUser> findByUsername(String username) {
         return sysUserRepository.findByUsername(username);
     }
+
+    @org.springframework.transaction.annotation.Transactional(readOnly = true)
+    public boolean login(SysUser sysUser) throws ServiceException {
+        Optional<SysUser> sysUserInDB = sysUserRepository.findByUsername(sysUser.getName());
+        if (sysUserInDB == null) {
+            throw new ServiceException("exception.user.login.user_not_exit");
+        }
+        if (sysUserInDB.get().getPassword().equalsIgnoreCase(sysUser.getPassword())) {
+            return true;
+        } else {
+            throw new ServiceException("exception.user.login.password_not_match");
+        }
+    }
+
+    public boolean modifyPassword(String userName, String oldPassword, String newPassword) throws ServiceException {
+        Optional<SysUser> sysUser = sysUserRepository.findByUsername(userName);
+        if (sysUser == null) {
+            throw new ServiceException("exception.user.login.user_not_exit");
+        }
+        if (!sysUser.get().getPassword().equals(oldPassword)) {
+            throw new ServiceException("exception.user.login.password_not_match");
+        }
+        sysUser.get().setPassword(newPassword);
+        sysUserRepository.save(sysUser.get());
+        return true;
+    }
+
+    // 在 repository 中使用 cache
+    //    @CachePut(key = "#a0.name")
+    public SysUser update(SysUser sysUser) throws ServiceException {
+        return sysUserRepository.save(sysUser);
+    }
 }

@@ -1,8 +1,8 @@
 package com.alcor.ril.service;
 
-import com.alcor.ril.controller.bean.SystemMenu;
+import com.alcor.ril.web.controller.bean.SystemMenu;
 import com.alcor.ril.entity.SystemMenuEntity;
-import com.alcor.ril.repository.ISystemMenuRepository;
+import com.alcor.ril.persistence.repository.ISystemMenuRepository;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

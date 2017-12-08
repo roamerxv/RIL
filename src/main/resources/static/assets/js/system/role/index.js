@@ -44,7 +44,8 @@ $().ready(function () {
                 "orderable": false,
                 "render": function (data, type, row, meta) {
                     return '<a href="javascript:fun_role_edit(\'' + row.id + '\')" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="编辑"><i class="la la-edit"></i></a>' +
-                        '<a href="javascript:fun_role_delete(\'' + row.id + '\')" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title=" 删除"><i class="la la-trash"></i></a>'
+                        '<a href="javascript:fun_role_delete(\'' + row.id + '\')" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="删除"><i class="la la-trash"></i></a>' +
+                        '<a href="javascript:fun_menu_assign(\'' + row.id + '\')" class="m-portlet__nav-link btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill" title="分配菜单"><i class="la la-th-list"></i></a>'
                 }
             }],
     }).on('select', function (e, dt, type, indexes) {
@@ -113,4 +114,10 @@ function fun_role_delete(id){
             }
         }
     });
+}
+
+
+function fun_menu_assign(id) {
+    role_id = id ;
+    $('#m_modal_assign_menu').modal('show');
 }

@@ -1,4 +1,4 @@
-package com.alcor.ril.controller.bean;
+package com.alcor.ril.web.controller.bean;
 
 import com.alcor.ril.entity.SystemMenuEntity;
 import lombok.Data;

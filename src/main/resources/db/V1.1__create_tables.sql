@@ -76,67 +76,67 @@ CREATE TABLE `system_configure` (
 
 INSERT INTO `system_configure` VALUES ('banner_message', '多谢你如此精彩耀眼，做我平淡岁月里星辰', '用户的 banner 信息', 1);
 
-# 用户信息表
-CREATE TABLE `user` (
-  `name`       VARCHAR(36)
-               COLLATE utf8_bin NOT NULL
-  COMMENT '用户名',
-  `full_name`  VARCHAR(128)
-               COLLATE utf8_bin
-  COMMENT '用户全名',
-  `occupation` VARCHAR(128)
-               COLLATE utf8_bin
-  COMMENT '职务',
-  `company`    VARCHAR(128)
-               COLLATE utf8_bin
-  COMMENT '公司名字',
-  `phone`      VARCHAR(128)
-               COLLATE utf8_bin
-  COMMENT '电话号码',
-  `address`    VARCHAR(128)
-               COLLATE utf8_bin
-  COMMENT '地址',
-  `city`       VARCHAR(128)
-               COLLATE utf8_bin
-  COMMENT '城市',
-  `state`      VARCHAR(128)
-               COLLATE utf8_bin
-  COMMENT '区县',
-  `postcode`   VARCHAR(128)
-               COLLATE utf8_bin
-  COMMENT '邮政编码',
-  `linkedin`   VARCHAR(128)
-               COLLATE utf8_bin
-  COMMENT 'linkedin',
-  `facebook`   VARCHAR(128)
-               COLLATE utf8_bin
-  COMMENT 'Facebook',
-  `twitter`    VARCHAR(128)
-               COLLATE utf8_bin
-  COMMENT 'Twitter',
-  `instagram`  VARCHAR(128)
-               COLLATE utf8_bin
-  COMMENT 'Instagram',
-  `email`      VARCHAR(36)
-               COLLATE utf8_bin
-  COMMENT 'mail地址',
-  `avatar`     VARCHAR(128)
-               COLLATE utf8_bin
-  COMMENT '头像文件 ID',
-  `passwd`     VARCHAR(36)
-               COLLATE utf8_bin
-  COMMENT '密码',
-  PRIMARY KEY (`name`)
-)
-  ENGINE = InnoDB
-  DEFAULT CHARSET = utf8
-  COLLATE = utf8_bin;
+-- # 用户信息表
+-- CREATE TABLE `user` (
+--   `name`       VARCHAR(36)
+--                COLLATE utf8_bin NOT NULL
+--   COMMENT '用户名',
+--   `full_name`  VARCHAR(128)
+--                COLLATE utf8_bin
+--   COMMENT '用户全名',
+--   `occupation` VARCHAR(128)
+--                COLLATE utf8_bin
+--   COMMENT '职务',
+--   `company`    VARCHAR(128)
+--                COLLATE utf8_bin
+--   COMMENT '公司名字',
+--   `phone`      VARCHAR(128)
+--                COLLATE utf8_bin
+--   COMMENT '电话号码',
+--   `address`    VARCHAR(128)
+--                COLLATE utf8_bin
+--   COMMENT '地址',
+--   `city`       VARCHAR(128)
+--                COLLATE utf8_bin
+--   COMMENT '城市',
+--   `state`      VARCHAR(128)
+--                COLLATE utf8_bin
+--   COMMENT '区县',
+--   `postcode`   VARCHAR(128)
+--                COLLATE utf8_bin
+--   COMMENT '邮政编码',
+--   `linkedin`   VARCHAR(128)
+--                COLLATE utf8_bin
+--   COMMENT 'linkedin',
+--   `facebook`   VARCHAR(128)
+--                COLLATE utf8_bin
+--   COMMENT 'Facebook',
+--   `twitter`    VARCHAR(128)
+--                COLLATE utf8_bin
+--   COMMENT 'Twitter',
+--   `instagram`  VARCHAR(128)
+--                COLLATE utf8_bin
+--   COMMENT 'Instagram',
+--   `email`      VARCHAR(36)
+--                COLLATE utf8_bin
+--   COMMENT 'mail地址',
+--   `avatar`     VARCHAR(128)
+--                COLLATE utf8_bin
+--   COMMENT '头像文件 ID',
+--   `passwd`     VARCHAR(36)
+--                COLLATE utf8_bin
+--   COMMENT '密码',
+--   PRIMARY KEY (`name`)
+-- )
+--   ENGINE = InnoDB
+--   DEFAULT CHARSET = utf8
+--   COLLATE = utf8_bin;
 
-SET FOREIGN_KEY_CHECKS = 1;
-
-INSERT INTO `user`
-VALUES ('admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1');
-COMMIT;
+-- SET FOREIGN_KEY_CHECKS = 1;
+--
+-- INSERT INTO `user`
+-- VALUES ('admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1');
+-- COMMIT;
 
 # 事件表
 CREATE TABLE `event` (

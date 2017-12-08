@@ -25,7 +25,6 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 public class RilApplication  extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
-        log.debug("Hello......");
         SpringApplication.run(RilApplication.class, args);
     }
 

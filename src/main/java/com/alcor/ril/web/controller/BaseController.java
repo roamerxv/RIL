@@ -7,7 +7,7 @@
  *
  */
 
-package com.alcor.ril.controller;
+package com.alcor.ril.web.controller;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

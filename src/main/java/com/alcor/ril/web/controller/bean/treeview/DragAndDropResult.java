@@ -1,4 +1,4 @@
-package com.alcor.ril.controller.bean.treeview;
+package com.alcor.ril.web.controller.bean.treeview;
 
 import lombok.Data;
 

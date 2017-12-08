@@ -1,4 +1,4 @@
-package com.alcor.ril.controller;
+package com.alcor.ril.web.controller;
 
 import com.alcor.ril.entity.RoleEntity;
 import com.alcor.ril.service.RoleService;

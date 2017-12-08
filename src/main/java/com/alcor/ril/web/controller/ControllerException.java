@@ -7,7 +7,7 @@
  *
  */
 
-package com.alcor.ril.controller;
+package com.alcor.ril.web.controller;
 
 import com.alcor.ril.ProjectException;
 import org.springframework.validation.BindingResult;

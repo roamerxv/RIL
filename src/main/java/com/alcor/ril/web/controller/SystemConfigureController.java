@@ -1,4 +1,4 @@
-package com.alcor.ril.controller;
+package com.alcor.ril.web.controller;
 
 import com.alcor.ril.entity.SystemConfigureEntity;
 import com.alcor.ril.service.ServiceException;
@@ -24,7 +24,6 @@ import java.util.List;
 @Slf4j
 @RestController("com.alcor.ril.controller.SystemConfigureController")
 @SessionCheckKeyword(checkIt = true)
-@RequestMapping("/admin")
 public class SystemConfigureController extends BaseController {
 
     @Autowired

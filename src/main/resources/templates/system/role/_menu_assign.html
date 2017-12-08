@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="assign_menu_in_modal">
+    <!-- begin:: Model-->
+    <div class="modal fade" id="m_modal_assign_menu" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        分配菜单
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                        ×
+                    </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <!--begin::Portlet-->
+                            <div class="m-portlet">
+                                <div class="m-portlet__head">
+                                    <div class="m-portlet__head-caption">
+                                        <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                    <i class="la la-gear"></i>
+                                </span>
+                                            <h3 class="m-portlet__head-text">
+                                                系统全部菜单项
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--begin::Form-->
+                                <form class="m-form">
+                                    <div class="m-portlet__body">
+                                        <div class="m-form__section m-form__section--first">
+                                            <div id="jstree_system_menus_div">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <!--end::Form-->
+                            </div>
+                            <!--end::Portlet-->
+                        </div>
+                        <div class="col-lg-6">
+                            <!--begin::Portlet-->
+                            <div class="m-portlet">
+                                <div class="m-portlet__head">
+                                    <div class="m-portlet__head-caption">
+                                        <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                    <i class="la la-gear"></i>
+                                </span>
+                                            <h3 class="m-portlet__head-text">
+                                                角色菜单项
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--begin::Form-->
+                                <form class="m-form m-form--fit" id="submit_form">
+                                    <div class="m-portlet__body">
+
+                                    </div>
+                                </form>
+                                <!--end::Form-->
+                            </div>
+                            <!--end::Portlet-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- end::Model-->
+
+</div>
+</body>
+</html>

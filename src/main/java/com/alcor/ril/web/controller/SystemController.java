@@ -1,10 +1,10 @@
-package com.alcor.ril.controller;
+package com.alcor.ril.web.controller;
 
-import com.alcor.ril.controller.bean.ServerInfo;
-import com.alcor.ril.controller.bean.SystemMenu;
-import com.alcor.ril.controller.bean.treeview.DragAndDropResult;
-import com.alcor.ril.controller.bean.treeview.Item;
-import com.alcor.ril.controller.bean.treeview.ItemState;
+import com.alcor.ril.web.controller.bean.ServerInfo;
+import com.alcor.ril.web.controller.bean.SystemMenu;
+import com.alcor.ril.web.controller.bean.treeview.DragAndDropResult;
+import com.alcor.ril.web.controller.bean.treeview.Item;
+import com.alcor.ril.web.controller.bean.treeview.ItemState;
 import com.alcor.ril.entity.SystemMenuEntity;
 import com.alcor.ril.service.ServiceException;
 import com.alcor.ril.service.SystemMenuService;
@@ -31,7 +31,6 @@ import java.util.UUID;
 @Slf4j
 @RestController("com.alcor.cli.controller.SystemController")
 @SessionCheckKeyword
-@RequestMapping("/admin")
 public class SystemController extends BaseController {
 
     @Autowired

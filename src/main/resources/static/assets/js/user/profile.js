@@ -14,7 +14,7 @@ function fun_submit() {
     $.ajax({
         type: 'post',
         data: JSON.stringify(userEntity),
-        url: contextPath + 'user/' + userEntity.name + ".json",
+        url: contextPath + 'user/' + userEntity.username + ".json",
         async: true,//默认为true
         contentType: "application/json",
         dataType: 'json',//默认为预期服务器返回的数据类型
