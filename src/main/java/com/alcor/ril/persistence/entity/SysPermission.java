@@ -16,6 +16,10 @@ public class SysPermission extends BaseEntity {
     //资源路径
     @Getter @Setter private String url;
 
+    // http method
+    @Column(columnDefinition="enum('ALL','GET','POST','PUT','DELETE')")
+    @Getter @Setter private String method = "GET";
+
     //资源类型，[menu|button]
     @Column(columnDefinition="enum('menu','button')")
     @Getter @Setter private String resourceType;

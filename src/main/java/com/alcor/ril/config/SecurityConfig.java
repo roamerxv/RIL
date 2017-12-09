@@ -3,6 +3,8 @@ package com.alcor.ril.config;
 import com.alcor.ril.security.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +15,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
@@ -43,9 +47,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers("/", "/index", "/dashboard/index").permitAll()
-                    .antMatchers("/user/registration").permitAll()
-                    .antMatchers("/admin/**").hasRole("ADMIN")
+//                    .antMatchers("/user/registration").permitAll()
+//                    .antMatchers("/admin/**").hasRole("ADMIN")
                     .anyRequest().authenticated()
+                    .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+                        @Override
+                        public <T extends FilterSecurityInterceptor> T postProcess(T fsi) {
+                            fsi.setSecurityMetadataSource(mySecurityMetadataSource());
+                            fsi.setAccessDecisionManager(myAccessDecisionManager());
+                            return fsi;
+                        }
+                    })
                     .and()
                 .formLogin()
                     .loginPage("/login")
@@ -119,6 +131,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public LogoutSuccessHandler logoutSuccessHandler() {
         return new CustomLogoutSuccessHandler("/login");
+    }
+
+    @Bean
+    public FilterInvocationSecurityMetadataSource mySecurityMetadataSource() {
+        return new MyFilterInvocationSecurityMetadataSource();
+    }
+
+    @Bean
+    public AccessDecisionManager myAccessDecisionManager() {
+        return new MyAccessDecisionManager();
     }
 
 }

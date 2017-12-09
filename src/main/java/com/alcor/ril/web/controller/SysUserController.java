@@ -173,10 +173,18 @@ public class SysUserController extends  BaseController{
     public String showAvatar() throws ControllerException {
         // 从性能角度考虑，不再使用文件下载的方式显示用户头像
         Resource resource = new ClassPathResource(AVATAR_FILE_FOLDER_PATH);
-        String userAvatarID = sysUserService.findByUsername(super.getUserID()).get().getAvatar();
+        String avatarUrl = ConfigHelper.getConfig().getString("System.user.avatar.defaultFile");
+
+        String userAvatarID = null;
+        Optional<SysUser> user = sysUserService.findByUsername(super.getUserID());
+        if(user.isPresent()) {
+            userAvatarID = user.get().getAvatar();
+        } else {
+            return avatarUrl;
+        }
+        
         StringBuilder avatarPath = null;
         try {
-            String avatarUrl = ConfigHelper.getConfig().getString("System.user.avatar.defaultFile");
             if (StringUtils.isEmpty(userAvatarID)) {
                 log.debug("头像没有设置，使用缺省的头像文件");
                 return avatarUrl;
