@@ -135,6 +135,8 @@ dependencies {
     compile("org.springframework.boot:spring-boot-devtools") //  启动 devtolls
     // end
 
+    compile('com.google.guava:guava:23.5-jre')
+    
     runtime('mysql:mysql-connector-java')
     compileOnly('org.projectlombok:lombok')
     testCompile('org.springframework.boot:spring-boot-starter-test')

@@ -53,7 +53,25 @@ public class MyUserDetailService implements UserDetailsService {
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(Collection<SysRole> roles) {
-        return getGrantedAuthorities(getPrivileges(roles));
+//        return getGrantedAuthorities(getPrivileges(roles));
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        List<SysPermission> collection = new ArrayList<>();
+        for (SysRole role : roles) {
+            log.debug("role={},avaiable={}", role.getRole(), role.getAvailable());
+            if(role.getAvailable()) {
+                collection.addAll(role.getPermissions());
+            }
+        }
+        for (SysPermission permission : collection) {
+            log.debug("permission={},avaiable={}", permission.getPermission(), permission.getAvailable());
+            if(permission.getAvailable()) {
+                authorities.add(new MyGrantedAuthority(
+                        permission.getPermission().toUpperCase(),
+                        permission.getUrl(),
+                        permission.getMethod()));
+            }
+        }
+        return authorities;
     }
 
     private List<GrantedAuthority> getGrantedAuthorities(List<String> privileges) {
