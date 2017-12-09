@@ -61,3 +61,4 @@ logging:
       com.alcor.ril: DEBUG
       org.springframework.security: INFO
       org.hibernate.type: info
+      pers.roamer.boracay: debug
