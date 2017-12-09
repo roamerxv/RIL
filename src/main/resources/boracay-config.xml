@@ -41,7 +41,7 @@
     <aop:config>
         <aop:pointcut
                 id="catchControllerExceptionPointcut"
-                expression="execution(* pers.roamer.boracay.controller..*.*(..)) || execution(* com.alcor.ril.controller..*.*(..))"/>
+                expression="execution(* pers.roamer.boracay.controller..*.*(..)) || execution(* com.alcor.ril.web.controller..*.*(..))"/>
         <aop:aspect ref="catchControllerExceptionAspect">
             <aop:after-throwing throwing="ex" method="writeToHttpResponse"
                                 pointcut-ref="catchControllerExceptionPointcut"/>
@@ -79,19 +79,18 @@
     <!-- ④配置项目中需要进行短信验证码验证的功能 end-->
 
     <!-- ⑤配置项目中需要进行session check，确定是否登录的功能 begin-->
-    <!--
     <bean id="sessionCheckKeywordAspect"
           class="pers.roamer.boracay.aspect.httprequest.SessionCheckKeywordAspect"></bean>
     <aop:config>
         <aop:pointcut
                 id="sessionKeywordCheckPointcut"
-                expression="execution(* com.alcor.ril.controller..*.*(..))"/>
+                expression="execution(* com.alcor.ril.web.controller..*.*(..))"/>
         <aop:aspect ref="sessionCheckKeywordAspect">
             <aop:before method="sessionKeywordCheck"
                         pointcut-ref="sessionKeywordCheckPointcut"/>
         </aop:aspect>
     </aop:config>
-    -->
+
     <!-- ⑤配置项目中需要进行session check，确定是否登录的功能  end-->
 
 

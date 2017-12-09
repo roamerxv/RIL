@@ -199,40 +199,6 @@ public class SysUserController extends  BaseController{
             e.printStackTrace();
             throw new ControllerException(e.getMessage());
         }
-
-
-//        String userID = super.getUserID();
-//        UserEntity userEntity = userService.findByName(userID);
-//        String avatarId = userEntity.getAvatar();
-//        log.debug("头像的ID 是{}", avatarId);
-//        String saveFilePath = ConfigHelper.getConfig().getString("System.UploadFile.saveFilePath") + File.separator + avatarId;
-//        File[] listFiles = new File(saveFilePath).listFiles();
-//        try {
-//            File avatarFile = null;
-//            if (listFiles == null) {
-//                log.debug("头像没有设置，使用缺省的头像文件");
-//                avatarFile = new ClassPathResource("/static/assets/img/logo/logo.png").getFile();
-//            } else if (listFiles.length <= 0) {
-//                log.debug("头像文件不存，使用缺省的头像文件");
-//                avatarFile = new ClassPathResource("/static/assets/img/logo/logo.png").getFile();
-//            } else {
-//                log.debug("在 id 的目录下发现多个文件，取第一个文件");
-//                avatarFile = listFiles[0];
-//            }
-//            log.debug(avatarFile);
-//            FileInputStream inputStream = new FileInputStream(avatarFile);
-//            byte[] data = new byte[(int) avatarFile.length()];
-//            inputStream.read(data);
-//            inputStream.close();
-//            response.setContentType("image/png");
-//            OutputStream stream = response.getOutputStream();
-//            stream.write(data);
-//            stream.flush();
-//            stream.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            throw new ControllerException(e.getMessage());
-//        }
     }
 
     @RequestMapping(value = "/user/modify_password")
