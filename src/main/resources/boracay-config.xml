@@ -24,7 +24,7 @@
     <aop:config>
         <aop:pointcut
                 id="logControllerPointcut"
-                expression="execution(* com.alcor.ril.controller..*.*(..)) &amp;&amp; !execution(* com.alcor.ril.web.controller.SysUserController.adminLogout(..))"/>
+                expression="execution(* com.alcor.ril.web.controller..*.*(..)) &amp;&amp; !execution(* com.alcor.ril.web.controller.SysUserController.adminLogout(..))"/>
         <aop:pointcut
                 id="beforeLogControllerPointcut"
                 expression="execution(* com.alcor.ril.web.controller.SysUserController.adminLogout(..))"/>
