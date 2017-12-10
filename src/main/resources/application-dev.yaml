@@ -59,5 +59,6 @@ logging:
 #    config: classpath:logback-${spring.profiles.active}.xml
     level:
       com.alcor.ril: DEBUG
+      pers.roamer.boracay.aspect: DEBUG
       org.springframework.security: INFO
       org.hibernate.type: info
