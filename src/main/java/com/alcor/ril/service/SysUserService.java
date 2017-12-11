@@ -2,7 +2,9 @@ package com.alcor.ril.service;
 
 import com.alcor.ril.persistence.entity.SysUser;
 import com.alcor.ril.persistence.repository.SysUserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,9 +16,14 @@ import java.util.Optional;
  * Date: 2017/12/8
  * Time: 00:37
  */
+@Slf4j
 @Service
 @Transactional
 public class SysUserService implements ISysUserService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
     private SysUserRepository sysUserRepository;
 
@@ -43,10 +50,11 @@ public class SysUserService implements ISysUserService {
         if (sysUser == null) {
             throw new ServiceException("exception.user.login.user_not_exit");
         }
-        if (!sysUser.get().getPassword().equals(oldPassword)) {
+        log.debug("表单中的密码是：[{}],输入的密码是:[{}]",sysUser.get().getPassword(),passwordEncoder.encode(oldPassword));
+        if (!sysUser.get().getPassword().equals(passwordEncoder.encode(oldPassword))) {
             throw new ServiceException("exception.user.login.password_not_match");
         }
-        sysUser.get().setPassword(newPassword);
+        sysUser.get().setPassword(passwordEncoder.encode(newPassword));
         sysUserRepository.save(sysUser.get());
         return true;
     }

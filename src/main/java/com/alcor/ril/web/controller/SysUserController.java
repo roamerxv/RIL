@@ -35,7 +35,6 @@ import java.util.Optional;
  */
 @Slf4j
 @Controller
-//@RequestMapping("/user")
 public class SysUserController extends  BaseController{
 
     static private String AVATAR_FILE_FOLDER_PATH = "/static/assets/img/avatar";
