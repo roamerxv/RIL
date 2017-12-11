@@ -11,9 +11,9 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 @CacheConfig(cacheNames = "spring:cache:SystemPermission")
-public interface ISysPermissionRepository extends JpaRepository<SysPermissionEntity, Long> {
+public interface ISysPermissionRepository extends JpaRepository<SysPermissionEntity, String> {
     @Cacheable(key = "'ListByParentId_'.concat(#a0)")
-    public List<SysPermissionEntity> findAllByParentIdOrderByOrderNum(Long parentId);
+    public List<SysPermissionEntity> findAllByParentIdOrderByOrderNum(String parentId);
 
     //    @CacheEvict(key = "'ListByParentId_'.concat(#a0.parentId)")
     @CacheEvict(allEntries = true) //为了避免麻烦。把所有spring:cache:SystemMenuEntity开头的 cache 都清除
@@ -22,5 +22,5 @@ public interface ISysPermissionRepository extends JpaRepository<SysPermissionEnt
 
     @Modifying
     @Query("update SysPermissionEntity  a set a.orderNum = :orderNum WHERE  a.id = :id ")
-    public int changeOrderNumWithId(@Param("id") Long id, @Param("orderNum") int orderNum);
+    public int changeOrderNumWithId(@Param("id") String id, @Param("orderNum") int orderNum);
 }

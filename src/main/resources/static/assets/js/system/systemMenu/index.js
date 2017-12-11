@@ -123,6 +123,7 @@ $().ready(function () {
         systemMenu.parentId = $("#menu_parent_id").val();
         systemMenu.id = $("#menu_id").val();
         systemMenu.name = $("#menu_name").val();
+        systemMenu.permission = $("#menu_permission").val();
         systemMenu.url = $("#menu_url").val();
         systemMenu.clazz = $("#menu_clazz").val();
         systemMenu.orderNum = $("#menu_order_num").val();
@@ -195,6 +196,7 @@ function fun_render_jstree() {
 };
 
 function fun_get_menu_item_info(menu_info) {
+    Logger.debug(menu_info);
     if (menu_info.id === undefined) {
         $("button[name=btn_update]").attr('disabled', 'disabled');
         $("#menu_id").val("0");
@@ -203,6 +205,7 @@ function fun_get_menu_item_info(menu_info) {
         $("button[name=btn_update]").removeAttr('disabled');
     }
     $("#menu_name").val(menu_info.text);
+    $("#menu_permission").val(menu_info.permission);
     $("#menu_url").val(menu_info.url);
     $("#menu_clazz").val(menu_info.icon);
     $("#menu_parent_id").val(menu_info.parent);

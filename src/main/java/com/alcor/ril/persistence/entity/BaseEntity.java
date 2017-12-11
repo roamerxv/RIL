@@ -17,8 +17,7 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 public abstract class BaseEntity  implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @Setter protected Long id;
+    @Getter @Setter protected String id;
 
     @CreatedDate
     @Column(name = "gmt_create", nullable = false, insertable = true, updatable = false)

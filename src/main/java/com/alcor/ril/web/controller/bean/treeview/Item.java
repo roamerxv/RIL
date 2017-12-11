@@ -13,10 +13,11 @@ import java.util.List;
 @Data
 public class Item {
     String text;
-    Long id;
+    String id;
     String icon;
-    Long parent;
+    String parent;
     String url;
+    String permission;
     int orderNum;
     List<Item> children;
     ItemState state;

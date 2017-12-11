@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Data
 public class DragAndDropResult {
-    public Long id;
-    public Long parentId;
-    public List<Long> children;
+    public String id;
+    public String parentId;
+    public List<String> children;
 }

@@ -1,5 +1,6 @@
 package com.alcor.ril.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,7 +29,7 @@ public class SysPermissionEntity extends BaseEntity {
     @Getter @Setter private String name;
 
     //父编号
-    @Getter @Setter private Long parentId;
+    @Getter @Setter private String parentId;
 
     //父编号列表
     @Getter @Setter private String parentIds;
@@ -44,6 +45,7 @@ public class SysPermissionEntity extends BaseEntity {
     @Getter @Setter Integer orderNum = 0 ;
 
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name="ril_role_permission",joinColumns={@JoinColumn(name="permissionId")},inverseJoinColumns={@JoinColumn(name="roleId")})
     @Getter @Setter private List<SysRole> roles;

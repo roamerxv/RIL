@@ -31,10 +31,10 @@ public class SystemMenuService {
      * @throws ServiceException
      */
     public List<SystemMenu> getSystemMenusWithRoot() throws ServiceException {
-        return getSystemMenusWithParent(new Long(0));
+        return getSystemMenusWithParent("0");
     }
 
-    public List<SystemMenu> getSystemMenusWithParent(Long parentId) throws ServiceException {
+    public List<SystemMenu> getSystemMenusWithParent(String parentId) throws ServiceException {
         List<SysPermissionEntity> sysPermissionEntityList = iSysPermissionRepository.findAllByParentIdOrderByOrderNum(parentId);
         if (sysPermissionEntityList == null) {
             return null;
@@ -51,7 +51,7 @@ public class SystemMenuService {
     }
 
 
-    public SysPermissionEntity getMenuItemById(Long id) throws ServiceException {
+    public SysPermissionEntity getMenuItemById(String id) throws ServiceException {
         return iSysPermissionRepository.findOne(id);
     }
 
@@ -67,7 +67,7 @@ public class SystemMenuService {
      * @throws ServiceException
      */
     @Transactional
-    public SysPermissionEntity updateParent(Long id, Long pid) throws ServiceException {
+    public SysPermissionEntity updateParent(String id, String pid) throws ServiceException {
         SysPermissionEntity sysPermissionEntity = iSysPermissionRepository.findOne(id);
         sysPermissionEntity.setParentId(pid);
         iSysPermissionRepository.save(sysPermissionEntity);
@@ -75,7 +75,7 @@ public class SystemMenuService {
     }
 
     @Transactional
-    public void resort(List<Long> children) throws  ServiceException{
+    public void resort(List<String> children) throws  ServiceException{
         for (int i=0 ; i < children.size() ;i++){
             log.debug("开始把id 是{}的菜单项下的 sortNum 改成{}",children.get(i),i);
             iSysPermissionRepository.changeOrderNumWithId(children.get(i),i);

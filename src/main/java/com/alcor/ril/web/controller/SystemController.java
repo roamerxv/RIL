@@ -109,6 +109,7 @@ public class SystemController extends BaseController {
             treeViewItem.setIcon(item.getMenuItem().getClazz());
             treeViewItem.setUrl(item.getMenuItem().getUrl());
             treeViewItem.setOrderNum(item.getMenuItem().getOrderNum());
+            treeViewItem.setPermission(item.getMenuItem().getPermission());
             ItemState itemState = new ItemState();
             itemState.setOpened(true);
             treeViewItem.setState(itemState);
@@ -129,18 +130,19 @@ public class SystemController extends BaseController {
      * @throws ControllerException
      */
     @PutMapping("/systemMenu")
-    public SysPermissionEntity updateSystemMenuItem(@RequestBody SysPermissionEntity systemMenuEntity) throws ControllerException {
-        log.debug("开始 更新 id 是：{}的菜单项信息", systemMenuEntity.getId());
+    public SysPermissionEntity updateSystemMenuItem(@RequestBody SysPermissionEntity sysPermissionEntity) throws ControllerException {
+        log.debug("开始 更新 id 是：{}的菜单项信息", sysPermissionEntity.getId());
         try {
-            SysPermissionEntity systemMenuEntityInDB = systemMenuService.getMenuItemById(systemMenuEntity.getId());
-            if (systemMenuEntityInDB == null) {
+            SysPermissionEntity sysPermissionEntityInDB = systemMenuService.getMenuItemById(sysPermissionEntity.getId());
+            if (sysPermissionEntityInDB == null) {
                 throw new ControllerException("要更新的菜单项不存在!");
             }
-            systemMenuEntityInDB.setUrl(systemMenuEntity.getUrl());
-            systemMenuEntityInDB.setName(systemMenuEntity.getName());
-            systemMenuEntityInDB.setClazz(systemMenuEntity.getClazz());
-            systemMenuEntityInDB.setOrderNum(systemMenuEntity.getOrderNum());
-            return systemMenuService.update(systemMenuEntityInDB);
+            sysPermissionEntityInDB.setUrl(sysPermissionEntity.getUrl());
+            sysPermissionEntityInDB.setName(sysPermissionEntity.getName());
+            sysPermissionEntityInDB.setClazz(sysPermissionEntity.getClazz());
+            sysPermissionEntityInDB.setOrderNum(sysPermissionEntity.getOrderNum());
+            sysPermissionEntityInDB.setPermission(sysPermissionEntity.getPermission());
+            return systemMenuService.update(sysPermissionEntityInDB);
         } catch (ServiceException e) {
             log.error(e.getMessage(), e);
             throw new ControllerException(e.getMessage());
@@ -180,11 +182,11 @@ public class SystemController extends BaseController {
      * @throws ControllerException
      */
     @PostMapping("/systemMenu")
-    public SysPermissionEntity getSystemMenuItem(@RequestBody SysPermissionEntity systemMenuEntity) throws ControllerException {
+    public SysPermissionEntity getSystemMenuItem(@RequestBody SysPermissionEntity sysPermissionEntity) throws ControllerException {
         log.debug("开始 增加一个菜单项信息");
         try {
-            systemMenuEntity.setParentId(systemMenuEntity.getId());
-            return systemMenuService.update(systemMenuEntity);
+            sysPermissionEntity.setParentId(sysPermissionEntity.getId());
+            return systemMenuService.update(sysPermissionEntity);
         } catch (ServiceException e) {
             log.error(e.getMessage(), e);
             throw new ControllerException(e.getMessage());
