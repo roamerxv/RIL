@@ -1,7 +1,7 @@
 package com.alcor.ril.security;
 
 import com.alcor.ril.persistence.entity.SysPermissionEntity;
-import com.alcor.ril.persistence.entity.SysRole;
+import com.alcor.ril.persistence.entity.SysRoleEntity;
 import com.alcor.ril.persistence.entity.SysUser;
 import com.alcor.ril.persistence.repository.SysUserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -52,11 +52,11 @@ public class MyUserDetailService implements UserDetailsService {
                 getAuthorities(user.get().getRoles()));
     }
 
-    private Collection<? extends GrantedAuthority> getAuthorities(Collection<SysRole> roles) {
+    private Collection<? extends GrantedAuthority> getAuthorities(Collection<SysRoleEntity> roles) {
 //        return getGrantedAuthorities(getPrivileges(roles));
         List<GrantedAuthority> authorities = new ArrayList<>();
         List<SysPermissionEntity> collection = new ArrayList<>();
-        for (SysRole role : roles) {
+        for (SysRoleEntity role : roles) {
             log.debug("role={},avaiable={}", role.getRole(), role.getAvailable());
             if(role.getAvailable()) {
                 collection.addAll(role.getPermissions());
@@ -82,10 +82,10 @@ public class MyUserDetailService implements UserDetailsService {
         return authorities;
     }
 
-    private List<String> getPrivileges(Collection<SysRole> roles) {
+    private List<String> getPrivileges(Collection<SysRoleEntity> roles) {
         List<String> privileges = new ArrayList<>();
         List<SysPermissionEntity> collection = new ArrayList<>();
-        for (SysRole role : roles) {
+        for (SysRoleEntity role : roles) {
             log.debug("role={},avaiable={}", role.getRole(), role.getAvailable());
             if(role.getAvailable()) {
                 privileges.add(role.getRole().toUpperCase());

@@ -1,6 +1,6 @@
 $().ready(function () {
     $("#m_modal_role_edit").on('hidden.bs.modal', function () {
-        $("#role-name").val("");
+        $("#role-role").val("");
         $("#role-description").val("");
     });
 
@@ -23,7 +23,7 @@ $().ready(function () {
                 },
                 success: function (data, textStatus, jqXHR) {
                     $("#role-id").val(data.id);
-                    $("#role-name").val(data.name);
+                    $("#role-role").val(data.role);
                     $("#role-description").val(data.description);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -48,7 +48,7 @@ $().ready(function () {
         }
         var role = {};
         role.id = role_id;
-        role.name = $("#role-name").val();
+        role.role = $("#role-role").val();
         role.description = $("#role-description").val();
         $.ajax({
             type: ajax_type,

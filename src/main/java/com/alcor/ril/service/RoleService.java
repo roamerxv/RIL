@@ -1,6 +1,6 @@
 package com.alcor.ril.service;
 
-import com.alcor.ril.entity.RoleEntity;
+import com.alcor.ril.persistence.entity.SysRoleEntity;
 import com.alcor.ril.persistence.repository.IRoleRepository;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -26,16 +26,16 @@ public class RoleService {
     IRoleRepository iRoleRepository;
 
     @Transactional(readOnly = true)
-    public List<RoleEntity> findAll() throws ServiceException {
+    public List<SysRoleEntity> findAll() throws ServiceException {
         return iRoleRepository.findAll();
     }
 
-    public RoleEntity findById(String id) throws ServiceException {
+    public SysRoleEntity findById(String id) throws ServiceException {
         return iRoleRepository.findOne(id);
     }
 
 
-    public RoleEntity update(RoleEntity roleEntity) throws ServiceException {
+    public SysRoleEntity update(SysRoleEntity roleEntity) throws ServiceException {
         return iRoleRepository.save(roleEntity);
     }
 

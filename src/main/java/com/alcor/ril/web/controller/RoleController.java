@@ -1,6 +1,6 @@
 package com.alcor.ril.web.controller;
 
-import com.alcor.ril.entity.RoleEntity;
+import com.alcor.ril.persistence.entity.SysRoleEntity;
 import com.alcor.ril.service.RoleService;
 import com.alcor.ril.service.ServiceException;
 import com.fasterxml.jackson.databind.ser.Serializers;
@@ -50,10 +50,10 @@ public class RoleController extends Serializers.Base {
      */
     @GetMapping(value = "/role/getData4Datatables")
     @ResponseBody
-    public List<RoleEntity> getAllRoleInfo4Datatables() throws ControllerException {
+    public List<SysRoleEntity> getAllRoleInfo4Datatables() throws ControllerException {
         log.debug("获取jquery datatales 用的所有的角色信息");
         try {
-            List<RoleEntity> roleEntityList = roleService.findAll();
+            List<SysRoleEntity> roleEntityList = roleService.findAll();
             return roleEntityList;
         } catch (ServiceException e) {
             log.error(e.getMessage(), e);
@@ -68,7 +68,7 @@ public class RoleController extends Serializers.Base {
      * @throws ControllerException
      */
     @GetMapping(value = "/role/{id}")
-    public RoleEntity getById(@PathVariable String id) throws ControllerException {
+    public SysRoleEntity getById(@PathVariable String id) throws ControllerException {
         log.debug("获取 id 是{}的角色信息", id);
         try {
             return roleService.findById(id);
@@ -86,12 +86,12 @@ public class RoleController extends Serializers.Base {
      */
     @PutMapping(value = "/role")
     @ResponseBody
-    public String udpate(@RequestBody RoleEntity roleEntity) throws ControllerException {
-        log.debug("要更新的角色 id 是{},名称是{}",roleEntity.getId(),roleEntity.getName());
-        RoleEntity roleEntityInDb = null;
+    public String udpate(@RequestBody SysRoleEntity roleEntity) throws ControllerException {
+        log.debug("要更新的角色 id 是{},名称是{}",roleEntity.getId(),roleEntity.getRole());
+        SysRoleEntity roleEntityInDb = null;
         try {
             roleEntityInDb = roleService.findById(roleEntity.getId());
-            roleEntityInDb.setName(roleEntity.getName());
+            roleEntityInDb.setRole(roleEntity.getRole());
             roleEntityInDb.setDescription(roleEntity.getDescription());
             roleService.update(roleEntityInDb);
             return HttpResponseHelper.successInfoInbox("更新成功");
@@ -108,7 +108,7 @@ public class RoleController extends Serializers.Base {
      * @throws ControllerException
      */
     @PostMapping(value = "/role")
-    public RoleEntity create(@RequestBody RoleEntity roleEntity) throws ControllerException {
+    public SysRoleEntity create(@RequestBody SysRoleEntity roleEntity) throws ControllerException {
         roleEntity.setId(UUID.randomUUID().toString());
         try {
             return roleService.update(roleEntity);

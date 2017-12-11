@@ -35,6 +35,6 @@ public class SysUser extends BaseEntity {
     // 一个用户具有多个角色
     @ManyToMany(fetch = FetchType.EAGER)//立即从数据库中进行加载数据;
     @JoinTable(name = "ril_user_role", joinColumns = {@JoinColumn(name = "uid")}, inverseJoinColumns = {@JoinColumn(name = "roleId")})
-    @Getter @Setter private Set<SysRole> roles;
+    @Getter @Setter private Set<SysRoleEntity> roles;
     
 }

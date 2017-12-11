@@ -48,6 +48,6 @@ public class SysPermissionEntity extends BaseEntity {
     @JsonIgnore
     @ManyToMany
     @JoinTable(name="ril_role_permission",joinColumns={@JoinColumn(name="permissionId")},inverseJoinColumns={@JoinColumn(name="roleId")})
-    @Getter @Setter private List<SysRole> roles;
+    @Getter @Setter private List<SysRoleEntity> roles;
 
 }

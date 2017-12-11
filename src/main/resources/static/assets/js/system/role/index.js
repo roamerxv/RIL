@@ -30,7 +30,7 @@ $().ready(function () {
             dataSrc: ''
         },
         "columns": [{
-            "data": "name"
+            "data": "role"
         }, {
             "data": "description"
         }],
