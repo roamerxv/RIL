@@ -30,7 +30,6 @@ var system_menu_tree = $('#jstree_system_menus_div').jstree({
 });
 
 
-
 $().ready(function () {
     fun_render_system_menu();
 })
@@ -70,7 +69,8 @@ function fun_render_system_menu() {
         error: function (jqXHR, textStatus, errorThrown) {
             showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
         },
-    }).done(function (data) {
-        mApp.unblockPage();
-    });
+        complete: function () {
+            mApp.unblockPage();
+        }
+    })
 };

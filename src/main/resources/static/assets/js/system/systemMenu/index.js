@@ -4,6 +4,10 @@ var droped_item;   //被放入的节点
 var item_children; //拖拽后产生的新子节点数组
 //-------
 
+$(document).on('dnd_stop.vakata', function (e, data) {
+    Logger.debug(e);
+});
+
 var system_menu_tree = $('#jstree_system_menus_div').jstree({
     "check_callback": true,
     "core": {
@@ -14,34 +18,10 @@ var system_menu_tree = $('#jstree_system_menus_div').jstree({
         "check_callback": function (operation, node, node_parent, node_position, more) {
             draged_item = node;
             droped_item = node_parent;
-
+            Logger.debug(node_parent);
             if (node_parent.parent == null) {
                 return false;
             }
-
-            // if (node_parent.type == "#" && node_parent.id == "#") {
-            //     Logger.debug(" 拖拽到了 root 节点");
-            //     return true;
-            // } else if (node_parent.type == "default") {
-            //     Logger.debug("拖拽到了菜单节点");
-            //     if (node_parent.original.parent == "0") {
-            //         Logger.debug("说明是一级菜单，可以把菜单放放入");
-            //         // 判断被加入的菜单项下是否有子菜单，如果有，则不许加入.
-            //         if (node.children == null || node.children.length <= 0) {
-            //             //Logger.debug("是被拖拉的菜单没有字菜单了。可以被增加为子菜单")
-            //             return true;
-            //         } else {
-            //             return false;
-            //         }
-            //     } else {
-            //         Logger.debug("是二级菜单，不能再增加子菜单了");
-            //         return false;
-            //     }
-            // } else {
-            //     //Logger.debug("没有拖拽到有效节点");
-            //     return true;
-            // }
-
             return true;
         },
         "strings": {
@@ -57,7 +37,28 @@ var system_menu_tree = $('#jstree_system_menus_div').jstree({
         }
     },
     "state": {"key": "demo2"},
-    "plugins": ["dnd", "state", "types"],
+    "plugins": ["dnd", "state", "types", "contextmenu"],
+    "contextmenu": {
+        "items": {
+            "create": null,
+            "rename": null,
+            "remove": null,
+            "ccp": null,
+            "delete": {
+                "label": "删除",
+                "action": function (obj) {
+                    var inst = jQuery.jstree.reference(obj.reference);
+                    var clickedNode = inst.get_node(obj.reference);
+                    if (clickedNode.parent === "#") {
+                        showMessage("warning", "警告", "不能删除根菜单");
+                    } else {
+                        //删除菜单项
+                        fun_delete_menu(clickedNode.id);
+                    }
+                }
+            }
+        }
+    }
 }).on('select_node.jstree', function (e, data) {
     if (typeof(data.node) == "undefined") {
         return false;
@@ -102,9 +103,10 @@ var system_menu_tree = $('#jstree_system_menus_div').jstree({
             Logger.debug(jqXHR);
             showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
         },
-    }).done(function (data) {
-        mApp.unblockPage();
-    });
+        complete: function () {
+            mApp.unblockPage();
+        }
+    })
 });
 
 var operator;
@@ -218,3 +220,54 @@ function fun_get_menu_item_info(menu_info) {
     }
 }
 
+
+function fun_delete_menu(id) {
+    bootbox.confirm({
+        message: "确认要删除这条记录吗?一经删除，就无法恢复！",
+        buttons: {
+            confirm: {
+                label: '删除',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: '不删了',
+                className: 'btn-danger'
+            }
+        },
+        callback: function (result) {
+            if (result) {
+                mApp.blockPage({
+                    overlayColor: "#000000",
+                    type: "loader",
+                    state: "success",
+                    message: "正在删除，请稍等..."
+                });
+                $.ajax({
+                    type: "delete",
+                    url: contextPath + "systemMenu/" + id + ".json",
+                    async: true,//默认为true
+                    contentType: "application/json",
+                    dataType: 'json',//默认为预期服务器返回的数据类型
+                    beforeSend: function () {
+                        mApp.blockPage({
+                            overlayColor: "#000000",
+                            type: "loader",
+                            state: "success",
+                            message: "正在进行删除..."
+                        });
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        fun_render_jstree();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        Logger.debug(jqXHR);
+                        showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
+                    },
+                    complete: function () {
+                        mApp.unblockPage();
+                    }
+                })
+            }
+        }
+    });
+}
