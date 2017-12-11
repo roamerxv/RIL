@@ -1,4 +1,4 @@
-package com.alcor.ril.entity;
+package com.alcor.ril.persistence.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;

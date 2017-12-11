@@ -1,6 +1,6 @@
 package com.alcor.ril.web.controller;
 
-import com.alcor.ril.entity.SystemConfigureEntity;
+import com.alcor.ril.persistence.entity.SystemConfigureEntity;
 import com.alcor.ril.service.ServiceException;
 import com.alcor.ril.service.SystemConfigureService;
 import com.fasterxml.jackson.core.JsonProcessingException;

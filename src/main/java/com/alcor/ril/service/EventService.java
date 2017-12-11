@@ -1,6 +1,6 @@
 package com.alcor.ril.service;
 
-import com.alcor.ril.entity.EventEntity;
+import com.alcor.ril.persistence.entity.EventEntity;
 import com.alcor.ril.persistence.repository.IEventRepository;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;

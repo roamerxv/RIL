@@ -1,4 +1,4 @@
-package com.alcor.ril.entity;
+package com.alcor.ril.persistence.entity;
 
 import javax.persistence.*;
 
@@ -7,7 +7,7 @@ import javax.persistence.*;
  * @create 2017-10-2017/10/16  上午10:32
  */
 @Entity
-@Table(name = "system_configure", schema = "ril", catalog = "")
+@Table(name = "ril_system_configure", schema = "ril", catalog = "")
 public class SystemConfigureEntity {
     private String name;
     private String value;

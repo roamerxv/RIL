@@ -1,6 +1,6 @@
 package com.alcor.ril.web.controller;
 
-import com.alcor.ril.entity.EventEntity;
+import com.alcor.ril.persistence.entity.EventEntity;
 import com.alcor.ril.service.EventService;
 import com.alcor.ril.service.ServiceException;
 import com.fasterxml.jackson.core.JsonProcessingException;

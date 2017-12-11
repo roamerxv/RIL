@@ -148,31 +148,12 @@ INSERT INTO `ril_user_role` VALUES ('1', '1');
 INSERT INTO `ril_user_role` VALUES ('2', '2');
 COMMIT;
 
--- ----------------------------
--- Table structure for role
--- ----------------------------
-DROP TABLE IF EXISTS `role`;
-CREATE TABLE `role` (
-  `id` varchar(36) COLLATE utf8_bin NOT NULL,
-  `name` varchar(32) COLLATE utf8_bin NOT NULL COMMENT '角色名字',
-  `description` varchar(256) COLLATE utf8_bin DEFAULT NULL COMMENT '角色描述',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='用户角色表';
-
--- ----------------------------
--- Records of role
--- ----------------------------
-BEGIN;
-INSERT INTO `role` VALUES ('1', '领导', '领导的描述');
-INSERT INTO `role` VALUES ('6efeb563-ff36-4a54-9fdd-39d21107138a', '带队老师', '带队老师');
-COMMIT;
-
 
 -- ----------------------------
 -- Table structure for system_configure
 -- ----------------------------
-DROP TABLE IF EXISTS `system_configure`;
-CREATE TABLE `system_configure` (
+DROP TABLE IF EXISTS `ril_system_configure`;
+CREATE TABLE `ril_system_configure` (
   `name` varchar(32) COLLATE utf8_bin NOT NULL COMMENT '参数名字',
   `value` text COLLATE utf8_bin NOT NULL COMMENT '参数值',
   `description` text COLLATE utf8_bin NOT NULL COMMENT '描述',
