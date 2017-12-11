@@ -1,6 +1,6 @@
 package com.alcor.ril.security;
 
-import com.alcor.ril.persistence.entity.SysPermission;
+import com.alcor.ril.persistence.entity.SysPermissionEntity;
 import com.alcor.ril.persistence.entity.SysRole;
 import com.alcor.ril.persistence.entity.SysUser;
 import com.alcor.ril.persistence.repository.SysUserRepository;
@@ -55,14 +55,14 @@ public class MyUserDetailService implements UserDetailsService {
     private Collection<? extends GrantedAuthority> getAuthorities(Collection<SysRole> roles) {
 //        return getGrantedAuthorities(getPrivileges(roles));
         List<GrantedAuthority> authorities = new ArrayList<>();
-        List<SysPermission> collection = new ArrayList<>();
+        List<SysPermissionEntity> collection = new ArrayList<>();
         for (SysRole role : roles) {
             log.debug("role={},avaiable={}", role.getRole(), role.getAvailable());
             if(role.getAvailable()) {
                 collection.addAll(role.getPermissions());
             }
         }
-        for (SysPermission permission : collection) {
+        for (SysPermissionEntity permission : collection) {
             log.debug("permission={},avaiable={}", permission.getPermission(), permission.getAvailable());
             if(permission.getAvailable()) {
                 authorities.add(new MyGrantedAuthority(
@@ -84,7 +84,7 @@ public class MyUserDetailService implements UserDetailsService {
 
     private List<String> getPrivileges(Collection<SysRole> roles) {
         List<String> privileges = new ArrayList<>();
-        List<SysPermission> collection = new ArrayList<>();
+        List<SysPermissionEntity> collection = new ArrayList<>();
         for (SysRole role : roles) {
             log.debug("role={},avaiable={}", role.getRole(), role.getAvailable());
             if(role.getAvailable()) {
@@ -92,7 +92,7 @@ public class MyUserDetailService implements UserDetailsService {
                 collection.addAll(role.getPermissions());
             }
         }
-        for (SysPermission permission : collection) {
+        for (SysPermissionEntity permission : collection) {
             log.debug("permission={},avaiable={}", permission.getPermission(), permission.getAvailable());
             if(permission.getAvailable()) {
                 privileges.add(permission.getPermission().toUpperCase());

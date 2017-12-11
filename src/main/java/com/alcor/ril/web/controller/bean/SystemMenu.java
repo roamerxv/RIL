@@ -1,6 +1,6 @@
 package com.alcor.ril.web.controller.bean;
 
-import com.alcor.ril.entity.SystemMenuEntity;
+import com.alcor.ril.persistence.entity.SysPermissionEntity;
 import lombok.Data;
 
 import java.util.List;
@@ -13,6 +13,6 @@ import java.util.List;
  */
 @Data
 public class SystemMenu {
-    public SystemMenuEntity menuItem;
+    public SysPermissionEntity menuItem;
     public List<SystemMenu> childrenMenu;
 }

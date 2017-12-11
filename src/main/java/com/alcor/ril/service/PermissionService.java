@@ -1,7 +1,7 @@
 package com.alcor.ril.service;
 
-import com.alcor.ril.persistence.entity.SysPermission;
-import com.alcor.ril.persistence.repository.SysPermissionRepository;
+import com.alcor.ril.persistence.entity.SysPermissionEntity;
+import com.alcor.ril.persistence.repository.ISysPermissionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,10 +21,10 @@ import java.util.List;
 public class PermissionService {
 
     @Autowired
-    private SysPermissionRepository sysPermissionRepository;
+    private ISysPermissionRepository iSysPermissionRepository;
 
-    public List<SysPermission> findAll() {
-        return sysPermissionRepository.findAll();
+    public List<SysPermissionEntity> findAll() {
+        return iSysPermissionRepository.findAll();
     }
     
 }

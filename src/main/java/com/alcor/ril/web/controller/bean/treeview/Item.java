@@ -13,9 +13,9 @@ import java.util.List;
 @Data
 public class Item {
     String text;
-    String id;
+    Long id;
     String icon;
-    String parent;
+    Long parent;
     String url;
     int orderNum;
     List<Item> children;

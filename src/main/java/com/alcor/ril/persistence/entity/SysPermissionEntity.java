@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "ril_permission")
-public class SysPermission extends BaseEntity {
+public class SysPermissionEntity extends BaseEntity {
     //权限字符串,menu例子：role:*，button例子：role:create,role:update,role:delete,role:view
     @Column(unique = true, nullable = false)
     @Getter @Setter private String permission;
@@ -35,6 +35,14 @@ public class SysPermission extends BaseEntity {
 
     // 是否可用
     @Getter @Setter private Boolean available = Boolean.FALSE;
+
+    @Column(name = "clazz", nullable = false, length = 256)
+    @Getter @Setter private String clazz ;
+
+
+    @Column(name = "order_num", nullable = false)
+    @Getter @Setter Integer orderNum = 0 ;
+
 
     @ManyToMany
     @JoinTable(name="ril_role_permission",joinColumns={@JoinColumn(name="permissionId")},inverseJoinColumns={@JoinColumn(name="roleId")})

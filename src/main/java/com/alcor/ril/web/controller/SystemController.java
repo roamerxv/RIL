@@ -1,13 +1,13 @@
 package com.alcor.ril.web.controller;
 
+import com.alcor.ril.persistence.entity.SysPermissionEntity;
+import com.alcor.ril.service.ServiceException;
+import com.alcor.ril.service.SystemMenuService;
 import com.alcor.ril.web.controller.bean.ServerInfo;
 import com.alcor.ril.web.controller.bean.SystemMenu;
 import com.alcor.ril.web.controller.bean.treeview.DragAndDropResult;
 import com.alcor.ril.web.controller.bean.treeview.Item;
 import com.alcor.ril.web.controller.bean.treeview.ItemState;
-import com.alcor.ril.entity.SystemMenuEntity;
-import com.alcor.ril.service.ServiceException;
-import com.alcor.ril.service.SystemMenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -20,7 +20,6 @@ import pers.roamer.boracay.helper.HttpResponseHelper;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * 系统级别的控制操作
@@ -56,7 +55,7 @@ public class SystemController extends BaseController {
     }
 
     @GetMapping("/cleanCache")
-    @CacheEvict(cacheNames = {"spring:cache:UserEntity", "spring:cache:SystemMenuEntity"}, allEntries = true)
+    @CacheEvict(cacheNames = {"spring:cache:UserEntity", "spring:cache:SystemPermission"}, allEntries = true)
     public ModelAndView cleanCache() {
         log.debug("清除spring cache 中的缓存！");
         ModelAndView modelAndView = new ModelAndView("/index");
@@ -83,6 +82,7 @@ public class SystemController extends BaseController {
         try {
             return this.parseSystemMenu(systemMenuService.getSystemMenusWithRoot());
         } catch (ServiceException e) {
+            log.error(e.getMessage(),e);
             throw new ControllerException(e.getMessage());
         }
     }
@@ -129,10 +129,10 @@ public class SystemController extends BaseController {
      * @throws ControllerException
      */
     @PutMapping("/systemMenu")
-    public SystemMenuEntity updateSystemMenuItem(@RequestBody SystemMenuEntity systemMenuEntity) throws ControllerException {
+    public SysPermissionEntity updateSystemMenuItem(@RequestBody SysPermissionEntity systemMenuEntity) throws ControllerException {
         log.debug("开始 更新 id 是：{}的菜单项信息", systemMenuEntity.getId());
         try {
-            SystemMenuEntity systemMenuEntityInDB = systemMenuService.getMenuItemById(systemMenuEntity.getId());
+            SysPermissionEntity systemMenuEntityInDB = systemMenuService.getMenuItemById(systemMenuEntity.getId());
             if (systemMenuEntityInDB == null) {
                 throw new ControllerException("要更新的菜单项不存在!");
             }
@@ -180,12 +180,10 @@ public class SystemController extends BaseController {
      * @throws ControllerException
      */
     @PostMapping("/systemMenu")
-    public SystemMenuEntity getSystemMenuItem(@RequestBody SystemMenuEntity systemMenuEntity) throws ControllerException {
+    public SysPermissionEntity getSystemMenuItem(@RequestBody SysPermissionEntity systemMenuEntity) throws ControllerException {
         log.debug("开始 增加一个菜单项信息");
         try {
             systemMenuEntity.setParentId(systemMenuEntity.getId());
-            systemMenuEntity.setId(UUID.randomUUID().toString());
-            systemMenuEntity.setLabelClazz("");
             return systemMenuService.update(systemMenuEntity);
         } catch (ServiceException e) {
             log.error(e.getMessage(), e);

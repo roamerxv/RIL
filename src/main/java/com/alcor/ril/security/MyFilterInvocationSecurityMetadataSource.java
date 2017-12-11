@@ -1,6 +1,6 @@
 package com.alcor.ril.security;
 
-import com.alcor.ril.persistence.entity.SysPermission;
+import com.alcor.ril.persistence.entity.SysPermissionEntity;
 import com.alcor.ril.service.PermissionService;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
@@ -97,8 +97,8 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
     private void loadResourceDefine(){
         log.debug("loading all permissions...");
 //        Collection<ConfigAttribute> array;
-        List<SysPermission> permissions = permissionService.findAll();
-        for(SysPermission permission : permissions) {
+        List<SysPermissionEntity> permissions = permissionService.findAll();
+        for(SysPermissionEntity permission : permissions) {
             if(permission.getAvailable() == true) {
 //                array = new ArrayList<>();
 //                ConfigAttribute cfg = new SecurityConfig(permission.getPermission().toUpperCase());

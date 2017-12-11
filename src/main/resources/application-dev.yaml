@@ -58,4 +58,4 @@ context:
 logging:
     config: classpath:logback-${spring.profiles.active}.xml
     level:
-      org.hibernate.type:
+      org.hibernate.type: info
