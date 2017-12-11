@@ -20,6 +20,7 @@ import pers.roamer.boracay.helper.HttpResponseHelper;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 系统级别的控制操作
@@ -82,7 +83,7 @@ public class SystemController extends BaseController {
         try {
             return this.parseSystemMenu(systemMenuService.getSystemMenusWithRoot());
         } catch (ServiceException e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             throw new ControllerException(e.getMessage());
         }
     }
@@ -153,8 +154,11 @@ public class SystemController extends BaseController {
     /**
      * 拖拉后，把结果保存到数据库中
      * 同时具备更新父节点和排序的功能
+     *
      * @param result
+     *
      * @return
+     *
      * @throws ControllerException
      */
     @BusinessMethod("调整菜单结构")
@@ -182,10 +186,15 @@ public class SystemController extends BaseController {
      * @throws ControllerException
      */
     @PostMapping("/systemMenu")
+    @BusinessMethod(value = "新增一个系统菜单")
     public SysPermissionEntity getSystemMenuItem(@RequestBody SysPermissionEntity sysPermissionEntity) throws ControllerException {
         log.debug("开始 增加一个菜单项信息");
         try {
+            if (systemMenuService.findByPsermission(sysPermissionEntity.getPermission()).size() > 0) {
+                throw new ControllerException("exception.permission.duplicate");
+            }
             sysPermissionEntity.setParentId(sysPermissionEntity.getId());
+            sysPermissionEntity.setId(UUID.randomUUID().toString());
             return systemMenuService.update(sysPermissionEntity);
         } catch (ServiceException e) {
             log.error(e.getMessage(), e);

@@ -129,7 +129,7 @@ $().ready(function () {
         systemMenu.orderNum = $("#menu_order_num").val();
         $.ajax({
             type: operator,
-            url: contextPath + "systemMenu",
+            url: contextPath + "systemMenu.json",
             async: true,//默认为true
             contentType: "application/json",
             dataType: 'json',//默认为预期服务器返回的数据类型
@@ -148,8 +148,9 @@ $().ready(function () {
             error: function (jqXHR, textStatus, errorThrown) {
                 showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
             },
-        }).done(function (data) {
-            mApp.unblockPage();
+            complete: function (data) {
+                mApp.unblockPage();
+            }
         });
         return false;
     })
@@ -160,7 +161,7 @@ function fun_render_jstree() {
 
     $.ajax({
         type: 'get',
-        url: contextPath + "systemMenus4Treeviewer",
+        url: contextPath + "systemMenus4Treeviewer.json",
         async: true,//默认为true
         contentType: "application/json",
         dataType: 'json',//默认为预期服务器返回的数据类型

@@ -19,6 +19,8 @@ public interface ISysPermissionRepository extends JpaRepository<SysPermissionEnt
     @CacheEvict(allEntries = true) //为了避免麻烦。把所有spring:cache:SystemMenuEntity开头的 cache 都清除
     public SysPermissionEntity save(SysPermissionEntity sysPermissionEntity);
 
+    public List<SysPermissionEntity> findByPermission(String permission) ;
+
 
     @Modifying
     @Query("update SysPermissionEntity  a set a.orderNum = :orderNum WHERE  a.id = :id ")

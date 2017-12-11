@@ -59,6 +59,10 @@ public class SystemMenuService {
         return iSysPermissionRepository.save(sysPermissionEntity);
     }
 
+    public List<SysPermissionEntity> findByPsermission(String permission) throws  ServiceException{
+        return iSysPermissionRepository.findByPermission(permission);
+    }
+
     /**
      * 修改当前系统菜单项的父ID
      * @param id

@@ -14,6 +14,8 @@
         exception: "测试用的错误！由Controller 层抛出。| user_name , user_passwd"
     system:
         need_login: "必须登录系统"
+    permission:
+        duplicate:   "已经定义过这个 permission 了"
     user:
         login:
             user_not_exit:  "用户不存在！"
