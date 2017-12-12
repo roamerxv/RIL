@@ -204,7 +204,7 @@ public class SystemController extends BaseController {
 
 
     @DeleteMapping("/systemMenu/{id}")
-    @BusinessMethod(value = "删除一个菜单")
+    @BusinessMethod(value = "删除一个系统菜单")
     @ResponseBody
     public String deleteMenuById(@PathVariable String id) throws ControllerException {
         log.debug("开始删除一个菜单项,id是{}", id);

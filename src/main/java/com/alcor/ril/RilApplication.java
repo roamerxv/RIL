@@ -11,18 +11,19 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
-/** @SpringBootApplication   same as @Configuration @EnableAutoConfiguration @ComponentScan
+/**
+ * @SpringBootApplication same as @Configuration @EnableAutoConfiguration @ComponentScan
  */
-@SpringBootApplication(scanBasePackages = {"pers.roamer.boracay","com.alcor.ril"})
+@SpringBootApplication(scanBasePackages = {"pers.roamer.boracay", "com.alcor.ril"})
 @ImportResource(locations = {"classpath:boracay-config.xml"})
-@EnableJpaRepositories({"pers.roamer.boracay","com.alcor.ril"})
-@EntityScan({"pers.roamer.boracay.entity","com.alcor.ril.entity","com.alcor.ril.persistence.entity"})
+@EnableJpaRepositories({"pers.roamer.boracay", "com.alcor.ril.persistence"})
+@EntityScan({"pers.roamer.boracay.entity", "com.alcor.ril.persistence.entity"})
 //@EnableAsync()
 @EnableScheduling
 @EnableRedisHttpSession
 @EnableCaching
 @Slf4j
-public class RilApplication  extends SpringBootServletInitializer {
+public class RilApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(RilApplication.class, args);

@@ -51,12 +51,7 @@ $().ready(function () {
     }).on('select', function (e, dt, type, indexes) {
 
     });
-    ;
 
-
-    $('#role_table tbody').on('dblclick', 'tr', function () {
-
-    });
 });
 
 

@@ -96,7 +96,8 @@ COMMIT;
 DROP TABLE IF EXISTS `ril_role_permission`;
 CREATE TABLE `ril_role_permission` (
   `permission_id` varchar(36) COLLATE utf8_bin NOT NULL,
-  `role_id` varchar(36)  NOT NULL
+  `role_id` varchar(36)  NOT NULL,
+  PRIMARY KEY (`permission_id`, `role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='角色权限关系表';
 
 -- ----------------------------

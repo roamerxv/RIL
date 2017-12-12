@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pers.roamer.boracay.aspect.businesslogger.BusinessMethod;
 import pers.roamer.boracay.aspect.httprequest.SessionCheckKeyword;
 import pers.roamer.boracay.helper.HttpResponseHelper;
 
@@ -84,6 +85,7 @@ public class RoleController extends Serializers.Base {
      * @return
      * @throws ControllerException
      */
+    @BusinessMethod(value = "更新一个角色的信息")
     @PutMapping(value = "/role")
     @ResponseBody
     public String udpate(@RequestBody SysRoleEntity roleEntity) throws ControllerException {
@@ -107,6 +109,7 @@ public class RoleController extends Serializers.Base {
      * @return
      * @throws ControllerException
      */
+    @BusinessMethod(value = "新增一个角色记录")
     @PostMapping(value = "/role")
     public SysRoleEntity create(@RequestBody SysRoleEntity roleEntity) throws ControllerException {
         roleEntity.setId(UUID.randomUUID().toString());
@@ -118,6 +121,13 @@ public class RoleController extends Serializers.Base {
         }
     }
 
+    /**
+     * 删除一个角色信息
+     * @param id
+     * @return
+     * @throws ControllerException
+     */
+    @BusinessMethod(value = "删除一个角色信息")
     @DeleteMapping(value = "/role/{id}")
     @ResponseBody
     public String deleteById(@PathVariable String id) throws ControllerException {
@@ -129,5 +139,28 @@ public class RoleController extends Serializers.Base {
             log.error(e.getMessage(), e);
             throw new ControllerException(e.getMessage());
         }
+    }
+
+    /**
+     * 给角色分配一个菜单
+     * 包括此菜单下面的所有子孙菜单
+     * @param menuId
+     * @param roleId
+     * @return
+     * @throws ControllerException
+     */
+    @BusinessMethod(value = "给角色分配菜单")
+    @PostMapping(value = "/assign-menu-to-role/{menuId}/{roleId}")
+    @ResponseBody
+    public String assignMenu2Role(@PathVariable String menuId , @PathVariable String roleId) throws  ControllerException{
+        log.debug("分配一个菜单{}给角色{}",menuId,roleId);
+        try {
+            roleService.assignMenu(menuId,roleId);
+            return HttpResponseHelper.successInfoInbox("分配成功");
+        } catch (ServiceException e) {
+            log.error(e.getMessage(),e);
+            throw new ControllerException(e.getMessage());
+        }
+
     }
 }
