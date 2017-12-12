@@ -201,6 +201,21 @@ public class SystemController extends BaseController {
             throw new ControllerException(e.getMessage());
         }
     }
+
+
+    @DeleteMapping("/systemMenu/{id}")
+    @BusinessMethod(value = "删除一个菜单")
+    @ResponseBody
+    public String deleteMenuById(@PathVariable String id) throws ControllerException {
+        log.debug("开始删除一个菜单项,id是{}", id);
+        try {
+            systemMenuService.deleteByIdIncludedChilden(id);
+            return HttpResponseHelper.successInfoInbox("删除成功");
+        } catch (ServiceException e) {
+            log.error(e.getMessage(), e);
+            throw new ControllerException(e.getMessage());
+        }
+    }
 }
 
 

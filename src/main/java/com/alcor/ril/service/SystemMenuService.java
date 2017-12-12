@@ -59,15 +59,18 @@ public class SystemMenuService {
         return iSysPermissionRepository.save(sysPermissionEntity);
     }
 
-    public List<SysPermissionEntity> findByPsermission(String permission) throws  ServiceException{
+    public List<SysPermissionEntity> findByPsermission(String permission) throws ServiceException {
         return iSysPermissionRepository.findByPermission(permission);
     }
 
     /**
      * 修改当前系统菜单项的父ID
+     *
      * @param id
      * @param pid
+     *
      * @return
+     *
      * @throws ServiceException
      */
     @Transactional
@@ -79,11 +82,32 @@ public class SystemMenuService {
     }
 
     @Transactional
-    public void resort(List<String> children) throws  ServiceException{
-        for (int i=0 ; i < children.size() ;i++){
-            log.debug("开始把id 是{}的菜单项下的 sortNum 改成{}",children.get(i),i);
-            iSysPermissionRepository.changeOrderNumWithId(children.get(i),i);
+    public void resort(List<String> children) throws ServiceException {
+        for (int i = 0; i < children.size(); i++) {
+            log.debug("开始把id 是{}的菜单项下的 sortNum 改成{}", children.get(i), i);
+            iSysPermissionRepository.changeOrderNumWithId(children.get(i), i);
         }
     }
 
+    /**
+     * 删除id 对应的菜单和其下所有的子孙菜单
+     * @param id
+     * @throws ServiceException
+     */
+    @Transactional
+    public void deleteByIdIncludedChilden(String id) throws ServiceException {
+        log.debug("开始把 id 为{}的菜单，以及下面所有的子孙菜单都删除",id);
+        //查看是否下面有子菜单
+        List<SysPermissionEntity> sysPermissionEntityList = iSysPermissionRepository.findAllByParentIdOrderByOrderNum(id);
+        if (sysPermissionEntityList == null || sysPermissionEntityList.size() == 0) {
+            //没有子菜单了。删除自身
+            log.debug("没有子菜单了。删除自身");
+            iSysPermissionRepository.delete(id);
+        } else {
+            //递归调用，进行查询
+            for (int i = 0; i < sysPermissionEntityList.size(); i++) {
+                deleteByIdIncludedChilden(sysPermissionEntityList.get(i).getId());
+            }
+        }
+    }
 }

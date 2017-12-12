@@ -21,6 +21,10 @@ public interface ISysPermissionRepository extends JpaRepository<SysPermissionEnt
 
     public List<SysPermissionEntity> findByPermission(String permission) ;
 
+    @Override
+    @CacheEvict(allEntries = true)
+    public void delete(String id);
+
 
     @Modifying
     @Query("update SysPermissionEntity  a set a.orderNum = :orderNum WHERE  a.id = :id ")
