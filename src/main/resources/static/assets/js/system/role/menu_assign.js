@@ -97,7 +97,7 @@ function fun_assign_menu_to_role(menu_id ,role_id){
         contentType: "application/json",
         dataType: 'json',//默认为预期服务器返回的数据类型
         beforeSend: function () {
-            mApp.blockPage({
+            mApp.block("#m_modal_assign_menu .modal-content",{
                 overlayColor: "#000000",
                 type: "loader",
                 state: "success",
@@ -111,7 +111,7 @@ function fun_assign_menu_to_role(menu_id ,role_id){
             showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
         },
         complete: function () {
-            mApp.unblockPage();
+            mApp.unblock("#m_modal_assign_menu .modal-content");
         }
     })
 }
