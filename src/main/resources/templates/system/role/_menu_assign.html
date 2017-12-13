@@ -25,40 +25,18 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-6">
-                            <!--begin::Form-->
-                            <form class="m-form">
-                                <div class="m-portlet__body">
-                                    <div class="m-form__section m-form__section--first">
-                                        <div th:replace="/system/systemMenu/_system_menus :: content"></div>
-                                    </div>
+                            <div class="m-portlet__body">
+                                <div class="m-form__section m-form__section--first">
+                                    <div th:replace="/system/systemMenu/_system_menus :: content"></div>
                                 </div>
-                            </form>
-                            <!--end::Form-->
+                            </div>
                         </div>
                         <div class="col-lg-6">
-                            <!--begin::Portlet-->
-                            <div class="m-portlet">
-                                <div class="m-portlet__head">
-                                    <div class="m-portlet__head-caption">
-                                        <div class="m-portlet__head-title">
-                                <span class="m-portlet__head-icon m--hide">
-                                    <i class="la la-gear"></i>
-                                </span>
-                                            <h3 class="m-portlet__head-text">
-                                                角色菜单项
-                                            </h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--begin::Form-->
-                                <form class="m-form m-form--fit" id="submit_form">
-                                    <div class="m-portlet__body">
-
-                                    </div>
-                                </form>
-                                <!--end::Form-->
+                            <!--begin::Form-->
+                            <div class="m-portlet__body">
+                                <div th:replace="/system/role/_role_menus :: content"></div>
                             </div>
-                            <!--end::Portlet-->
+                            <!--end::Form-->
                         </div>
                     </div>
                 </div>

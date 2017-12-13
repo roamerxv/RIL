@@ -4,10 +4,9 @@ import com.alcor.ril.persistence.entity.SysPermissionEntity;
 import com.alcor.ril.service.ServiceException;
 import com.alcor.ril.service.SystemMenuService;
 import com.alcor.ril.web.controller.bean.ServerInfo;
-import com.alcor.ril.web.controller.bean.SystemMenu;
 import com.alcor.ril.web.controller.bean.treeview.DragAndDropResult;
 import com.alcor.ril.web.controller.bean.treeview.Item;
-import com.alcor.ril.web.controller.bean.treeview.ItemState;
+import com.alcor.ril.web.controller.bean.treeview.Tools;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -18,7 +17,6 @@ import pers.roamer.boracay.aspect.httprequest.SessionCheckKeyword;
 import pers.roamer.boracay.helper.HttpResponseHelper;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -81,47 +79,13 @@ public class SystemController extends BaseController {
     public List<Item> getystemMenu4Treeviewer() throws ControllerException {
         log.debug("开始获取系统菜单,用于显示在 TreeViewer");
         try {
-            return this.parseSystemMenu(systemMenuService.getSystemMenusWithRoot());
+            return new Tools().parseSystemMenu(systemMenuService.getSystemMenusWithRoot());
         } catch (ServiceException e) {
             log.error(e.getMessage(), e);
             throw new ControllerException(e.getMessage());
         }
     }
 
-    /**
-     * 递归把系统菜单的对象链表结构转换成用于 treeviewer 显示的链表结构
-     *
-     * @param systemMenuList
-     *
-     * @return
-     *
-     * @throws ControllerException
-     */
-    private List<Item> parseSystemMenu(List<SystemMenu> systemMenuList) throws ControllerException {
-        if (systemMenuList == null) {
-            return null;
-        }
-        List<Item> treeViewItemList = new ArrayList<>(systemMenuList.size());
-        for (SystemMenu item : systemMenuList) {
-            Item treeViewItem = new Item();
-            treeViewItem.setId(item.getMenuItem().getId());
-            treeViewItem.setParent(item.getMenuItem().getParentId());
-            treeViewItem.setText(item.getMenuItem().getName());
-            treeViewItem.setIcon(item.getMenuItem().getClazz());
-            treeViewItem.setUrl(item.getMenuItem().getUrl());
-            treeViewItem.setOrderNum(item.getMenuItem().getOrderNum());
-            treeViewItem.setPermission(item.getMenuItem().getPermission());
-            ItemState itemState = new ItemState();
-            itemState.setOpened(true);
-            treeViewItem.setState(itemState);
-
-            treeViewItemList.add(treeViewItem);
-            if (!item.getChildrenMenu().isEmpty()) {
-                treeViewItem.setChildren(this.parseSystemMenu(item.getChildrenMenu()));
-            }
-        }
-        return treeViewItemList;
-    }
 
     /**
      * 根据一个 systemMenuEntity ，保存更新到数据库

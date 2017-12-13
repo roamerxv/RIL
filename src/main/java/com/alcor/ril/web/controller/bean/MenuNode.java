@@ -12,7 +12,7 @@ import java.util.List;
  * @create 2017-11-2017/11/30  上午9:53
  */
 @Data
-public class SystemMenu {
+public class MenuNode {
     public SysPermissionEntity menuItem;
-    public List<SystemMenu> childrenMenu;
+    public List<MenuNode> childrenMenu;
 }

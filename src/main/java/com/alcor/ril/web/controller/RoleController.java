@@ -3,6 +3,9 @@ package com.alcor.ril.web.controller;
 import com.alcor.ril.persistence.entity.SysRoleEntity;
 import com.alcor.ril.service.RoleService;
 import com.alcor.ril.service.ServiceException;
+import com.alcor.ril.service.SystemMenuService;
+import com.alcor.ril.web.controller.bean.treeview.Item;
+import com.alcor.ril.web.controller.bean.treeview.Tools;
 import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,10 @@ public class RoleController extends Serializers.Base {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private SystemMenuService systemMenuService;
+
 
     /**
      * 跳转到角色维护的 index 界面
@@ -64,8 +71,11 @@ public class RoleController extends Serializers.Base {
 
     /**
      * 获取一个角色的详细信息
+     *
      * @param id
+     *
      * @return
+     *
      * @throws ControllerException
      */
     @GetMapping(value = "/role/{id}")
@@ -81,15 +91,18 @@ public class RoleController extends Serializers.Base {
 
     /**
      * 更新一个角色的信息
+     *
      * @param roleEntity
+     *
      * @return
+     *
      * @throws ControllerException
      */
     @BusinessMethod(value = "更新一个角色的信息")
     @PutMapping(value = "/role")
     @ResponseBody
     public String udpate(@RequestBody SysRoleEntity roleEntity) throws ControllerException {
-        log.debug("要更新的角色 id 是{},名称是{}",roleEntity.getId(),roleEntity.getRole());
+        log.debug("要更新的角色 id 是{},名称是{}", roleEntity.getId(), roleEntity.getRole());
         SysRoleEntity roleEntityInDb = null;
         try {
             roleEntityInDb = roleService.findById(roleEntity.getId());
@@ -105,8 +118,11 @@ public class RoleController extends Serializers.Base {
 
     /**
      * 新增一个角色记录
+     *
      * @param roleEntity
+     *
      * @return
+     *
      * @throws ControllerException
      */
     @BusinessMethod(value = "新增一个角色记录")
@@ -116,15 +132,18 @@ public class RoleController extends Serializers.Base {
         try {
             return roleService.update(roleEntity);
         } catch (ServiceException e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             throw new ControllerException(e.getMessage());
         }
     }
 
     /**
      * 删除一个角色信息
+     *
      * @param id
+     *
      * @return
+     *
      * @throws ControllerException
      */
     @BusinessMethod(value = "删除一个角色信息")
@@ -133,7 +152,7 @@ public class RoleController extends Serializers.Base {
     public String deleteById(@PathVariable String id) throws ControllerException {
         log.debug("要删除的角色 id 是{}", id);
         try {
-             roleService.delete(id);
+            roleService.delete(id);
             return HttpResponseHelper.successInfoInbox("删除成功");
         } catch (ServiceException e) {
             log.error(e.getMessage(), e);
@@ -141,24 +160,54 @@ public class RoleController extends Serializers.Base {
         }
     }
 
+
+    /**
+     * 获取一个角色对应的菜单链表结构
+     *
+     * @param id
+     *
+     * @return
+     *
+     * @throws ControllerException
+     */
+    @SessionCheckKeyword(checkIt = false)
+    @GetMapping(value = "/role/showMenus/{id}")
+    @ResponseBody
+    public List<Item> showMenus(@PathVariable String id) throws ControllerException {
+        log.debug("开始获取角色下的菜单项");
+        List<String> menu_ids = roleService.findMenusByRole(id);
+        try {
+            Tools tools = new Tools();
+            List<Item> items = tools.parseSystemMenu(systemMenuService.getSystemMenusWithRoot());
+            tools.filtIncludeIds(items, menu_ids);
+            log.debug("角色菜单生成完成");
+            return items;
+        } catch (ServiceException e) {
+            throw new ControllerException(e.getMessage());
+        }
+    }
+
     /**
      * 给角色分配一个菜单
      * 包括此菜单下面的所有子孙菜单
+     *
      * @param menuId
      * @param roleId
+     *
      * @return
+     *
      * @throws ControllerException
      */
     @BusinessMethod(value = "给角色分配菜单")
     @PostMapping(value = "/assign-menu-to-role/{menuId}/{roleId}")
     @ResponseBody
-    public String assignMenu2Role(@PathVariable String menuId , @PathVariable String roleId) throws  ControllerException{
-        log.debug("分配一个菜单{}给角色{}",menuId,roleId);
+    public String assignMenu2Role(@PathVariable String menuId, @PathVariable String roleId) throws ControllerException {
+        log.debug("分配一个菜单{}给角色{}", menuId, roleId);
         try {
-            roleService.assignMenu(menuId,roleId);
+            roleService.assignMenu(menuId, roleId);
             return HttpResponseHelper.successInfoInbox("分配成功");
         } catch (ServiceException e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
             throw new ControllerException(e.getMessage());
         }
 

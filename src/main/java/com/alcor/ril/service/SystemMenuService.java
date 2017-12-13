@@ -2,7 +2,7 @@ package com.alcor.ril.service;
 
 import com.alcor.ril.persistence.entity.SysPermissionEntity;
 import com.alcor.ril.persistence.repository.ISysPermissionRepository;
-import com.alcor.ril.web.controller.bean.SystemMenu;
+import com.alcor.ril.web.controller.bean.MenuNode;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,19 +30,19 @@ public class SystemMenuService {
      *
      * @throws ServiceException
      */
-    public List<SystemMenu> getSystemMenusWithRoot() throws ServiceException {
+    public List<MenuNode> getSystemMenusWithRoot() throws ServiceException {
         return getSystemMenusWithParent("0");
     }
 
-    public List<SystemMenu> getSystemMenusWithParent(String parentId) throws ServiceException {
+    public List<MenuNode> getSystemMenusWithParent(String parentId) throws ServiceException {
         List<SysPermissionEntity> sysPermissionEntityList = iSysPermissionRepository.findAllByParentIdOrderByOrderNum(parentId);
         if (sysPermissionEntityList == null) {
             return null;
         }
 //        log.debug("发现{}条，父id 是{}的菜单记录", systemMenuEntityList.size(),parentId);
-        List<SystemMenu> sysPermissionChilden = new ArrayList<>(sysPermissionEntityList.size());
+        List<MenuNode> sysPermissionChilden = new ArrayList<>(sysPermissionEntityList.size());
         for (SysPermissionEntity item : sysPermissionEntityList) {
-            SystemMenu systemMenu = new SystemMenu();
+            MenuNode systemMenu = new MenuNode();
             systemMenu.setMenuItem(item);
             systemMenu.setChildrenMenu(this.getSystemMenusWithParent(item.getId()));
             sysPermissionChilden.add(systemMenu);
