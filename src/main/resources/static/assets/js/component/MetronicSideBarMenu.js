@@ -22,16 +22,25 @@ function fun_gen_menu_item(parent_jquery_obj, data) {
     } else {
         for (i in data) {
             var menu = data[i];
-            Logger.debug(menu);
             if (typeof (menu.children) == undefined || menu.children === null || menu.children.length <= 0) {
-                //如果是 没有子菜单
-                menu_item = fun_gen_leaf_menu(menu);
-                menu_item.appendTo(parent_jquery_obj);
+                //如果没有子菜单
+                var menu_item = fun_gen_leaf_menu(menu);
+                if (menu.parent === "0") {
+                    menu_item.appendTo(parent_jquery_obj);
+                } else {
+                    menu_item.appendTo(parent_jquery_obj);
+                }
+
             } else {
                 //如果有子菜单
-                menu_item = fun_gen_menu_has_submenu(menu);
-                menu_item.appendTo(parent_jquery_obj);
-                fun_gen_menu_item(menu_item, menu.children);
+                var menu_item = fun_gen_menu_has_submenu(menu);
+                if (menu.parent === "0") {
+                    menu_item.appendTo(parent_jquery_obj);
+                } else {
+                    // menu_item.appendTo(subnav_ul.children("ul")[0]);
+                    // subnav_ul.insertAfter(parent_jquery_obj.children("ul.m-m-menu__subnav")[0]);
+                }
+                fun_gen_menu_item(menu_item.find("ul.m-menu__subnav")[0], menu.children);
             }
 
         }
@@ -46,20 +55,32 @@ function fun_gen_menu_has_submenu(menu) {
         "                <a href=\"#\" class=\"m-menu__link m-menu__toggle\">\n" +
         "                    <span class=\"m-menu__item-here \"></span>\n" +
         "                    <i class=\"m-menu__link-icon " + menu.icon + "\"></i>\n" +
-        "                    <span class=\"m-menu__link-text\">\n" +
-        menu.text + "\n" +
+        "                    <span class=\"m-menu__link-text\">" +
+        "                             " + menu.text + "\n" +
         "                    </span>\n" +
         "                    <i class=\"m-menu__ver-arrow la la-angle-right\"></i>\n" +
         "                </a>\n" +
-        "                <div class=\"m-menu__submenu\">\n" +
+        "                <div class=\"m-menu__submenu\">" +
         "                    <span class=\"m-menu__arrow\"></span>\n" +
-        "                    <ul class=\"m-menu__subnav\">" +
-        "                   </ul>" +
+        "                    <ul class=\"m-menu__subnav\"></ul>" +
         "               </div>" +
-        "           </li>        ");
+        "           </li>        "
+        )
+    ;
     return menu_item;
 }
 
+function fun_test() {
+    return $(" <li class=\"m-menu__item \" aria-haspopup=\"true\" data-redirect=\"true\">\n" +
+        "                                            <a href=\"/systemMenuMaintain\" class=\"m-menu__link \">\n" +
+        "                                                <i class=\"m-menu__link-bullet m-menu__link-bullet--dot\">\n" +
+        "                                                    <span></span>\n" +
+        "                                                </i>\n" +
+        "                                                <span class=\"m-menu__link-text\">系统菜单维护</span>\n" +
+        "                                            </a>\n" +
+        "                                        </li>");
+    
+}
 
 //生成叶子菜单
 function fun_gen_leaf_menu(menu) {
@@ -69,7 +90,7 @@ function fun_gen_leaf_menu(menu) {
         "                    <span class=\"m-menu__link-title\">\n" +
         "                        <span class=\"m-menu__link-wrap\">\n" +
         "                            <span class=\"m-menu__link-text\">\n" +
-        menu.text + "\n" +
+        "                                 " + menu.text + "\n" +
         "                            </span>\n" +
         "                        </span>\n" +
         "                    </span>\n" +
