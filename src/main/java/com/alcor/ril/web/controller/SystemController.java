@@ -54,7 +54,7 @@ public class SystemController extends BaseController {
     }
 
     @GetMapping("/cleanCache")
-    @CacheEvict(cacheNames = {"spring:cache:UserEntity", "spring:cache:SystemPermission"}, allEntries = true)
+    @CacheEvict(cacheNames = {"spring:cache"}, allEntries = true)
     public ModelAndView cleanCache() {
         log.debug("清除spring cache 中的缓存！");
         ModelAndView modelAndView = new ModelAndView("/index");

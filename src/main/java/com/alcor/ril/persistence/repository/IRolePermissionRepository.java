@@ -10,4 +10,8 @@ import java.util.List;
 @Repository()
 public interface IRolePermissionRepository extends JpaRepository<RilRolePermissionEntity, String>, PagingAndSortingRepository<RilRolePermissionEntity, String> {
     public List<RilRolePermissionEntity> findAllByRoleId(String roleId);
+
+
+    public void deleteAllByRoleIdAndPermissionIdIn(String roldId,List<String> permissionIdList) ;
+
 }

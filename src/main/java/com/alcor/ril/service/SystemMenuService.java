@@ -34,6 +34,15 @@ public class SystemMenuService {
         return getSystemMenusWithParent("0");
     }
 
+    /**
+     * 以 MenuNode 对象的方式，返回所有的子孙链表
+     *
+     * @param parentId
+     *
+     * @return
+     *
+     * @throws ServiceException
+     */
     public List<MenuNode> getSystemMenusWithParent(String parentId) throws ServiceException {
         List<SysPermissionEntity> sysPermissionEntityList = iSysPermissionRepository.findAllByParentIdOrderByOrderNum(parentId);
         if (sysPermissionEntityList == null) {
@@ -48,6 +57,24 @@ public class SystemMenuService {
             sysPermissionChilden.add(systemMenu);
         }
         return sysPermissionChilden;
+    }
+
+
+    /**
+     * 获取一个 菜单 id 对应的项目的所有子孙菜单项的 id 数组
+     * @param results
+     * @param parentId
+     * @throws ServiceException
+     */
+    public void getSystemMenuIDsWithParent(List<String> results, String parentId) throws ServiceException {
+        List<SysPermissionEntity> sysPermissionEntityList = iSysPermissionRepository.findAllByParentIdOrderByOrderNum(parentId);
+        if (sysPermissionEntityList == null) {
+        }else{
+            for (SysPermissionEntity item : sysPermissionEntityList) {
+                results.add(item.getId());
+                this.getSystemMenuIDsWithParent(results, item.getId());
+            }
+        }
     }
 
 
@@ -91,12 +118,14 @@ public class SystemMenuService {
 
     /**
      * 删除id 对应的菜单和其下所有的子孙菜单
+     *
      * @param id
+     *
      * @throws ServiceException
      */
     @Transactional
     public void deleteByIdIncludedChilden(String id) throws ServiceException {
-        log.debug("开始把 id 为{}的菜单，以及下面所有的子孙菜单都删除",id);
+        log.debug("开始把 id 为{}的菜单，以及下面所有的子孙菜单都删除", id);
         //查看是否下面有子菜单
         List<SysPermissionEntity> sysPermissionEntityList = iSysPermissionRepository.findAllByParentIdOrderByOrderNum(id);
         if (sysPermissionEntityList == null || sysPermissionEntityList.size() == 0) {

@@ -59,12 +59,10 @@ public class Tools {
         if(items == null){
             return ;
         }
-        log.debug("发现{}条菜单", items.size());
         try{
             for (Iterator<Item> itemIterator = items.iterator(); itemIterator.hasNext(); ) {
                 Item item = itemIterator.next();
                 boolean usedIncludeChildren = this.contains(item, ids);
-                log.debug("是否被分配{}", usedIncludeChildren);
                 if (usedIncludeChildren){
                     filtIncludeIds(item.getChildren(),ids);
                 }else{

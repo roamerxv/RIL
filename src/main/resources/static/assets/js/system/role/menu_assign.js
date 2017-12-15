@@ -61,7 +61,7 @@ var role_menu_tree = $('#jstree_role_menus_div').jstree({
 
 });
 
-//监听双击事件
+//监听系统菜单的双击事件，进行分配
 system_menu_tree.bind("dblclick.jstree", function (event) {
     var node = $(event.target).closest("li");
     var data = node.data("jstree");
@@ -69,6 +69,17 @@ system_menu_tree.bind("dblclick.jstree", function (event) {
     Logger.debug("准备分配给 role ID 是" + role_id);
     //菜单分配
     fun_assign_menu_to_role(node[0].id, role_id);
+});
+
+//监听系统菜单的双击事件，进行删除
+role_menu_tree.bind("dblclick.jstree", function (event) {
+    var node = $(event.target).closest("li");
+    var data = node.data("jstree");
+    Logger.debug("选择的菜单 ID 是:" + node[0].id);
+    Logger.debug("准备分配给 role ID 是" + role_id);
+    //角色菜单删除
+    fun_delete_role_menu(node[0].id, role_id);
+
 });
 
 
@@ -163,8 +174,7 @@ function fun_render_role_menu() {
 function fun_assign_menu_to_role(menu_id, role_id) {
     if (menu_id == "j1_1") {
         menu_id = "0"
-    }
-    ;
+    };
     $.ajax({
         type: 'post',
         url: contextPath + "/assign-menu-to-role/" + menu_id + "/" + role_id + ".json",
@@ -177,6 +187,39 @@ function fun_assign_menu_to_role(menu_id, role_id) {
                 type: "loader",
                 state: "success",
                 message: "正在分配菜单..."
+            });
+        },
+        success: function (data, textStatus, jqXHR) {
+            //刷新角色菜单
+            fun_render_role_menu();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);
+        },
+        complete: function () {
+            mApp.unblock("#m_modal_assign_menu .modal-content");
+        }
+    })
+}
+
+
+//删除一个角色的菜单
+function fun_delete_role_menu(menu_id,role_id){
+    if (menu_id == "j2_1") {
+        menu_id = "0"
+    };
+    $.ajax({
+        type: 'delete',
+        url: contextPath + "/assign-menu-to-role/" + menu_id + "/" + role_id + ".json",
+        async: true,//默认为true
+        contentType: "application/json",
+        dataType: 'json',//默认为预期服务器返回的数据类型
+        beforeSend: function () {
+            mApp.block("#m_modal_assign_menu .modal-content", {
+                overlayColor: "#000000",
+                type: "loader",
+                state: "success",
+                message: "正在删除菜单..."
             });
         },
         success: function (data, textStatus, jqXHR) {

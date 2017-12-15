@@ -212,4 +212,20 @@ public class RoleController extends Serializers.Base {
         }
 
     }
+
+
+    @BusinessMethod(value = "删除一个角色的菜单项")
+    @DeleteMapping(value = "/assign-menu-to-role/{menuId}/{roleId}")
+    @ResponseBody
+    public String deleteMenu4Role(@PathVariable String menuId, @PathVariable String roleId) throws ControllerException {
+        log.debug("分配一个菜单{}给角色{}", menuId, roleId);
+        try {
+            roleService.delete(menuId, roleId);
+            return HttpResponseHelper.successInfoInbox("删除成功");
+        } catch (ServiceException e) {
+            log.error(e.getMessage(), e);
+            throw new ControllerException(e.getMessage());
+        }
+
+    }
 }
