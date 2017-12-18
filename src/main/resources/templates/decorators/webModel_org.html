@@ -21,7 +21,11 @@
     <link rel="shortcut icon" th:href="@{/assets/img/logo/favicon.ico}"/>
 
     <!--begin::Base Scripts -->
+
     <script th:src="@{/assets/vendors/base/vendors.bundle.js}" type="text/javascript"></script>
+    <script th:src="@{/assets/base/scripts.bundle.js}" type="text/javascript"></script>
+
+
     <script th:inline="javascript">
         var contextPath = $("meta[name='ctx']").attr("content");
     </script>
@@ -96,11 +100,7 @@
 <!-- begin::Quick Nav -->
 
 <!--begin::Page Snippets -->
-<!--<script th:src="@{/assets/app/js/dashboard.js}" type="text/javascript"></script>-->
-
-
-<script th:src="@{/assets/base/scripts.bundle.js}" type="text/javascript"></script>
-
+<script th:src="@{/assets/app/js/dashboard.js}" type="text/javascript"></script>
 
 <!--使用jonnyreeves/js-logger-->
 <script th:src="@{/assets/js/lib/jonnyreeves-js-logger/logger.min.js}"></script>
@@ -118,7 +118,6 @@
 <!-- 引入确认弹窗的组件-->
 <script th:src="@{/assets/js/lib/bootbox/bootbox.min.js}"></script>
 <!---->
-
 
 <script th:src="@{/assets/js/application.js}" type="text/javascript"></script>
 

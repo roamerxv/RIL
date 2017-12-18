@@ -3,11 +3,13 @@ MetronicSidebarMenu = function fun_gen_menu(jquery_object, menu_data) {
 }
 
 function fun_gen_content_div(jquery_object, data) {
-    var menu_content_div = $(" <div class=\"m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark m-aside-menu--dropdown \"\n" +
-        "         data-menu-vertical=\"false\"\n" +
-        "         data-menu-dropdown=\"true\" data-menu-scrollable=\"true\" data-menu-dropdown-timeout=\"0\"\n" +
-        "    >\n" +
-        "    </div>");
+    var menu_content_div = $("" +
+        "<div " +
+        "            id=\"m_ver_menu\"\n" +
+        "            class=\"m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark m-aside-menu--dropdown \"\n" +
+        "            data-menu-vertical=\"false\"\n" +
+        "            data-menu-dropdown=\"true\" data-menu-scrollable=\"true\" data-menu-dropdown-timeout=\"0\"\n" +
+        "    >");
     var menu_ul = $("<ul class=\"m-menu__nav  m-menu__nav--dropdown-submenu-arrow \" id=\"m_ver_menu\">\n" +
         "</ul>\n");
 
@@ -79,7 +81,7 @@ function fun_test() {
         "                                                <span class=\"m-menu__link-text\">系统菜单维护</span>\n" +
         "                                            </a>\n" +
         "                                        </li>");
-    
+
 }
 
 //生成叶子菜单

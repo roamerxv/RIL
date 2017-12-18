@@ -10,12 +10,12 @@ $().ready(function () {
                 overlayColor: "#000000",
                 type: "loader",
                 state: "success",
-                message: "正在获取菜单..."
+                size: 'ls'
             });
         },
         success: function (data, textStatus, jqXHR) {
             //生成菜单
-            MetronicSidebarMenu($("#metronic_sidebar_menu"), data);
+            BootstrapSidebarMenu($("#metronic_sidebar_menu"), data);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);

@@ -208,6 +208,203 @@ public class SysUserController extends  BaseController{
         }
     }
 
+    @GetMapping(value = "/sidebar")
+    public ModelAndView showSidebar() throws ControllerException{
+        ModelAndView modelAndView = new ModelAndView("decorators/sidebar2");
+        String menuHtml= "<div id=\"metronic_sidebar_menu\">\n" +
+                "        <div\n" +
+                "            id=\"m_ver_menu\"\n" +
+                "            class=\"m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark m-aside-menu--dropdown \"\n" +
+                "            data-menu-vertical=\"false\"\n" +
+                "            data-menu-dropdown=\"true\" data-menu-scrollable=\"true\" data-menu-dropdown-timeout=\"0\"\n" +
+                "    >\n" +
+                "        <ul class=\"m-menu__nav  m-menu__nav--dropdown-submenu-arrow \">\n" +
+                "            <li class=\"m-menu__item \" aria-haspopup=\"true\" name=\"menu_system_dashboard\">\n" +
+                "                <a th:href=\"@{/}\" class=\"m-menu__link \">\n" +
+                "                    <i class=\"m-menu__link-icon flaticon-line-graph\"></i>\n" +
+                "                    <span class=\"m-menu__link-title\">\n" +
+                "                        <span class=\"m-menu__link-wrap\">\n" +
+                "                            <span class=\"m-menu__link-text\">\n" +
+                "                                Dashboard\n" +
+                "                            </span>\n" +
+                "                        </span>\n" +
+                "                    </span>\n" +
+                "                </a>\n" +
+                "            </li>\n" +
+                "            <li class=\"m-menu__item  m-menu__item--submenu\" aria-haspopup=\"true\" data-menu-submenu-toggle=\"hover\"\n" +
+                "                name=\"menu_system\">\n" +
+                "                <a href=\"#\" class=\"m-menu__link m-menu__toggle\">\n" +
+                "                    <span class=\"m-menu__item-here\"></span>\n" +
+                "                    <i class=\"m-menu__link-icon flaticon-open-box\"></i>\n" +
+                "                    <span class=\"m-menu__link-text\">\n" +
+                "                        系统设置\n" +
+                "                    </span>\n" +
+                "                    <i class=\"m-menu__ver-arrow la la-angle-right\"></i>\n" +
+                "                </a>\n" +
+                "                <div class=\"m-menu__submenu\">\n" +
+                "                    <span class=\"m-menu__arrow\"></span>\n" +
+                "                    <ul class=\"m-menu__subnav\">\n" +
+                "                        <li class=\"m-menu__item  m-menu__item--submenu\" aria-haspopup=\"true\"\n" +
+                "                            data-menu-submenu-toggle=\"hover\">\n" +
+                "                            <a href=\"#\" class=\"m-menu__link m-menu__toggle\">\n" +
+                "                                <span class=\"m-menu__item-here\"></span>\n" +
+                "                                <i class=\"m-menu__link-icon flaticon-open-box\"></i>\n" +
+                "                                <span class=\"m-menu__link-text\">\n" +
+                "                                    授权维护\n" +
+                "                                </span>\n" +
+                "                                <i class=\"m-menu__ver-arrow la la-angle-right\"></i>\n" +
+                "                            </a>\n" +
+                "                            <div class=\"m-menu__submenu\">\n" +
+                "                                <span class=\"m-menu__arrow\"></span>\n" +
+                "                                <ul class=\"m-menu__subnav\">\n" +
+                "                                    <li class=\"m-menu__item \" aria-haspopup=\"true\" data-redirect=\"true\">\n" +
+                "                                        <a th:href=\"@{/systemMenuMaintain}\" class=\"m-menu__link \">\n" +
+                "                                            <i class=\"m-menu__link-bullet m-menu__link-bullet--dot\">\n" +
+                "                                                <span></span>\n" +
+                "                                            </i>\n" +
+                "                                            <span class=\"m-menu__link-text\">系统菜单维护</span>\n" +
+                "                                        </a>\n" +
+                "                                    </li>\n" +
+                "                                    <li class=\"m-menu__item \" aria-haspopup=\"true\" data-redirect=\"true\">\n" +
+                "                                        <a th:href=\"@{/roleMaintain}\" class=\"m-menu__link \">\n" +
+                "                                            <i class=\"m-menu__link-bullet m-menu__link-bullet--dot\">\n" +
+                "                                                <span></span>\n" +
+                "                                            </i>\n" +
+                "                                            <span class=\"m-menu__link-text\">角色维护</span>\n" +
+                "                                        </a>\n" +
+                "                                    </li>\n" +
+                "                                </ul>\n" +
+                "                            </div>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"m-menu__item \" aria-haspopup=\"true\" data-redirect=\"true\">\n" +
+                "                            <a th:href=\"@{/serverInfo}\" class=\"m-menu__link \">\n" +
+                "                                <i class=\"m-menu__link-bullet m-menu__link-bullet--dot\">\n" +
+                "                                    <span></span>\n" +
+                "                                </i>\n" +
+                "                                <span class=\"m-menu__link-text\">查看服务器信息</span>\n" +
+                "                            </a>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"m-menu__item\" aria-haspopup=\"true\" name=\"menu_system_configer\">\n" +
+                "                            <a th:href=\"@{/system_config}\" class=\"m-menu__link \">\n" +
+                "                                <span class=\"m-menu__item-here\"></span>\n" +
+                "                                <i class=\"m-menu__link-icon flaticon-list-3\"></i>\n" +
+                "                                <span class=\"m-menu__link-text\">参数设置</span>\n" +
+                "                            </a>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"m-menu__item\" aria-haspopup=\"true\" name=\"menu_system_log\">\n" +
+                "                            <a th:href=\"@{/system_logs_index}\" class=\"m-menu__link \">\n" +
+                "                                <span class=\"m-menu__item-here\"></span>\n" +
+                "                                <i class=\"m-menu__link-icon flaticon-line-graph\"></i>\n" +
+                "                                <span class=\"m-menu__link-text\">系统日志</span>\n" +
+                "                            </a>\n" +
+                "                        </li>\n" +
+                "                    </ul>\n" +
+                "                </div>\n" +
+                "            </li>\n" +
+                "            <li class=\"m-menu__item  m-menu__item--submenu\" aria-haspopup=\"true\" data-menu-submenu-toggle=\"hover\">\n" +
+                "                <a href=\"#\" class=\"m-menu__link m-menu__toggle\">\n" +
+                "                    <span class=\"m-menu__item-here\"></span>\n" +
+                "                    <i class=\"m-menu__link-icon flaticon-open-box\"></i>\n" +
+                "                    <span class=\"m-menu__link-text\">\n" +
+                "                                        测试功能\n" +
+                "                                    </span>\n" +
+                "                    <i class=\"m-menu__ver-arrow la la-angle-right\"></i>\n" +
+                "                </a>\n" +
+                "                <div class=\"m-menu__submenu\">\n" +
+                "                    <span class=\"m-menu__arrow\"></span>\n" +
+                "                    <ul class=\"m-menu__subnav\">\n" +
+                "                        <li class=\"m-menu__item  m-menu__item--submenu\" aria-haspopup=\"true\"\n" +
+                "                            data-menu-submenu-toggle=\"hover\">\n" +
+                "                            <a href=\"#\" class=\"m-menu__link m-menu__toggle\">\n" +
+                "                                <span class=\"m-menu__item-here\"></span>\n" +
+                "                                <i class=\"m-menu__link-icon flaticon-open-box\"></i>\n" +
+                "                                <span class=\"m-menu__link-text\">\n" +
+                "                                    三级菜单\n" +
+                "                                </span>\n" +
+                "                                <i class=\"m-menu__ver-arrow la la-angle-right\"></i>\n" +
+                "                            </a>\n" +
+                "                            <div class=\"m-menu__submenu\">\n" +
+                "                                <span class=\"m-menu__arrow\"></span>\n" +
+                "                                <ul class=\"m-menu__subnav\">\n" +
+                "                                    <li class=\"m-menu__item \" aria-haspopup=\"true\" data-redirect=\"true\">\n" +
+                "                                        <a th:href=\"@{/cleanCache}\" class=\"m-menu__link \">\n" +
+                "                                            <i class=\"m-menu__link-bullet m-menu__link-bullet--dot\">\n" +
+                "                                                <span></span>\n" +
+                "                                            </i>\n" +
+                "                                            <span class=\"m-menu__link-text\">三级菜单1</span>\n" +
+                "                                        </a>\n" +
+                "                                    </li>\n" +
+                "                                </ul>\n" +
+                "                            </div>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"m-menu__item \" aria-haspopup=\"true\" data-redirect=\"true\">\n" +
+                "                            <a th:href=\"@{/cleanCache}\" class=\"m-menu__link \">\n" +
+                "                                <i class=\"m-menu__link-bullet m-menu__link-bullet--dot\">\n" +
+                "                                    <span></span>\n" +
+                "                                </i>\n" +
+                "                                <span class=\"m-menu__link-text\">清除所有 cache</span>\n" +
+                "                            </a>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"m-menu__item \" aria-haspopup=\"true\" data-redirect=\"true\">\n" +
+                "                            <a th:href=\"@{/systemMenus4Treeviewer}\" class=\"m-menu__link \" target=\"_test\">\n" +
+                "                                <i class=\"m-menu__link-bullet m-menu__link-bullet--dot\">\n" +
+                "                                    <span></span>\n" +
+                "                                </i>\n" +
+                "                                <span class=\"m-menu__link-text\">显示系统菜单的 json</span>\n" +
+                "                            </a>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"m-menu__item \" aria-haspopup=\"true\" data-redirect=\"true\">\n" +
+                "                            <a th:href=\"@{/serverInfo}\" class=\"m-menu__link \">\n" +
+                "                                <i class=\"m-menu__link-bullet m-menu__link-bullet--dot\">\n" +
+                "                                    <span></span>\n" +
+                "                                </i>\n" +
+                "                                <span class=\"m-menu__link-text\">查看服务器信息</span>\n" +
+                "                            </a>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"m-menu__item \" aria-haspopup=\"true\">\n" +
+                "                            <a th:href=\"@{/businessMethodLog.json}\" class=\"m-menu__link \" target=\"_test\">\n" +
+                "                                <i class=\"m-menu__link-bullet m-menu__link-bullet--dot\">\n" +
+                "                                    <span></span>\n" +
+                "                                </i>\n" +
+                "                                <span class=\"m-menu__link-text\">调用一个记录日志的方法</span>\n" +
+                "                            </a>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"m-menu__item \" aria-haspopup=\"true\" data-redirect=\"true\">\n" +
+                "                            <a th:href=\"@{/builder.html}\" class=\"m-menu__link \">\n" +
+                "                                <i class=\"m-menu__link-bullet m-menu__link-bullet--dot\">\n" +
+                "                                    <span></span>\n" +
+                "                                </i>\n" +
+                "                                <span class=\"m-menu__link-text\">调用一个静态页面</span>\n" +
+                "                            </a>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"m-menu__item \" aria-haspopup=\"true\" data-redirect=\"true\">\n" +
+                "                            <a th:href=\"@{/testPage}\" class=\"m-menu__link \">\n" +
+                "                                <i class=\"m-menu__link-bullet m-menu__link-bullet--dot\">\n" +
+                "                                    <span></span>\n" +
+                "                                </i>\n" +
+                "                                <span class=\"m-menu__link-text\">访问一个动态界面</span>\n" +
+                "                            </a>\n" +
+                "                        </li>\n" +
+                "                        <li class=\"m-menu__item \" aria-haspopup=\"true\" data-redirect=\"true\">\n" +
+                "                            <a th:href=\"@{/test/ajax_500}\" class=\"m-menu__link \">\n" +
+                "                                <i class=\"m-menu__link-bullet m-menu__link-bullet--dot\">\n" +
+                "                                    <span></span>\n" +
+                "                                </i>\n" +
+                "                                <span class=\"m-menu__link-text\"> 通过 ajax 捕获500错误</span>\n" +
+                "                            </a>\n" +
+                "                        </li>\n" +
+                "                    </ul>\n" +
+                "                </div>\n" +
+                "            </li>\n" +
+                "\n" +
+                "        </ul>\n" +
+                "    </div>\n" +
+                "    </div>";
+        log.debug("获取动态菜单");
+        modelAndView.addObject("sidebar",menuHtml);
+        return modelAndView;
+    }
+
     @RequestMapping(value = "/user/modify_password")
     @ResponseBody
     public String modifyPassword(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword) throws ControllerException {
