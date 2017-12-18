@@ -46,17 +46,17 @@ function fun_gen_menu_item(parent_jquery_obj, data) {
 
 //生成枝干菜单
 function fun_gen_menu_has_submenu(menu) {
-    var menu_item = $("<li data-toggle=\"collapse\" data-target=\"#" + menu.id + "\" class=\"collapsed\">\n" +
+    var menu_item = $("<li data-toggle=\"collapse\" data-target=\"#" + menu.id + "\">\n" +
         "                <a href=\"#\"><i class=\"" + menu.icon + "\"></i> " + menu.text + " <span class=\"arrow\"></span></a>\n" +
         "            </li>\n" +
-        "            <ul class=\"sub-menu collapse \" id=\"" + menu.id + "\" ></ul>");
+        "            <ul class=\"sub-menu\" id=\"" + menu.id + "\" ></ul>");
     return menu_item;
 }
 
 //生成叶子菜单
 function fun_gen_leaf_menu(menu) {
     var menu_item = $("<li>\n" +
-        "                  <a href=\"#\">\n" +
+        "                  <a href=\""+ menu.url +"\">\n" +
         "                  <i class=\"" + menu.icon + "\"></i> " + menu.text + "\n" +
         "                  </a>\n" +
         "                </li>");
