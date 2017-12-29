@@ -15,7 +15,7 @@ $().ready(function () {
         },
         success: function (data, textStatus, jqXHR) {
             //生成菜单
-            BootstrapSidebarMenu($("#metronic_sidebar_menu"), data);
+            MetronicSidebarMenu($("#metronic_sidebar_menu"), data);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             showMessage("danger", "错误", jqXHR.responseJSON.data[0].errorMessage);

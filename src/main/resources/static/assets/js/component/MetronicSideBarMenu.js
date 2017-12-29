@@ -1,21 +1,43 @@
 MetronicSidebarMenu = function fun_gen_menu(jquery_object, menu_data) {
     fun_gen_content_div(jquery_object, menu_data);
+    // var temp = $("");
+    // temp.appendTo(jquery_object);
+    var menu = $('#m_ver_menu').mMenu({
+        // submenu settings
+        submenu: {
+            // breakpoints
+            desktop: {
+                default: 'accordion', // by default the submenu mode set to accordion
+                state: {
+                    body: 'm-aside-left--minimize', // whenever the page body has this class switch the submenu mode to dropdown
+                    mode: 'dropdown'
+                }
+            },
+            tablet: 'accordion', // the submenu mode set to accordion for tablet
+            mobile: 'accordion' // the submenu mode set to accordion for mobile
+        },
+
+        //accordion mode settings
+        accordion: {
+            autoScroll: true,
+            expandAll: false
+        }
+    });
 }
 
 function fun_gen_content_div(jquery_object, data) {
-    var menu_content_div = $("" +
-        "<div " +
-        "            id=\"m_ver_menu\"\n" +
-        "            class=\"m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark m-aside-menu--dropdown \"\n" +
-        "            data-menu-vertical=\"false\"\n" +
-        "            data-menu-dropdown=\"true\" data-menu-scrollable=\"true\" data-menu-dropdown-timeout=\"0\"\n" +
-        "    >");
-    var menu_ul = $("<ul class=\"m-menu__nav  m-menu__nav--dropdown-submenu-arrow \" id=\"m_ver_menu\">\n" +
-        "</ul>\n");
+    var menu_content_div = $("<div\n" +
+        "        id=\"m_ver_menu\"\n" +
+        "        class=\"m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark \"\n" +
+        "        data-menu-vertical=\"true\"\n" +
+        "        data-menu-scrollable=\"false\" data-menu-dropdown-timeout=\"500\"\n" +
+        ">");
+    var menu_ul = $("<ul class=\"m-menu__nav  m-menu__nav--dropdown-submenu-arrow \">");
 
     fun_gen_menu_item(menu_ul, data);
     menu_ul.appendTo(menu_content_div);
     menu_content_div.appendTo(jquery_object);
+
 }
 
 function fun_gen_menu_item(parent_jquery_obj, data) {
