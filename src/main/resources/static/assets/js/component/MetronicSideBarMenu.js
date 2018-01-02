@@ -74,8 +74,7 @@ function fun_gen_menu_item(parent_jquery_obj, data) {
 //生成枝干菜单
 function fun_gen_menu_has_submenu(menu) {
     var menu_item = $("" +
-        "            <li class=\"m-menu__item  m-menu__item--submenu\" aria-haspopup=\"true\" data-menu-submenu-toggle=\"hover\"\n" +
-        "                name=\"menu_system\">\n" +
+        "<li class=\"m-menu__item  m-menu__item--submenu\" aria-haspopup=\"true\"  data-menu-submenu-toggle=\"hover\">\n" +
         "                <a href=\"#\" class=\"m-menu__link m-menu__toggle\">\n" +
         "                    <span class=\"m-menu__item-here \"></span>\n" +
         "                    <i class=\"m-menu__link-icon " + menu.icon + "\"></i>\n" +
@@ -92,18 +91,6 @@ function fun_gen_menu_has_submenu(menu) {
         )
     ;
     return menu_item;
-}
-
-function fun_test() {
-    return $(" <li class=\"m-menu__item \" aria-haspopup=\"true\" data-redirect=\"true\">\n" +
-        "                                            <a href=\"/systemMenuMaintain\" class=\"m-menu__link \">\n" +
-        "                                                <i class=\"m-menu__link-bullet m-menu__link-bullet--dot\">\n" +
-        "                                                    <span></span>\n" +
-        "                                                </i>\n" +
-        "                                                <span class=\"m-menu__link-text\">系统菜单维护</span>\n" +
-        "                                            </a>\n" +
-        "                                        </li>");
-
 }
 
 //生成叶子菜单
