@@ -1,7 +1,8 @@
 $().ready(function () {
+    var admin_role_id = "1"
     $.ajax({
         type: 'get',
-        url: contextPath + "role/showMenus/" + "4e44a00b-7aa6-455a-af52-9e01cf9c4a58" + ".json",
+        url: contextPath + "role/showMenus/" + admin_role_id + ".json",
         async: true,//默认为true
         contentType: "application/json",
         dataType: 'json',//默认为预期服务器返回的数据类型

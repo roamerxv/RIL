@@ -11,11 +11,12 @@ buildscript {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
-        classpath 'mysql:mysql-connector-java:8.0.8-dmr'
-        classpath 'org.flywaydb:flyway-gradle-plugin:5.0.3'
+        classpath 'mysql:mysql-connector-java:8.0.9-rc'
+        classpath 'org.flywaydb:flyway-gradle-plugin:5.0.7'
         // 这是版本检测用的插件
-        classpath('com.github.ben-manes:gradle-versions-plugin:0.17.0')
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
         // -----
+        //classpath 'io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE]'
     }
 }
 
@@ -30,6 +31,10 @@ apply plugin: 'com.github.ben-manes.versions'
 
 // 这里定义一个 flyway 插件
 apply plugin: 'org.flywaydb.flyway'
+// end
+
+// 这里定义一个 io.spring.dependency-management plugin
+// apply plugin: 'io.spring.dependency-management'
 // end
 
 group = 'com.alcor'
@@ -47,7 +52,7 @@ repositories {
 // gradle flyway 查看子命令
 flyway {
     driver = 'com.mysql.cj.jdbc.Driver'
-    url = 'jdbc:mysql://120.76.101.180:3306/ril?useUnicode=true&characterEncoding=utf-8&useSSL=false'
+    url = 'jdbc:mysql://127.0.0.1:13306/ril?useUnicode=true&characterEncoding=utf-8&useSSL=false'
     user = 'ril'
     password = 'rilril'
     schemas = ['ril']
@@ -68,10 +73,10 @@ ext {
     apacheOroVersion = "2.0.8"
     javaxServletAPIVersion = "4.0.0"
     mysqlJavaConnectorVersion = "5.1.43"
-    druidVersion = "1.1.6"
+    druidVersion = "1.1.8"
     hibernateVersion = "5.2.11.Final"
     userAgentUtilsVersion = "1.20"
-    lombokVersion = "1.16.18"
+    lombokVersion = "1.16.20"
 }
 
 // upgrade to thymeleaf version 3
@@ -116,8 +121,8 @@ dependencies {
     compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity4')
 
     // 使用 spring session + redis 共享 session
-    compile('org.springframework.session:spring-session')
     compile('org.springframework.boot:spring-boot-starter-data-redis')
+	compile('org.springframework.session:spring-session:1.3.2.RELEASE')
     // ---------------------------------------
 
     // 使用 spring cache
@@ -135,9 +140,10 @@ dependencies {
     compile("org.springframework.boot:spring-boot-devtools") //  启动 devtolls
     // end
 
-    compile('com.google.guava:guava:23.5-jre')
-    
-    runtime('mysql:mysql-connector-java')
-    compileOnly('org.projectlombok:lombok')
+    compile('com.google.guava:guava:24.0-jre')
+
+    compile('org.projectlombok:lombok:1.16.20')
+
+    runtime('mysql:mysql-connector-java:8.0.9-rc')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
